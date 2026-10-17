@@ -10,13 +10,12 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
-from . import model, queries, store, thaidate
-
-UI_PATH = Path(__file__).with_name("ui.html")
+from . import model, page, queries, store, thaidate
 
 
 class _Handler(BaseHTTPRequestHandler):
     db_path: str | None = None
+    page_html: bytes = b""
     server_version = "thai-lotto-db"
 
     def log_message(self, fmt: str, *args) -> None:  # เงียบกว่าเดิม
@@ -29,7 +28,7 @@ class _Handler(BaseHTTPRequestHandler):
         params = {k: v[0] for k, v in parse_qs(parsed.query).items()}
 
         if route in {"/", "/index.html"}:
-            self._send(200, UI_PATH.read_bytes(), "text/html; charset=utf-8")
+            self._send(200, self.page_html, "text/html; charset=utf-8")
             return
         if not route.startswith("/api/"):
             self._json({"error": "ไม่พบเส้นทางนี้"}, status=404)
@@ -180,7 +179,13 @@ def serve(
     port: int = 8777,
     open_browser: bool = True,
 ) -> None:
-    handler = type("Handler", (_Handler,), {"db_path": db_path})
+    # หน้าเว็บสร้างครั้งเดียวตอนเริ่ม แล้วเสิร์ฟจากหน่วยความจำ
+    conn = store.connect(db_path)
+    try:
+        html = page.render(conn).encode("utf-8")
+    finally:
+        conn.close()
+    handler = type("Handler", (_Handler,), {"db_path": db_path, "page_html": html})
     httpd = ThreadingHTTPServer((host, port), handler)
     url = f"http://{host}:{port}/"
     print(f"เปิดหน้าเว็บที่ {url}   (กด Ctrl+C เพื่อหยุด)")

@@ -2,393 +2,679 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
 
 <style>
-/* ม่วงเข้มไล่เฉดเป็นแถบแบรนด์ด้านบน เนื้อหาเป็นกระดาษสว่างข้างล่าง
-   สีหยิบจากมาสคอต: มิ้นต์เป็นสีหลัก ม่วงเป็นพื้น เหลืองไว้เน้นจุดเดียว
-   เส้นขอบหนาสีหมึกเข้มแบบการ์ตูนเวกเตอร์ และขอบพิกเซลคั่นแถบ */
+/* ท้องฟ้าราตรีม่วง-ฟ้าเป็นแถบเปิด แล้วเนื้อหาเป็นการ์ดขาวมนลอยบนพื้นสว่าง
+   ฟ้าอมเขียวเป็นสีนำหนึ่งเดียว เหลืองอำพันสงวนไว้ให้เลขที่ค้นเจอเท่านั้น
+   ตารางไม่มีเส้นตั้ง เหลือเส้นนอนบางที่สุด ให้ตัวเลขเป็นพระเอก */
 :root {
   color-scheme: light;
-  --void: #190f3d;
-  --grape: #4c1d95;
-  --violet: #7c3aed;
-  --lilac: #c4b5fd;
-  --mint: #5eead4;
-  --mint-ink: #04463f;
-  --sun: #fde047;
-  --outline: #150b33;
 
-  --paper: #f3f0fd;
+  --night-1: #2e1d6e;
+  --night-2: #1d1148;
+  --night-3: #120a2e;
+
+  --aqua: #5ee7f5;
+  --aqua-deep: #0e7490;
+  --brand: #7c5cf0;
+  --brand-deep: #4c2fc7;
+  --flash: #fcd34d;
+  --flash-ink: #6b4708;
+
+  --bg: #f5f5fb;
   --card: #ffffff;
-  --card-2: #ece6fc;
-  --line: #d9cefa;
-  --ink: #1b1340;
-  --muted: #6a5c99;
-  --hit: #fde047;
-  --hit-ink: #352400;
+  --card-2: #f3f2fb;
+  --hair: #e9e7f5;
+  --ink: #1d1a3d;
+  --ink-2: #5f5b86;
+  --ink-3: #8e8ab0;
+  --sky-ink: #ffffff;
+  --sky-ink-2: #c9c2f6;
 
-  --display: "Mitr", "Noto Sans Thai", system-ui, sans-serif;
+  --p-violet: #ede9fe;
+  --p-blue: #e0f2fe;
+  --p-pink: #fce7f3;
+  --p-green: #dcfce7;
+  --p-amber: #fef3c7;
+
+  --display: "Anuphan", "Noto Sans Thai", system-ui, sans-serif;
   --body: "IBM Plex Sans Thai", "Leelawadee UI", Tahoma, system-ui, sans-serif;
   --mono: "IBM Plex Mono", "Cascadia Mono", ui-monospace, monospace;
+
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --shadow: 0 1px 2px rgba(29, 26, 61, .05), 0 12px 32px -12px rgba(29, 26, 61, .14);
+  --shadow-lift: 0 2px 4px rgba(29, 26, 61, .06), 0 22px 48px -16px rgba(29, 26, 61, .22);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --paper: #110a28;
-    --card: #1a1040;
-    --card-2: #241751;
-    --line: #35236d;
-    --ink: #efeaff;
-      --muted: #a396d8;
-    --hit: #4a3906;
-    --hit-ink: #fde047;
+    --bg: #100c26;
+    --card: #1a1640;
+    --card-2: #221d52;
+    --hair: #2e2763;
+    --ink: #f0eefc;
+    --ink-2: #b0a9dc;
+    --ink-3: #8179b8;
+    --p-violet: #2a2160;
+    --p-blue: #16314f;
+    --p-pink: #3d1b38;
+    --p-green: #14352a;
+  --p-amber: #3d2f07;
+    --flash: #7a5a09;
+    --flash-ink: #fde68a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px -12px rgba(0, 0, 0, .6);
+    --shadow-lift: 0 2px 4px rgba(0, 0, 0, .35), 0 22px 48px -16px rgba(0, 0, 0, .7);
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --paper: #110a28;
-  --card: #1a1040;
-  --card-2: #241751;
-  --line: #35236d;
-  --ink: #efeaff;
-  --muted: #a396d8;
-  --hit: #4a3906;
-  --hit-ink: #fde047;
+  --bg: #100c26;
+  --card: #1a1640;
+  --card-2: #221d52;
+  --hair: #2e2763;
+  --ink: #f0eefc;
+  --ink-2: #b0a9dc;
+  --ink-3: #8179b8;
+  --p-violet: #2a2160;
+  --p-blue: #16314f;
+  --p-pink: #3d1b38;
+  --p-green: #14352a;
+  --p-amber: #3d2f07;
+  --flash: #7a5a09;
+  --flash-ink: #fde68a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 32px -12px rgba(0, 0, 0, .6);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, .35), 0 22px 48px -16px rgba(0, 0, 0, .7);
 }
 
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--body);
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-text-size-adjust: 100%;
 }
 .gut {
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
 }
-.shell { max-width: 1240px; margin: 0 auto; }
+.shell { max-width: 1200px; margin: 0 auto; }
 body::before {
   content: ""; position: fixed; inset: 0 0 auto;
-  height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--void);
+  height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--night-1);
 }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; border-radius: 6px; }
+[hidden] { display: none !important; }
 
-/* ---------------------------------------------------------- แถบฮีโร่ */
-.hero {
-  background:
-    radial-gradient(120% 140% at 18% 0%, var(--violet) 0%, transparent 55%),
-    radial-gradient(120% 130% at 88% 18%, #9333ea 0%, transparent 52%),
-    linear-gradient(170deg, var(--grape) 0%, var(--void) 78%);
-  color: #fff;
+/* ===================================================== ท้องฟ้า */
+.sky {
   position: relative;
-  overflow: hidden;
-}
-.hero-in {
-  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: 18px 28px; align-items: center; padding-block: 30px 26px;
-}
-.eyebrow {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
-  text-transform: uppercase; color: var(--mint); margin: 0 0 10px;
-}
-h1 {
-  font-family: var(--display); font-weight: 500;
-  font-size: clamp(30px, 6.4vw, 54px); line-height: 1.08;
-  margin: 0; letter-spacing: -0.01em; text-wrap: balance; color: #fff;
-}
-h1 .hl { color: var(--mint); }
-.standfirst {
-  margin: 12px 0 0; max-width: 46ch; font-size: 14.5px; color: var(--lilac);
-}
-.tally { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 16px 0 0; }
-.tally div { display: flex; flex-direction: column; }
-.tally dt {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--lilac);
-}
-.tally dd {
-  margin: 0; font-family: var(--mono); font-weight: 600; font-size: 17px;
-  font-variant-numeric: tabular-nums; color: #fff;
-}
-.hero-art { display: flex; justify-content: center; }
-.hero-art svg { width: 100%; max-width: 420px; height: auto; }
-.pixelrow {
-  height: 16px;
   background:
-    repeating-linear-gradient(90deg, var(--violet) 0 16px, transparent 16px 32px);
-  opacity: 0.85;
+    radial-gradient(90% 70% at 12% 8%, rgba(129, 140, 248, .55) 0%, transparent 60%),
+    radial-gradient(70% 60% at 78% 4%, rgba(232, 121, 249, .40) 0%, transparent 62%),
+    radial-gradient(85% 75% at 92% 56%, rgba(34, 211, 238, .30) 0%, transparent 60%),
+    linear-gradient(165deg, var(--night-1) 0%, var(--night-2) 52%, var(--night-3) 100%);
+  color: var(--sky-ink);
+  overflow: hidden;
+  isolation: isolate;
 }
-.pixelrow + .pixelrow { height: 8px; background-position: 16px 0; opacity: 0.5; }
+.sky::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(2px 2px at 14% 26%, rgba(255,255,255,.8), transparent),
+    radial-gradient(2px 2px at 72% 14%, rgba(255,255,255,.65), transparent),
+    radial-gradient(1.5px 1.5px at 34% 62%, rgba(255,255,255,.5), transparent),
+    radial-gradient(2px 2px at 88% 38%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1.5px 1.5px at 56% 82%, rgba(255,255,255,.4), transparent),
+    radial-gradient(2px 2px at 24% 88%, rgba(255,255,255,.35), transparent);
+}
+.skyline {
+  position: absolute; left: 0; right: 0; bottom: -1px; z-index: 0;
+  width: 100%; height: auto; opacity: .5; pointer-events: none;
+}
 
-/* ---------------------------------------------------------- แถบควบคุม */
+.topbar {
+  position: relative; z-index: 3;
+  display: flex; align-items: center; gap: 18px;
+  padding-block: 16px;
+}
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+.brand svg { width: 38px; height: 38px; flex: none; }
+.brand b { font-family: var(--display); font-size: 21px; font-weight: 700; letter-spacing: .01em; }
+.topnav { display: flex; gap: 4px; flex-wrap: wrap; }
+.topnav button {
+  font: inherit; font-size: 14px; cursor: pointer; color: var(--sky-ink-2);
+  background: none; border: 0; padding: 7px 13px; border-radius: 999px; position: relative;
+}
+.topnav button:hover { color: #fff; }
+.topnav button[aria-selected="true"] { color: #fff; font-weight: 600; }
+.topnav button[aria-selected="true"]::after {
+  content: ""; position: absolute; left: 13px; right: 13px; bottom: 1px;
+  height: 2.5px; border-radius: 2px; background: var(--aqua);
+}
+.topcta {
+  font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  color: var(--aqua-deep); background: #d7f7fb; border: 0;
+  padding: 9px 18px; border-radius: 999px; white-space: nowrap;
+}
+.topcta:hover { background: #fff; }
+
+.hero {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr);
+  gap: 24px 36px; align-items: center;
+  padding-block: 18px 92px;
+}
+.kicker {
+  font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--aqua); margin: 0 0 14px; font-family: var(--mono); font-weight: 600;
+}
+.hero h1 { font-size: clamp(32px, 5.6vw, 58px); line-height: 1.12; font-weight: 700; }
+.hero h1 .glow {
+  background: linear-gradient(100deg, #a5f3fc 0%, var(--aqua) 48%, #c4b5fd 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.lede { margin: 16px 0 0; max-width: 44ch; color: var(--sky-ink-2); font-size: 15.5px; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+.cta {
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 24px; border-radius: 999px; border: 0;
+  background: linear-gradient(100deg, #7ff0fb, #37c7e8);
+  color: #06323d; box-shadow: 0 10px 26px -8px rgba(94, 231, 245, .7);
+}
+.cta:hover { filter: brightness(1.06); }
+.cta.ghost {
+  background: rgba(255, 255, 255, .07); color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, .34); box-shadow: none;
+}
+.cta.ghost:hover { background: rgba(255, 255, 255, .15); }
+.hero-art { position: relative; display: flex; justify-content: center; }
+.hero-art svg {
+  width: 100%; max-width: 520px; height: auto;
+  filter: drop-shadow(0 24px 48px rgba(10, 5, 40, .5));
+}
+
+.quick-wrap { position: relative; z-index: 5; margin-top: -62px; }
+.quick {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(206px, 1fr));
+  gap: 1px; background: var(--hair);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-lift); overflow: hidden;
+}
+.quick button {
+  font: inherit; text-align: left; cursor: pointer; background: var(--card); border: 0;
+  display: flex; align-items: center; gap: 12px; padding: 18px 16px; color: var(--ink);
+}
+.quick button:hover, .quick button[aria-selected="true"] { background: var(--card-2); }
+.badge { width: 44px; height: 44px; border-radius: 14px; flex: none; display: grid; place-items: center; }
+.q-txt { display: flex; flex-direction: column; min-width: 0; }
+.q-txt b { font-family: var(--display); font-weight: 600; font-size: 15px; }
+.q-txt span { font-size: 12.5px; color: var(--ink-3); line-height: 1.45; }
+.q-arrow { margin-left: auto; color: var(--ink-3); flex: none; }
+
+/* ===================================================== แถบควบคุม */
 .bar {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
-  background: var(--paper); border-bottom: 2px solid var(--line); padding-block: 11px;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hair);
+  margin-top: 30px;
 }
-.bar-in { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: flex-end; }
-.group { display: flex; flex-direction: column; gap: 6px; }
-.group > span {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--muted);
+.bar-in { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: flex-end; padding-block: 14px; }
+.field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.field > label {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-3); font-weight: 600; font-family: var(--mono);
 }
-.seg { display: flex; flex-wrap: wrap; gap: 5px; }
-.segrows { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
-button {
-  font: inherit; font-size: 13px; cursor: pointer; color: var(--ink);
-  background: var(--card); border: 2px solid var(--line);
-  border-radius: 8px; padding: 5px 11px;
+.rows { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button {
+  font: inherit; font-size: 13px; cursor: pointer; color: var(--ink-2);
+  background: var(--card); border: 1px solid var(--hair);
+  border-radius: 999px; padding: 6px 14px; white-space: nowrap;
 }
-button:hover { border-color: var(--violet); }
-button[aria-pressed="true"], button[aria-selected="true"] {
-  background: var(--mint); border-color: var(--outline); color: var(--mint-ink);
-  font-weight: 600;
+.chips button:hover { border-color: var(--brand); color: var(--ink); }
+.chips button[aria-pressed="true"] {
+  background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600;
 }
-:focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; }
-input, select {
-  font: inherit; font-family: var(--mono); font-size: 13.5px;
-  padding: 5px 10px; border-radius: 8px; border: 2px solid var(--line);
-  background: var(--card); color: var(--ink); width: 9ch;
+.search {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--card); border: 1px solid var(--hair);
+  border-radius: 999px; padding: 6px 14px;
 }
-select { width: auto; font-family: var(--body); }
-input::placeholder { color: var(--muted); font-family: var(--body); }
-input.wide { width: 13ch; }
+.search input {
+  font: inherit; font-family: var(--mono); font-size: 14px; border: 0; outline: 0;
+  background: none; color: var(--ink); width: 9ch; padding: 0;
+}
+.search input.wide { width: 12ch; }
+.search input::placeholder { font-family: var(--body); color: var(--ink-3); }
+select {
+  font: inherit; font-size: 14px; padding: 8px 13px; border-radius: 999px;
+  border: 1px solid var(--hair); background: var(--card); color: var(--ink); cursor: pointer;
+}
 
-nav.tabs { display: flex; gap: 5px; flex-wrap: wrap; padding-block: 16px 0; }
-nav.tabs button { font-size: 13.5px; padding: 7px 15px; border-radius: 999px; }
-
-/* ---------------------------------------------------------- กรอบเนื้อหา */
-.frame {
-  background: var(--card); border: 2px solid var(--line);
-  border-radius: 14px; overflow: hidden; margin-block: 14px;
+/* ===================================================== เนื้อหา */
+main { padding-block: 26px 10px; }
+.panel {
+  background: var(--card); border-radius: var(--r-lg);
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 20px;
 }
-.frame-head {
-  display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline;
-  justify-content: space-between; padding: 13px 15px;
-  border-bottom: 2px solid var(--line); background: var(--card-2);
+.panel-head {
+  display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline;
+  justify-content: space-between; padding: 20px 22px 16px;
 }
-.frame-head h2 { font-family: var(--display); font-weight: 500; font-size: 18px; margin: 0; }
-.note { color: var(--muted); font-size: 12.5px; }
-.pan { overflow: auto; max-height: min(74vh, 780px); }
+.panel-head h2 { font-size: 19px; }
+.meta { color: var(--ink-3); font-size: 12.5px; }
+.legend {
+  display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center;
+  padding: 0 22px 18px; color: var(--ink-3); font-size: 12.5px;
+}
+.legend i { font-style: normal; color: var(--ink-2); }
+.key {
+  display: inline-grid; place-items: center; min-width: 19px; height: 19px;
+  padding: 0 5px; border-radius: 6px; font-family: var(--mono); font-size: 10.5px; font-weight: 600;
+}
+.key.star { background: var(--p-violet); color: var(--brand-deep); }
+.key.off { background: var(--card-2); color: var(--ink-3); }
+.key.plus { background: var(--p-blue); color: var(--aqua-deep); }
+.key.lit { background: var(--flash); color: var(--flash-ink); }
 
+.pan { overflow: auto; max-height: min(72vh, 760px); }
 table.grid { border-collapse: separate; border-spacing: 0; width: 100%; }
 table.grid th, table.grid td {
-  border-bottom: 1px solid var(--line); border-right: 1px solid var(--line);
-  padding: 4px 6px; text-align: center; vertical-align: top; white-space: nowrap;
+  padding: 7px 8px; text-align: center; vertical-align: top; white-space: nowrap;
+  border-bottom: 1px solid var(--hair);
 }
 table.grid thead th {
-  position: sticky; top: 0; z-index: 3; background: var(--card-2);
-  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em;
-  color: var(--muted); font-weight: 600; padding-block: 9px;
+  position: sticky; top: 0; z-index: 3; background: var(--card);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .08em; font-weight: 600;
+  color: var(--ink-3); padding-block: 12px;
 }
 table.grid th.yr {
-  position: sticky; left: 0; z-index: 2; background: var(--card-2);
+  position: sticky; left: 0; z-index: 2; background: var(--card);
   font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600;
-  text-align: right; font-size: 13px; min-width: 54px; color: var(--ink);
+  text-align: right; font-size: 13.5px; min-width: 60px; color: var(--ink-2); padding-right: 14px;
 }
-table.grid thead th.corner { z-index: 4; left: 0; text-align: right; }
-table.grid td.on, table.grid thead th.on { background: color-mix(in srgb, var(--violet) 12%, transparent); }
-table.grid th.yr.on { background: color-mix(in srgb, var(--violet) 12%, transparent); color: var(--violet); }
+table.grid thead th.corner { z-index: 4; left: 0; text-align: right; padding-right: 14px; }
+table.grid tbody tr:last-child th, table.grid tbody tr:last-child td { border-bottom: 0; }
+table.grid td.on { background: var(--card-2); }
+table.grid thead th.on { color: var(--brand); }
+table.grid th.yr.on { background: var(--card-2); color: var(--brand); }
 
-.stack { display: flex; flex-direction: column; gap: 2px; }
-.chip {
-  display: flex; gap: 5px; align-items: baseline; justify-content: center;
-  border: 2px solid transparent; border-radius: 7px; padding: 2px 4px;
-  cursor: pointer; background: none; color: inherit; width: 100%;
-  flex-wrap: wrap; row-gap: 1px;
+.stack { display: flex; flex-direction: column; gap: 3px; }
+.cell {
+  display: flex; gap: 6px; align-items: baseline; justify-content: center;
+  flex-wrap: wrap; row-gap: 2px;
+  border: 0; background: none; color: inherit; width: 100%;
+  padding: 3px 5px; border-radius: 8px; cursor: pointer;
 }
-.chip:hover { border-color: var(--violet); background: var(--card-2); }
-.chip .dd {
-  font-family: var(--mono); font-size: 9.5px; font-variant-numeric: tabular-nums;
-  color: var(--muted); min-width: 2ch; text-align: right;
+.cell:hover { background: var(--p-violet); }
+.cell .d {
+  font-family: var(--mono); font-size: 10px; color: var(--ink-3);
+  font-variant-numeric: tabular-nums; min-width: 2ch; text-align: right;
 }
-.chip .v {
-  font-family: var(--mono); font-weight: 600; font-size: 13px;
-  font-variant-numeric: tabular-nums; letter-spacing: 0.02em; color: var(--ink);
+.cell .n {
+  font-family: var(--mono); font-weight: 600; font-size: 13.5px;
+  font-variant-numeric: tabular-nums; color: var(--ink); letter-spacing: .01em;
 }
-.chip .star { color: var(--violet); font-weight: 700; }
-.chip .more { font-family: var(--mono); font-size: 9.5px; color: var(--muted); align-self: center; }
-.chip.lit { background: var(--hit); border-color: var(--outline); }
-.chip.lit .v, .chip.lit .dd, .chip.lit .more, .chip.lit .star { color: var(--hit-ink); }
-.chip.off { cursor: default; opacity: 0.55; }
-.chip.off:hover { border-color: transparent; background: none; }
-.chip.off .v { font-size: 10px; letter-spacing: 0; color: var(--muted); font-family: var(--body); }
-.starkey { color: var(--violet); }
-.void { color: var(--line); font-family: var(--mono); }
+.cell .star { color: var(--brand); font-weight: 700; }
+.cell .more {
+  font-family: var(--mono); font-size: 10px; color: var(--aqua-deep);
+  background: var(--p-blue); border-radius: 5px; padding: 0 4px; align-self: center;
+}
+.cell.lit { background: var(--flash); }
+.cell.lit .n, .cell.lit .d, .cell.lit .star { color: var(--flash-ink); }
+.cell.lit .more { background: rgba(0, 0, 0, .09); color: var(--flash-ink); }
+.cell.off { cursor: default; opacity: .6; }
+.cell.off:hover { background: none; }
+.cell.off .n { font-family: var(--body); font-size: 11px; font-weight: 400; color: var(--ink-3); }
+.nil { color: var(--hair); font-family: var(--mono); }
 
-/* ---------------------------------------------------------- ผลทั้งงวด */
-.tier { border-top: 2px solid var(--line); padding: 14px 15px; }
-.tier:first-child { border-top: 0; }
+.tier { padding: 18px 22px; border-top: 1px solid var(--hair); }
 .tier-head {
   display: flex; flex-wrap: wrap; gap: 4px 12px;
-  justify-content: space-between; align-items: baseline; margin-bottom: 9px;
+  justify-content: space-between; align-items: baseline; margin-bottom: 11px;
 }
-.tier-head b { font-weight: 600; font-size: 14.5px; }
-.tier-head span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
-.balls { display: flex; flex-wrap: wrap; gap: 5px; }
-.ball {
-  font-family: var(--mono); font-size: 13px; font-weight: 500;
-  font-variant-numeric: tabular-nums; letter-spacing: 0.04em;
-  padding: 4px 8px; border-radius: 7px;
-  background: var(--card-2); border: 2px solid var(--line); color: var(--ink);
+.tier-head b { font-family: var(--display); font-weight: 600; font-size: 15px; }
+.tier-head span { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+.balls { display: flex; flex-wrap: wrap; gap: 6px; }
+.b {
+  font-family: var(--mono); font-size: 13.5px; font-weight: 500;
+  font-variant-numeric: tabular-nums; letter-spacing: .04em;
+  padding: 6px 10px; border-radius: var(--r-sm);
+  background: var(--card-2); color: var(--ink);
 }
-.ball.one {
-  font-size: clamp(26px, 7vw, 40px); font-weight: 600; letter-spacing: 0.1em;
-  padding: 10px 18px; background: var(--mint); border-color: var(--outline); color: var(--mint-ink);
+.b.one {
+  font-size: clamp(30px, 7vw, 46px); font-weight: 600; letter-spacing: .1em;
+  padding: 14px 26px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: #fff;
+  box-shadow: 0 14px 30px -12px rgba(76, 47, 199, .7);
 }
-.ball.two { font-size: 17px; font-weight: 600; padding: 6px 12px; }
-.ball.hit { background: var(--hit); border-color: var(--outline); color: var(--hit-ink); }
-.flip { display: flex; gap: 6px; flex-wrap: wrap; padding: 13px 15px 0; }
+.b.two { font-size: 18px; font-weight: 600; padding: 9px 14px; }
+.nav-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 22px 4px; }
+.pill {
+  font: inherit; font-size: 13.5px; cursor: pointer; color: var(--ink-2);
+  background: var(--card-2); border: 0; border-radius: 999px; padding: 8px 16px;
+}
+.pill:hover { background: var(--p-violet); color: var(--ink); }
+.callout {
+  margin: 14px 22px 4px; padding: 12px 16px; border-radius: var(--r-md);
+  background: var(--p-violet); color: var(--brand-deep); font-size: 13px;
+}
 
-/* ---------------------------------------------------------- ตรวจสลาก */
-.verdict { margin: 0; padding: 15px; border-radius: 12px; }
-.verdict.yes { background: var(--card-2); border: 2px solid var(--violet); }
-.verdict.no { background: var(--card-2); border: 2px solid var(--line); color: var(--muted); }
-.verdict h3 { font-family: var(--display); font-weight: 500; font-size: 17px; margin: 0 0 9px; color: var(--violet); }
-.verdict.no h3 { color: var(--muted); }
+.verdict { padding: 24px 22px; }
+.verdict.win { background: linear-gradient(135deg, var(--p-violet), var(--p-blue)); }
+.verdict h3 { font-size: 20px; margin-bottom: 6px; }
+.verdict .sum { color: var(--ink-2); font-size: 13.5px; margin: 0; }
+.wins { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.wincard {
+  background: var(--card); border-radius: var(--r-md); padding: 12px 16px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 2px;
+}
+.wincard span { font-size: 11.5px; color: var(--ink-3); }
+.wincard b { font-family: var(--mono); font-size: 18px; letter-spacing: .06em; }
 
-table.rows { border-collapse: collapse; width: 100%; font-size: 13.5px; }
-table.rows th, table.rows td {
-  text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line);
+table.list { border-collapse: collapse; width: 100%; font-size: 14px; }
+table.list th, table.list td { text-align: left; padding: 11px 22px; border-bottom: 1px solid var(--hair); }
+table.list th {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-3); font-weight: 600;
 }
-table.rows th {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--muted); font-weight: 600;
+table.list tbody tr:last-child td { border-bottom: 0; }
+table.list tbody tr.tap { cursor: pointer; }
+table.list tbody tr.tap:hover { background: var(--card-2); }
+table.list .n {
+  font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600; letter-spacing: .04em;
 }
-table.rows td.num, table.rows .num {
-  font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600;
-  letter-spacing: 0.04em;
-}
-table.rows tbody tr.tap { cursor: pointer; }
-table.rows tbody tr.tap:hover { background: var(--card-2); }
 .wrapx { overflow-x: auto; }
 
-footer {
-  padding-block: 22px 32px; margin-top: 12px;
-  border-top: 2px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.75;
+.ranks { padding: 6px 22px 20px; display: flex; flex-direction: column; }
+.rank {
+  display: grid; grid-template-columns: 2.5ch 7ch 1fr auto;
+  gap: 14px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--hair);
 }
-footer a { color: var(--violet); }
-[hidden] { display: none !important; }
+.rank:last-child { border-bottom: 0; }
+.rank .pos { font-family: var(--mono); font-size: 12px; color: var(--ink-3); text-align: right; }
+.rank .num {
+  font-family: var(--mono); font-size: 16px; font-weight: 600;
+  font-variant-numeric: tabular-nums; letter-spacing: .06em;
+}
+.track { height: 9px; border-radius: 5px; background: var(--card-2); overflow: hidden; }
+.fill { height: 100%; border-radius: 5px; background: var(--brand); }
+.rank .val {
+  font-family: var(--mono); font-size: 13px; color: var(--ink-2);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.pool { padding: 4px 22px 22px; display: flex; flex-wrap: wrap; gap: 6px; }
+.pool b {
+  font-family: var(--mono); font-weight: 500; font-size: 13px;
+  background: var(--card-2); color: var(--ink-2); padding: 5px 9px; border-radius: var(--r-sm);
+}
+
+/* ---- เก็งเลข ---- */
+.odds { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 1px; background: var(--hair); }
+.odds > div { background: var(--card); padding: 24px 22px; }
+.bignum {
+  font-family: var(--mono); font-size: clamp(42px, 11vw, 68px); font-weight: 600;
+  letter-spacing: .12em; line-height: 1.05; color: var(--ink);
+}
+.chance {
+  font-family: var(--display); font-size: clamp(26px, 6vw, 36px); font-weight: 700;
+  color: var(--brand); line-height: 1.1; margin-top: 4px;
+}
+.chance small { font-family: var(--body); font-size: 14px; font-weight: 400; color: var(--ink-3); display: block; }
+.facts { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+.fact {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+  padding: 10px 0; border-bottom: 1px solid var(--hair); font-size: 13.5px;
+}
+.fact:last-child { border-bottom: 0; }
+.fact span { color: var(--ink-3); }
+.fact b { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.tag {
+  display: inline-block; font-size: 12px; font-weight: 600; padding: 5px 12px;
+  border-radius: 999px; margin-top: 12px;
+}
+.tag.norm { background: var(--p-blue); color: var(--aqua-deep); }
+.tag.high { background: var(--p-pink); color: #9d174d; }
+.tag.low { background: var(--p-violet); color: var(--brand-deep); }
+.tag.zero { background: var(--card-2); color: var(--ink-2); }
+.years { display: flex; gap: 3px; margin-top: 14px; flex-wrap: wrap; }
+.years i {
+  width: 22px; height: 26px; border-radius: 5px; background: var(--card-2);
+  display: grid; place-items: center; font-style: normal;
+  font-family: var(--mono); font-size: 9.5px; color: var(--ink-3);
+}
+.years i.hit { background: var(--brand); color: #fff; }
+.years i.hit2 { background: var(--brand-deep); color: #fff; }
+.truth {
+  margin: 0 22px 20px; padding: 14px 18px; border-radius: var(--r-md);
+  background: var(--card-2); color: var(--ink-2); font-size: 13px; line-height: 1.7;
+}
+.truth b { color: var(--ink); }
+
+footer {
+  padding-block: 28px 40px; color: var(--ink-3); font-size: 12.5px; line-height: 1.8;
+  border-top: 1px solid var(--hair); margin-top: 18px;
+}
+footer a { color: var(--brand); }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
-@media (max-width: 720px) {
-  .hero-in { grid-template-columns: 1fr; }
+@media (max-width: 920px) {
+  .quick { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quick button:nth-child(2) { border-right: 0; }
+  .quick button:nth-child(1), .quick button:nth-child(2) { border-bottom: 1px solid var(--hair); }
+}
+@media (max-width: 780px) {
+  .hero { grid-template-columns: 1fr; padding-block: 8px 86px; }
   .hero-art { order: -1; }
-  .hero-art svg { max-width: 290px; }
+  .hero-art svg { max-width: 330px; }
+  .topnav { display: none; }
 }
 @media (max-width: 560px) {
-  table.grid th, table.grid td { padding: 3px 4px; }
-  .chip .v { font-size: 11.5px; }
-  .chip .dd { font-size: 9px; }
-  table.grid th.yr { min-width: 44px; font-size: 12px; }
+  .quick { grid-template-columns: 1fr; }
+  .quick button { border-right: 0; border-bottom: 1px solid var(--hair); }
+  .quick button:last-child { border-bottom: 0; }
+  table.grid th, table.grid td { padding: 5px 5px; }
+  .cell .n { font-size: 12px; }
+  table.grid th.yr { min-width: 48px; font-size: 12.5px; }
+  table.list th, table.list td { padding: 10px 14px; }
+  .rank { grid-template-columns: 2.5ch 7ch 1fr; }
+  .rank .val { grid-column: 2 / -1; }
 }
 </style>
 
-<div class="hero">
-  <div class="shell gut hero-in">
-    <div class="hero-copy">
-      <p class="eyebrow">▪ สลากกินแบ่งรัฐบาล 2549–2569</p>
-      <h1>ย้อนดูทุกงวด<br><span class="hl">ครบทุกรางวัล</span></h1>
-      <p class="standfirst">
-        เทียบเลขรางวัลเดือนต่อเดือนข้ามทุกปีในตารางเดียว เก็บครบทั้ง 9 หมวดรางวัล
-        ไม่ใช่แค่รางวัลที่ 1 และตรวจสลากย้อนหลังได้ทั้งคลัง
-      </p>
-      <dl class="tally" id="tally"></dl>
+<div class="sky">
+  <svg class="skyline" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#0d0725" d="M0 120V86h38l6-20 6 20h26V62l12-14 12 14v24h40V72h30v14h34l8-26 8 26h44V66l14-16 14 16v20h36V78h28v8h46V58l16-18 16 18v28h40V74h32v12h40V64l13-15 13 15v22h42V76h30v10h40V54l17-20 17 20v32h38V72h30v14h44V62l12-14 12 14v24h40V76h28v10h42V58l15-17 15 17v28h40V74h30v12h38V66l14-16 14 16v20h36v34z"/>
+  </svg>
+
+  <div class="shell gut">
+    <div class="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="31" fill="#fff"/>
+          <path d="M14 22l-2-12 14 5zM50 22l2-12-14 5z" fill="#fb923c"/>
+          <path d="M17 20l-1-7 8 3zM47 20l1-7-8 3z" fill="#fda4af"/>
+          <path d="M20 28q4-5 8 0M36 28q4-5 8 0" fill="none" stroke="#1d1a3d" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="22" cy="35" r="3.5" fill="#fda4af"/>
+          <circle cx="42" cy="35" r="3.5" fill="#fda4af"/>
+          <path d="M26 38q6 7 12 0" fill="none" stroke="#1d1a3d" stroke-width="3" stroke-linecap="round"/>
+          <path d="M10 47h44" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="32" cy="50" r="5" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+        </svg>
+        <b>สลาก</b>
+      </div>
+      <nav class="topnav" id="topnav"></nav>
+      <button class="topcta" id="jumpTool">เปิดตารางย้อนหลัง</button>
     </div>
-    <div class="hero-art">
-      <svg viewBox="0 0 440 320" role="img" aria-labelledby="catTitle">
-  <title id="catTitle">แมวมาสคอตกางแขน ล้อมด้วยสลาก เหรียญ และป้ายเลขรางวัล</title>
-  <g fill="none" stroke="#150b33" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
 
-    <!-- ของลอยรอบตัว -->
-    <g transform="rotate(-13 100 120)">
-      <rect x="40" y="88" width="104" height="64" rx="7" fill="#ffffff"/>
-      <path d="M54 108h58M54 122h74M54 136h40"/>
-      <rect x="118" y="100" width="18" height="18" rx="3" fill="#5eead4"/>
-    </g>
-    <g transform="rotate(10 382 92)">
-      <circle cx="382" cy="92" r="31" fill="#fde047"/>
-      <circle cx="382" cy="92" r="21" stroke-width="4"/>
-      <path d="M375 80v24M371 86h11a6 6 0 0 1 0 12h-11M371 98h13" stroke-width="4"/>
-    </g>
-    <g transform="rotate(-8 372 246)">
-      <rect x="334" y="222" width="80" height="48" rx="8" fill="#c4b5fd"/>
-      <text x="374" y="256" text-anchor="middle" font-family="IBM Plex Mono, monospace"
-            font-size="25" font-weight="600" fill="#150b33" stroke="none">16</text>
-    </g>
-    <path d="M118 44l6 15 15 6-15 6-6 15-6-15-15-6 15-6z" fill="#5eead4"/>
-    <path d="M330 34l5 12 12 5-12 5-5 12-5-12-12-5 12-5z" fill="#fde047"/>
-    <path d="M58 232l5 12 12 5-12 5-5 12-5-12-12-5 12-5z" fill="#c4b5fd"/>
+    <div class="hero">
+      <div>
+        <p class="kicker">2549 – 2569</p>
+        <h1>ข้อมูลสลากกินแบ่งรัฐบาล<br><span class="glow">ครบ จบ ในที่เดียว</span></h1>
+        <p class="lede">
+          เทียบเลขรางวัลเดือนต่อเดือนข้ามทุกปี ตรวจสลากย้อนหลังได้ทั้งคลัง
+          และดูสถิติเลขที่ออกบ่อย ครบทั้ง 9 หมวดรางวัล ไม่ใช่แค่รางวัลที่ 1
+        </p>
+        <div class="cta-row">
+          <button class="cta" id="ctaGrid">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+            </svg>
+            เทียบรายเดือน
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+          <button class="cta ghost" id="ctaCheck">ตรวจสลากย้อนหลัง</button>
+        </div>
+      </div>
 
-    <!-- หาง -->
-    <path d="M264 268c40-6 56-38 44-66" stroke-width="30"/>
-    <path d="M264 268c40-6 56-38 44-66" stroke="#5eead4" stroke-width="20"/>
+      <div class="hero-art">
+        <svg viewBox="0 0 520 430" role="img" aria-labelledby="artTitle">
+          <title id="artTitle">แมวกวักนำโชคกับลูกบอลเลขรางวัล เหรียญ และสลาก</title>
+          <defs>
+            <radialGradient id="gBall1" cx="33%" cy="28%">
+              <stop offset="0%" stop-color="#fbcfe8"/><stop offset="60%" stop-color="#f472b6"/>
+              <stop offset="100%" stop-color="#be185d"/>
+            </radialGradient>
+            <radialGradient id="gBall2" cx="33%" cy="28%">
+              <stop offset="0%" stop-color="#bae6fd"/><stop offset="60%" stop-color="#38bdf8"/>
+              <stop offset="100%" stop-color="#0369a1"/>
+            </radialGradient>
+            <radialGradient id="gBall3" cx="33%" cy="28%">
+              <stop offset="0%" stop-color="#ddd6fe"/><stop offset="60%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#5b21b6"/>
+            </radialGradient>
+            <radialGradient id="gCoin" cx="35%" cy="30%">
+              <stop offset="0%" stop-color="#fef9c3"/><stop offset="55%" stop-color="#fbbf24"/>
+              <stop offset="100%" stop-color="#b45309"/>
+            </radialGradient>
+            <linearGradient id="gFur" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#ebe6f7"/>
+            </linearGradient>
+            <linearGradient id="gBox" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#4c1d95"/>
+            </linearGradient>
+            <linearGradient id="gTicket" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fdf2f8"/><stop offset="100%" stop-color="#fbcfe8"/>
+            </linearGradient>
+            <radialGradient id="gHalo" cx="50%" cy="50%">
+              <stop offset="0%" stop-color="#c4b5fd" stop-opacity=".5"/>
+              <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
 
-    <!-- แขนกาง -->
-    <path d="M186 206c-30-6-58-16-78-30" stroke-width="32"/>
-    <path d="M186 206c-30-6-58-16-78-30" stroke="#5eead4" stroke-width="22"/>
-    <path d="M254 206c30-6 58-16 78-30" stroke-width="32"/>
-    <path d="M254 206c30-6 58-16 78-30" stroke="#5eead4" stroke-width="22"/>
-    <circle cx="100" cy="172" r="21" fill="#5eead4"/>
-    <circle cx="340" cy="172" r="21" fill="#5eead4"/>
+          <ellipse cx="268" cy="250" rx="206" ry="176" fill="url(#gHalo)"/>
 
-    <!-- ลำตัว -->
-    <path d="M182 176c-11 30-15 76-7 116h90c8-40 4-86-7-116z" fill="#5eead4"/>
-    <ellipse cx="220" cy="246" rx="32" ry="40" fill="#bbf7ea" stroke-width="4"/>
-    <ellipse cx="192" cy="292" rx="22" ry="12" fill="#5eead4"/>
-    <ellipse cx="248" cy="292" rx="22" ry="12" fill="#5eead4"/>
+          <g transform="rotate(-12 118 118)">
+            <rect x="52" y="84" width="132" height="70" rx="9" fill="url(#gTicket)"/>
+            <rect x="52" y="84" width="132" height="70" rx="9" fill="none" stroke="#f9a8d4" stroke-width="2"/>
+            <path d="M166 90v58" stroke="#f9a8d4" stroke-width="2" stroke-dasharray="5 5"/>
+            <text x="66" y="112" font-family="IBM Plex Sans Thai, sans-serif" font-size="11" fill="#9d174d">สลากกินแบ่งรัฐบาล</text>
+            <text x="66" y="137" font-family="IBM Plex Mono, monospace" font-size="21"
+                  font-weight="600" fill="#500724" letter-spacing="2">123456</text>
+          </g>
+          <g transform="rotate(14 432 300)">
+            <rect x="372" y="268" width="126" height="66" rx="9" fill="url(#gTicket)"/>
+            <rect x="372" y="268" width="126" height="66" rx="9" fill="none" stroke="#f9a8d4" stroke-width="2"/>
+            <text x="385" y="294" font-family="IBM Plex Sans Thai, sans-serif" font-size="10" fill="#9d174d">งวดล่าสุด</text>
+            <text x="385" y="319" font-family="IBM Plex Mono, monospace" font-size="20"
+                  font-weight="600" fill="#500724" letter-spacing="2">654321</text>
+          </g>
 
-    <!-- หู -->
-    <path d="M164 92L152 48l42 20z" fill="#5eead4"/>
-    <path d="M276 92L288 48l-42 20z" fill="#5eead4"/>
-    <path d="M170 84l-6-22 22 10z" fill="#c4b5fd" stroke-width="4"/>
-    <path d="M270 84l6-22-22 10z" fill="#c4b5fd" stroke-width="4"/>
+          <path d="M150 352h236l-16 58H166z" fill="url(#gBox)"/>
+          <path d="M142 330h252v26H142z" fill="#a78bfa"/>
 
-    <!-- หัว -->
-    <path d="M156 120c0-40 28-62 64-62s64 22 64 62c0 38-26 60-64 60s-64-22-64-60z" fill="#5eead4"/>
+          <g>
+            <path d="M206 236c-10 26-13 62-9 94h126c4-32 1-68-9-94z" fill="url(#gFur)"/>
+            <ellipse cx="260" cy="306" rx="34" ry="42" fill="#fff"/>
+            <path d="M300 250c14 10 24 26 26 42l-26 6z" fill="#fb923c"/>
+            <path d="M212 268c-16 10-24 28-22 48" stroke="#ece7f7" stroke-width="26" stroke-linecap="round" fill="none"/>
+            <circle cx="192" cy="320" r="16" fill="#fff"/>
+            <path d="M312 252c16-14 30-34 32-56" stroke="#f3effb" stroke-width="26" stroke-linecap="round" fill="none"/>
+            <circle cx="347" cy="188" r="20" fill="#fff"/>
+            <path d="M338 180v10M347 177v12M356 180v10" stroke="#fda4af" stroke-width="3" stroke-linecap="round"/>
+            <path d="M196 182l-6-44 42 18z" fill="#fff"/>
+            <path d="M324 182l6-44-42 18z" fill="#fb923c"/>
+            <path d="M202 178l-3-26 24 10z" fill="#fda4af"/>
+            <path d="M318 178l3-26-24 10z" fill="#fda4af"/>
+            <ellipse cx="260" cy="194" rx="72" ry="64" fill="url(#gFur)"/>
+            <path d="M212 142c-14 10-22 26-24 42 18 6 36 2 46-10z" fill="#fb923c"/>
+            <path d="M226 188q10-13 20 0M274 188q10-13 20 0" fill="none" stroke="#2b1f4d"
+                  stroke-width="5.5" stroke-linecap="round"/>
+            <ellipse cx="218" cy="206" rx="13" ry="8" fill="#fda4af" opacity=".75"/>
+            <ellipse cx="302" cy="206" rx="13" ry="8" fill="#fda4af" opacity=".75"/>
+            <path d="M254 204h12l-6 7z" fill="#fb7185"/>
+            <path d="M248 216q12 16 24 0q-4 14-12 14t-12-14z" fill="#be123c"/>
+            <path d="M254 224q6 8 12 0z" fill="#fda4af"/>
+            <path d="M214 198l-28-8M214 208h-30M216 218l-26 10M306 198l28-8M306 208h30M304 218l26 10"
+                  stroke="#cbc4e6" stroke-width="3" stroke-linecap="round"/>
+            <path d="M216 246q44 26 88 0" fill="none" stroke="#ef4444" stroke-width="15" stroke-linecap="round"/>
+            <circle cx="260" cy="262" r="16" fill="url(#gCoin)"/>
+            <path d="M260 252v20M250 262h20" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
 
-    <!-- แว่น -->
-    <rect x="166" y="100" width="108" height="32" rx="16" fill="#150b33"/>
-    <path d="M182 106l16 0-14 20-16 0z" fill="#5eead4" stroke="none" opacity="0.55"/>
-    <path d="M210 106l9 0-14 20-9 0z" fill="#5eead4" stroke="none" opacity="0.35"/>
+          <g font-family="IBM Plex Mono, monospace" font-weight="600" text-anchor="middle">
+            <circle cx="172" cy="196" r="38" fill="url(#gBall1)"/>
+            <ellipse cx="160" cy="182" rx="12" ry="8" fill="#fff" opacity=".45" transform="rotate(-28 160 182)"/>
+            <circle cx="172" cy="196" r="22" fill="#fff" opacity=".92"/>
+            <text x="172" y="205" font-size="26" fill="#9d174d">6</text>
 
-    <!-- จมูก ปาก หนวด -->
-    <ellipse cx="205" cy="154" rx="15" ry="11" fill="#bbf7ea" stroke-width="4"/>
-    <ellipse cx="235" cy="154" rx="15" ry="11" fill="#bbf7ea" stroke-width="4"/>
-    <path d="M212 142h16l-8 10z" fill="#150b33" stroke-width="4"/>
-    <path d="M220 152v8M220 160c-5 7-13 7-17 2M220 160c5 7 13 7 17 2" stroke-width="4"/>
-    <path d="M186 146l-30-8M186 155h-32M186 164l-28 10" stroke-width="4"/>
-    <path d="M254 146l30-8M254 155h32M254 164l28 10" stroke-width="4"/>
-  </g>
-</svg>
+            <circle cx="150" cy="292" r="33" fill="url(#gBall2)"/>
+            <ellipse cx="140" cy="280" rx="10" ry="7" fill="#fff" opacity=".45" transform="rotate(-28 140 280)"/>
+            <circle cx="150" cy="292" r="19" fill="#fff" opacity=".92"/>
+            <text x="150" y="300" font-size="23" fill="#075985">3</text>
+
+            <circle cx="378" cy="310" r="33" fill="url(#gBall3)"/>
+            <ellipse cx="368" cy="298" rx="10" ry="7" fill="#fff" opacity=".45" transform="rotate(-28 368 298)"/>
+            <circle cx="378" cy="310" r="19" fill="#fff" opacity=".92"/>
+            <text x="378" y="318" font-size="23" fill="#5b21b6">9</text>
+          </g>
+
+          <g font-family="IBM Plex Mono, monospace" font-weight="600" text-anchor="middle">
+            <circle cx="396" cy="126" r="27" fill="url(#gCoin)"/>
+            <circle cx="396" cy="126" r="19" fill="none" stroke="#b45309" stroke-width="2.5"/>
+            <text x="396" y="135" font-size="21" fill="#78350f">฿</text>
+            <circle cx="126" cy="366" r="21" fill="url(#gCoin)"/>
+            <circle cx="126" cy="366" r="14" fill="none" stroke="#b45309" stroke-width="2"/>
+            <text x="126" y="374" font-size="16" fill="#78350f">฿</text>
+          </g>
+
+          <g fill="#fef9c3">
+            <path d="M424 208l5 14 14 5-14 5-5 14-5-14-14-5 14-5z"/>
+            <path d="M112 142l4 11 11 4-11 4-4 11-4-11-11-4 11-4z"/>
+            <path d="M330 66l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
+          </g>
+        </svg>
+      </div>
     </div>
   </div>
-  <div class="pixelrow" aria-hidden="true"></div>
-  <div class="pixelrow" aria-hidden="true"></div>
 </div>
 
-<div class="bar gut">
-  <div class="shell">
+<div class="shell gut quick-wrap">
+  <div class="quick" id="quick"></div>
+</div>
+
+<div class="bar" id="bar">
+  <div class="shell gut">
     <div class="bar-in" id="barIn"></div>
   </div>
 </div>
 
+<main class="shell gut" id="stage"></main>
+
 <div class="shell gut">
-  <nav class="tabs" id="tabs">
-    <button data-view="grid" aria-selected="true">เทียบรายเดือน</button>
-    <button data-view="draw" aria-selected="false">ผลทั้งงวด</button>
-    <button data-view="ticket" aria-selected="false">ตรวจสลาก</button>
-  </nav>
-
-  <main id="stage"></main>
-
-  <footer>
-    <span id="src"></span><br>
-    ข้อมูลเพื่อการค้นย้อนหลังเท่านั้น การขึ้นเงินรางวัลให้ยึดประกาศของสำนักงานสลากกินแบ่งรัฐบาล
-    ความถี่ที่เห็นในหน้านี้เป็นการนับย้อนหลัง ไม่ใช่การทำนาย การออกรางวัลแต่ละงวดเป็นอิสระจากงวดก่อน
-  </footer>
+  <footer id="foot"></footer>
 </div>
 
 <script id="lotto-data" type="application/json">__DATA__</script>
@@ -401,14 +687,23 @@ const MONTH_FULL = ["มกราคม","กุมภาพันธ์","ม�
 const MONTH_ABBR = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
                     "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
 
-/* ลำดับหมวดใน DB.draws ตรงกับ DB.tiers */
 const TIERS = DB.tiers;
 const INDEX = Object.fromEntries(TIERS.map((t, i) => [t.key, i]));
 const TIER_ROWS = DB.tier_groups || [TIERS.map((t) => t.key)];
-const GRID_TIERS = TIER_ROWS.flat();
-const CELL_MAX = 12;  // เลขต่องวดที่โชว์ในช่องตาราง ที่เหลือบอกเป็น +N
+const SMALL_TIERS = TIERS.filter((t) => t.digits <= 3).map((t) => t.key);
+const CELL_MAX = 12;
+const STAR = '<span class="star">*</span>';
 
-/* คลี่สตริงเลขที่ต่อกันออกเป็นลิสต์ ตามจำนวนหลักของหมวดนั้น */
+const DATES = Object.keys(DB.draws).sort();
+const LATEST = DATES[DATES.length - 1];
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const group = (n) => n.toLocaleString("th-TH");
+const thaiDate = (iso) => {
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${d} ${MONTH_FULL[m - 1]} ${y + 543}`;
+};
+
 function split(packed, digits) {
   const out = [];
   for (let i = 0; i + digits <= packed.length; i += digits) out.push(packed.slice(i, i + digits));
@@ -417,64 +712,108 @@ function split(packed, digits) {
 function numbersOf(date, key) {
   const row = DB.draws[date];
   if (!row) return [];
-  const tier = TIERS[INDEX[key]];
-  return split(row[INDEX[key]] || "", tier.digits);
+  return split(row[INDEX[key]] || "", TIERS[INDEX[key]].digits);
 }
 
-const DATES = Object.keys(DB.draws).sort();
-const LATEST = DATES[DATES.length - 1];
-
-const thaiDate = (iso) => {
-  const [y, m, d] = iso.split("-").map(Number);
-  return `${d} ${MONTH_FULL[m - 1]} ${y + 543}`;
+const view = {
+  name: "grid", tier: "last2", slot: "all", lit: "",
+  date: LATEST, ticket: "", statTier: "last2", statMode: "top",
+  pickTier: "last2", pick: "", strategy: "hot",
 };
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const group = (n) => n.toLocaleString("th-TH");
 
-const STAR_HTML = '<span class="star">*</span>';
-const view = { name: "grid", tier: "last2", slot: "all", lit: "", date: LATEST, ticket: "" };
+const VIEWS = [
+  { key: "grid", label: "เทียบรายเดือน", sub: "เลขเดือนต่อเดือนข้ามทุกปี", tone: "p-violet", icon: "chart" },
+  { key: "draw", label: "ผลทั้งงวด", sub: "ครบทั้ง 9 หมวดรางวัล", tone: "p-blue", icon: "list" },
+  { key: "ticket", label: "ตรวจสลาก", sub: "เช็กย้อนหลังทั้งคลัง", tone: "p-pink", icon: "search" },
+  { key: "odds", label: "เก็งเลข", sub: "โอกาสจริง + สถิติประกอบ", tone: "p-amber", icon: "dice" },
+  { key: "stats", label: "สถิติย้อนหลัง", sub: "ออกบ่อย หายนาน ไม่เคยออก", tone: "p-green", icon: "spark" },
+];
+const ICONS = {
+  chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+  search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  spark: '<path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/>',
+  dice: '<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8.5 8.5h.01M15.5 15.5h.01M12 12h.01"/>',
+};
+const TONE_INK = { "p-violet": "var(--brand-deep)", "p-blue": "var(--aqua-deep)",
+                   "p-pink": "#9d174d", "p-green": "#166534", "p-amber": "var(--flash-ink)" };
 
-/* ------------------------------------------------------------- หัวสรุป */
-document.getElementById("tally").innerHTML = [
-  ["งวดทั้งหมด", group(DATES.length)],
-  ["เลขรางวัล", group(DB.prize_count)],
-  ["งวดแรก", thaiDate(DATES[0])],
-  ["งวดล่าสุด", thaiDate(LATEST)],
-].map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("");
+function icon(name, size = 21) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;
+}
 
-document.getElementById("src").innerHTML =
-  `ข้อมูล ${esc(DB.synced_at || "")} · คลังย้อนหลัง ` +
-  `<a href="https://github.com/vicha-w/thai-lotto-archive" target="_blank" rel="noreferrer">vicha-w/thai-lotto-archive</a>` +
+document.getElementById("topnav").innerHTML = VIEWS.map((v) =>
+  `<button data-view="${v.key}" aria-selected="${v.key === view.name}">${esc(v.label)}</button>`).join("");
+
+document.getElementById("quick").innerHTML = VIEWS.map((v) => `
+  <button data-view="${v.key}" aria-selected="${v.key === view.name}">
+    <span class="badge" style="background: var(--${v.tone}); color: ${TONE_INK[v.tone]}">${icon(v.icon)}</span>
+    <span class="q-txt"><b>${esc(v.label)}</b><span>${esc(v.sub)}</span></span>
+    <svg class="q-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 6l6 6-6 6"/></svg>
+  </button>`).join("");
+
+document.getElementById("foot").innerHTML =
+  `ข้อมูล ${esc(DB.synced_at || "")} · ${group(DATES.length)} งวด · ${group(DB.prize_count)} เลขรางวัล<br>` +
+  `คลังย้อนหลัง <a href="https://github.com/vicha-w/thai-lotto-archive" target="_blank" rel="noreferrer">vicha-w/thai-lotto-archive</a>` +
   ` สอบทานกับ API สำนักงานสลากกินแบ่งรัฐบาล และหน้าตรวจหวยย้อนหลังของ sanook · ` +
-  `เครื่องมือและโค้ด <a href="https://github.com/bomnatthasit/thai-lotto-db" target="_blank" rel="noreferrer">bomnatthasit/thai-lotto-db</a>`;
+  `โค้ด <a href="https://github.com/bomnatthasit/thai-lotto-db" target="_blank" rel="noreferrer">bomnatthasit/thai-lotto-db</a><br>` +
+  `ใช้เพื่อค้นย้อนหลังเท่านั้น การขึ้นเงินรางวัลให้ยึดประกาศของสำนักงานสลากกินแบ่งรัฐบาล ` +
+  `สถิติในหน้านี้เป็นการนับย้อนหลัง ไม่ใช่การทำนาย`;
 
-/* ------------------------------------------------------------- แถบควบคุม */
+function go(name) {
+  view.name = name;
+  render();
+  document.getElementById("bar").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+for (const host of [document.getElementById("topnav"), document.getElementById("quick")]) {
+  host.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-view]");
+    if (b) go(b.dataset.view);
+  });
+}
+document.getElementById("ctaGrid").addEventListener("click", () => go("grid"));
+document.getElementById("ctaCheck").addEventListener("click", () => go("ticket"));
+document.getElementById("jumpTool").addEventListener("click", () => go(view.name));
+
+function dateOptions(selected) {
+  return DATES.slice().reverse().map((d) =>
+    `<option value="${d}"${d === selected ? " selected" : ""}>${esc(thaiDate(d))}</option>`).join("");
+}
+function searchBox(id, value, placeholder, wide) {
+  return `<span class="search">${icon("search", 15)}
+    <input id="${id}" class="${wide ? "wide" : ""}" inputmode="numeric"
+           placeholder="${placeholder}" value="${esc(value)}"></span>`;
+}
+
 function renderBar() {
   const bar = document.getElementById("barIn");
+
   if (view.name === "grid") {
     bar.innerHTML = `
-      <label class="group"><span>รางวัล</span>
-        <span class="segrows" id="tierSeg">${TIER_ROWS.map((row) =>
-          `<span class="seg">${row.map((k) =>
-            `<button data-tier="${k}" aria-pressed="${k === view.tier}">${
-              esc(TIERS[INDEX[k]].label)}</button>`).join("")}</span>`
-        ).join("")}</span>
-      </label>
-      <label class="group"><span>งวด</span>
-        <span class="seg" id="slotSeg">
+      <div class="field"><label>รางวัล</label>
+        <div class="rows" id="tierRows">${TIER_ROWS.map((row) =>
+          `<div class="chips">${row.map((k) =>
+            `<button data-tier="${k}" aria-pressed="${k === view.tier}">${esc(TIERS[INDEX[k]].label)}</button>`
+          ).join("")}</div>`).join("")}</div>
+      </div>
+      <div class="field"><label>งวด</label>
+        <div class="chips" id="slotChips">
           <button data-slot="all" aria-pressed="${view.slot === "all"}">ทั้งคู่</button>
           <button data-slot="1" aria-pressed="${view.slot === "1"}">วันที่ 1</button>
           <button data-slot="16" aria-pressed="${view.slot === "16"}">วันที่ 16</button>
-        </span>
-      </label>
-      <label class="group"><span>เน้นเลขที่มี</span>
-        <input id="litBox" inputmode="numeric" placeholder="เช่น 48" value="${esc(view.lit)}">
-      </label>`;
-    document.getElementById("tierSeg").addEventListener("click", (e) => {
+        </div>
+      </div>
+      <div class="field"><label>ค้นเลขในตาราง</label>
+        ${searchBox("litBox", view.lit, "เช่น 48")}
+      </div>`;
+    document.getElementById("tierRows").addEventListener("click", (e) => {
       const b = e.target.closest("button[data-tier]");
       if (b) { view.tier = b.dataset.tier; render(); }
     });
-    document.getElementById("slotSeg").addEventListener("click", (e) => {
+    document.getElementById("slotChips").addEventListener("click", (e) => {
       const b = e.target.closest("button[data-slot]");
       if (b) { view.slot = b.dataset.slot; render(); }
     });
@@ -482,59 +821,107 @@ function renderBar() {
     box.addEventListener("input", () => { view.lit = box.value.replace(/\D/g, ""); paintLit(); });
     return;
   }
+
   if (view.name === "draw") {
+    bar.innerHTML = `<div class="field"><label>เลือกงวด</label>
+      <select id="pick">${dateOptions(view.date)}</select></div>`;
+    document.getElementById("pick").addEventListener("change", (e) => { view.date = e.target.value; render(); });
+    return;
+  }
+
+  if (view.name === "ticket") {
     bar.innerHTML = `
-      <label class="group"><span>เลือกงวด</span>
-        <select id="pick" style="font:inherit;padding:6px 10px;border-radius:7px;
-          border:1px solid var(--rule);background:var(--surface);color:var(--ink)">
-          ${DATES.slice().reverse().map((d) =>
-            `<option value="${d}"${d === view.date ? " selected" : ""}>${esc(thaiDate(d))}</option>`).join("")}
-        </select>
-      </label>`;
-    document.getElementById("pick").addEventListener("change", (e) => {
-      view.date = e.target.value; render();
+      <div class="field"><label>เลขสลาก 6 หลัก</label>
+        ${searchBox("tk", view.ticket, "011781", true)}
+      </div>
+      <div class="field"><label>เทียบกับงวด</label>
+        <select id="tkDate">${dateOptions(view.date)}</select>
+      </div>`;
+    const tk = document.getElementById("tk");
+    tk.addEventListener("input", () => {
+      view.ticket = tk.value.replace(/\D/g, "").slice(0, 6); paintTicket();
+    });
+    document.getElementById("tkDate").addEventListener("change", (e) => {
+      view.date = e.target.value; paintTicket();
     });
     return;
   }
+
+  if (view.name === "odds") {
+    const digits = TIERS[INDEX[view.pickTier]].digits;
+    bar.innerHTML = `
+      <div class="field"><label>จะเก็งรางวัลไหน</label>
+        <div class="chips" id="pickTier">${SMALL_TIERS.map((k) =>
+          `<button data-ptier="${k}" aria-pressed="${k === view.pickTier}">${esc(TIERS[INDEX[k]].label)}</button>`
+        ).join("")}</div>
+      </div>
+      <div class="field"><label>เลขที่ชอบ (${digits} หลัก)</label>
+        ${searchBox("pickBox", view.pick, digits === 2 ? "เช่น 48" : "เช่น 171")}
+      </div>
+      <div class="field"><label>ให้เสนอเลขแบบไหน</label>
+        <div class="chips" id="strat">
+          <button data-s="hot" aria-pressed="${view.strategy === "hot"}">ออกบ่อยสุด</button>
+          <button data-s="cold" aria-pressed="${view.strategy === "cold"}">ออกน้อยสุด</button>
+          <button data-s="due" aria-pressed="${view.strategy === "due"}">หายไปนานสุด</button>
+          <button data-s="never" aria-pressed="${view.strategy === "never"}">ไม่เคยออกเลย</button>
+        </div>
+      </div>`;
+    document.getElementById("pickTier").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-ptier]");
+      if (b) { view.pickTier = b.dataset.ptier; view.pick = ""; render(); }
+    });
+    document.getElementById("strat").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-s]");
+      if (b) { view.strategy = b.dataset.s; render(); }
+    });
+    const box = document.getElementById("pickBox");
+    box.addEventListener("input", () => {
+      view.pick = box.value.replace(/\D/g, "").slice(0, digits);
+      const stage = document.getElementById("stage");
+      stage.innerHTML = renderOdds(); wireOdds();
+      document.getElementById("pickBox")?.focus();
+    });
+    return;
+  }
+
   bar.innerHTML = `
-    <label class="group"><span>เลขสลาก 6 หลัก</span>
-      <input id="tk" class="wide" inputmode="numeric" maxlength="7"
-             placeholder="011781" value="${esc(view.ticket)}">
-    </label>
-    <label class="group"><span>เทียบกับงวด</span>
-      <select id="tkDate" style="font:inherit;padding:6px 10px;border-radius:7px;
-        border:1px solid var(--rule);background:var(--surface);color:var(--ink)">
-        ${DATES.slice().reverse().map((d) =>
-          `<option value="${d}"${d === view.date ? " selected" : ""}>${esc(thaiDate(d))}</option>`).join("")}
-      </select>
-    </label>`;
-  const tk = document.getElementById("tk");
-  tk.addEventListener("input", () => { view.ticket = tk.value.replace(/\D/g, "").slice(0, 6); paintTicket(); });
-  document.getElementById("tkDate").addEventListener("change", (e) => {
-    view.date = e.target.value; paintTicket();
+    <div class="field"><label>รางวัล</label>
+      <div class="chips" id="statTier">${SMALL_TIERS.map((k) =>
+        `<button data-stier="${k}" aria-pressed="${k === view.statTier}">${esc(TIERS[INDEX[k]].label)}</button>`
+      ).join("")}</div>
+    </div>
+    <div class="field"><label>เรียงแบบ</label>
+      <div class="chips" id="statMode">
+        <button data-mode="top" aria-pressed="${view.statMode === "top"}">ออกบ่อยสุด</button>
+        <button data-mode="low" aria-pressed="${view.statMode === "low"}">ออกน้อยสุด</button>
+        <button data-mode="gap" aria-pressed="${view.statMode === "gap"}">หายไปนานสุด</button>
+        <button data-mode="never" aria-pressed="${view.statMode === "never"}">ไม่เคยออก</button>
+      </div>
+    </div>`;
+  document.getElementById("statTier").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-stier]");
+    if (b) { view.statTier = b.dataset.stier; render(); }
+  });
+  document.getElementById("statMode").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-mode]");
+    if (b) { view.statMode = b.dataset.mode; render(); }
   });
 }
 
-/* ------------------------------------------------------------- ตารางเทียบ */
 function gridRows() {
   const tier = TIERS[INDEX[view.tier]];
   const cells = [];
-
   for (const date of DATES) {
     const period = DB.periods[date] || date;
     cells.push({
-      period,
-      slot: Number(period.slice(-2)),
-      date,
-      day: Number(date.slice(-2)),
+      period, slot: Number(period.slice(-2)), date, day: Number(date.slice(-2)),
       nums: numbersOf(date, view.tier),
       shifted: period.slice(0, 7) !== date.slice(0, 7),
-      cancelled: false,
-      note: DB.shift_notes[date] || null,
+      cancelled: false, note: DB.shift_notes[date] || null,
     });
   }
   for (const [period, note] of Object.entries(DB.cancelled || {})) {
-    if (period < DATES[0] || period > DATES[DATES.length - 1]) continue;
+    if (period < DATES[0] || period > LATEST) continue;
     cells.push({ period, slot: Number(period.slice(-2)), date: null, day: null,
                  nums: [], shifted: false, cancelled: true, note });
   }
@@ -550,35 +937,35 @@ function gridRows() {
   for (const months of byYear.values()) for (const b of months) b.sort((a, z) => a.slot - z.slot);
 
   return {
-    tier,
-    years: [...byYear.entries()].sort((a, b) => b[0] - a[0]),
+    tier, years: [...byYear.entries()].sort((a, b) => b[0] - a[0]),
     shifted: kept.filter((c) => c.shifted).length,
     cancelled: kept.filter((c) => c.cancelled).length,
+    biggest: kept.reduce((m, c) => Math.max(m, c.nums.length), 0),
   };
 }
 
 function renderGrid() {
-  const grid = gridRows();
-  const { tier, years } = grid;
+  const g = gridRows();
   const head = `<thead><tr><th class="yr corner">ปี พ.ศ.</th>${
     MONTH_ABBR.map((m) => `<th>${m}</th>`).join("")}</tr></thead>`;
-  const body = years.map(([year, months]) => {
+
+  const body = g.years.map(([year, months]) => {
     const cells = months.map((slots) => {
-      if (!slots.length) return `<td><span class="void">·</span></td>`;
+      if (!slots.length) return `<td><span class="nil">·</span></td>`;
       const chips = slots.map((c) => {
         if (c.cancelled) {
-          return `<span class="chip off" title="${esc(c.note || "")}">
-            <span class="dd">${c.slot}</span><span class="v">งดจำหน่าย</span></span>`;
+          return `<span class="cell off" title="${esc(c.note || "")}">
+            <span class="d">${c.slot}</span><span class="n">งดจำหน่าย</span></span>`;
         }
         const tip = c.shifted
           ? `งวด ${thaiDate(c.period)} ออกรางวัลวันที่ ${thaiDate(c.date)}`
           : `ดูผลทั้งงวด ${thaiDate(c.date)}`;
         const shown = c.nums.slice(0, CELL_MAX);
         const rest = c.nums.length - shown.length;
-        return `<button class="chip" data-date="${c.date}" data-n="${esc(c.nums.join(" "))}"
-            title="${esc(tip)}"><span class="dd">${c.day}</span><span class="v">${
-            esc(shown.join(" "))}${c.shifted ? STAR_HTML : ""}</span>${
-            rest > 0 ? `<span class="more">+${rest}</span>` : ""}</button>`;
+        return `<button class="cell" data-date="${c.date}" data-n="${esc(c.nums.join(" "))}"
+          title="${esc(tip)}"><span class="d">${c.day}</span><span class="n">${
+          esc(shown.join(" "))}${c.shifted ? STAR : ""}</span>${
+          rest > 0 ? `<span class="more">+${rest}</span>` : ""}</button>`;
       }).join("");
       return `<td><div class="stack">${chips}</div></td>`;
     }).join("");
@@ -586,32 +973,33 @@ function renderGrid() {
   }).join("");
 
   const slotText = { all: "งวดวันที่ 1 และ 16", "1": "เฉพาะงวดวันที่ 1", "16": "เฉพาะงวดวันที่ 16" }[view.slot];
-  return `<section class="frame">
-    <div class="frame-head">
-      <h2>${esc(tier.label)}</h2>
-      <span class="note">${years.length} ปี · ${esc(slotText)} · คลิกเลขเพื่อดูผลทั้งงวด</span>
+  return `<section class="panel">
+    <div class="panel-head">
+      <h2>${esc(g.tier.label)}</h2>
+      <span class="meta">${g.years.length} ปี · ${esc(slotText)} · คลิกเลขเพื่อดูผลทั้งงวด</span>
+    </div>
+    <div class="legend">
+      <span><span class="key star">*</span> <i>ออกคนละเดือนกับงวด</i> ${g.shifted} งวด</span>
+      <span><span class="key off">—</span> <i>งดจำหน่าย</i> ${g.cancelled} งวด</span>
+      ${g.biggest > CELL_MAX ? `<span><span class="key plus">+N</span>
+        <i>ยังมีอีก N เลข</i> พิมพ์ในช่องค้นเพื่อดึงขึ้นมา</span>` : ""}
+      <span><span class="key lit">48</span> <i>เลขที่ค้นเจอ</i></span>
     </div>
     <div class="pan"><table class="grid">${head}<tbody>${body}</tbody></table></div>
-  </section>
-  <p class="note">จัดตามงวด ไม่ใช่วันออกรางวัล จึงได้ 2 งวดต่อเดือนเสมอ
-  ตัวเลขเล็กคือวันที่ออกรางวัลจริง ·
-  <b class="starkey">*</b> งวดที่ออกรางวัลคนละเดือนกับงวดของตัวเอง (${grid.shifted} งวด เช่น
-  งวด 1 มกราคม ออกวันที่ 30 ธันวาคมปีก่อน) ·
-  <b>งดจำหน่าย</b> งวดที่ไม่มีการออกรางวัล (${grid.cancelled} งวด) ·
-  <b>+N</b> หมวดนี้มีเลขอีก N รางวัลในงวดนั้น พิมพ์เลขในช่องเน้นเพื่อดึงเลขที่ตรงขึ้นมา</p>`;
+  </section>`;
 }
 
 function wireGrid() {
   const table = document.querySelector("table.grid");
   if (!table) return;
   table.addEventListener("click", (e) => {
-    const chip = e.target.closest(".chip");
-    if (chip) { view.date = chip.dataset.date; view.name = "draw"; render(); }
+    const cell = e.target.closest(".cell[data-date]");
+    if (cell) { view.date = cell.dataset.date; go("draw"); }
   });
   table.addEventListener("mouseover", (e) => {
-    const cell = e.target.closest("td, th");
-    if (!cell) return;
-    const col = cell.cellIndex;
+    const td = e.target.closest("td, th");
+    if (!td) return;
+    const col = td.cellIndex;
     table.querySelectorAll(".on").forEach((el) => el.classList.remove("on"));
     if (col > 0) for (const tr of table.rows) tr.cells[col]?.classList.add("on");
   });
@@ -622,51 +1010,47 @@ function wireGrid() {
 
 function paintLit() {
   const needle = view.lit;
-  // ช่อง "งดจำหน่าย" ไม่มี data-n จึงต้องคัดออก ไม่งั้น split จะพัง
-  document.querySelectorAll(".chip[data-n]").forEach((chip) => {
-    const nums = chip.dataset.n ? chip.dataset.n.split(" ") : [];
+  document.querySelectorAll(".cell[data-n]").forEach((cell) => {
+    const nums = cell.dataset.n ? cell.dataset.n.split(" ") : [];
     const matches = needle ? nums.filter((n) => n.includes(needle)) : [];
-    // หมวดที่มีหลายสิบเลข ให้ช่องสลับไปโชว์เฉพาะเลขที่ตรง จะได้เห็นว่าออกงวดไหน
     const shown = (matches.length ? matches : nums).slice(0, CELL_MAX);
-    const star = chip.querySelector(".star") ? STAR_HTML : "";
-    chip.querySelector(".v").innerHTML = esc(shown.join(" ")) + star;
-    const more = chip.querySelector(".more");
+    const star = cell.querySelector(".star") ? STAR : "";
+    cell.querySelector(".n").innerHTML = esc(shown.join(" ")) + star;
+    const more = cell.querySelector(".more");
     if (more) {
       const rest = nums.length - shown.length;
       more.textContent = rest > 0 ? `+${rest}` : "";
     }
-    chip.classList.toggle("lit", matches.length > 0);
+    cell.classList.toggle("lit", matches.length > 0);
   });
 }
 
-/* ------------------------------------------------------------- ผลทั้งงวด */
 function renderDraw() {
   const date = view.date;
   const i = DATES.indexOf(date);
-  const tiers = TIERS.map((t) => ({ tier: t, nums: numbersOf(date, t.key) }))
-                     .filter((x) => x.nums.length);
+  const period = DB.periods[date] || date;
+  const shifted = period.slice(0, 7) !== date.slice(0, 7);
+  const tiers = TIERS.map((t) => ({ tier: t, nums: numbersOf(date, t.key) })).filter((x) => x.nums.length);
+
   const blocks = tiers.map(({ tier, nums }) => {
     const size = tier.key === "first" ? "one" : (nums.length <= 4 ? "two" : "");
     return `<div class="tier">
       <div class="tier-head"><b>${esc(tier.label)}</b><span>${nums.length} รางวัล</span></div>
-      <div class="balls">${nums.map((n) => `<span class="ball ${size}">${esc(n)}</span>`).join("")}</div>
+      <div class="balls">${nums.map((n) => `<span class="b ${size}">${esc(n)}</span>`).join("")}</div>
     </div>`;
   }).join("");
 
-  const period = DB.periods[date] || date;
-  const shifted = period.slice(0, 7) !== date.slice(0, 7);
-  return `<section class="frame">
-    <div class="frame-head">
+  return `<section class="panel">
+    <div class="panel-head">
       <h2>งวดวันที่ ${esc(thaiDate(shifted ? period : date))}</h2>
-      <span class="note">${esc(date)} · ${tiers.reduce((s, t) => s + t.nums.length, 0)} รางวัล</span>
+      <span class="meta">${esc(date)} · ${tiers.reduce((s, t) => s + t.nums.length, 0)} รางวัล</span>
     </div>
-    ${shifted ? `<p class="note" style="padding:12px 14px 0;margin:0">
-      <b class="starkey">*</b> งวดนี้ออกรางวัลวันที่ ${esc(thaiDate(date))} ซึ่งคนละเดือนกับงวด
-      ${esc(DB.shift_notes[date] ? "— " + DB.shift_notes[date] : "")}</p>` : ""}
-    <div class="flip">
-      ${i > 0 ? `<button data-go="${DATES[i - 1]}">← งวดก่อน</button>` : ""}
-      ${i < DATES.length - 1 ? `<button data-go="${DATES[i + 1]}">งวดถัดไป →</button>` : ""}
+    <div class="nav-row">
+      ${i > 0 ? `<button class="pill" data-go="${DATES[i - 1]}">← งวดก่อน</button>` : ""}
+      ${i < DATES.length - 1 ? `<button class="pill" data-go="${DATES[i + 1]}">งวดถัดไป →</button>` : ""}
     </div>
+    ${shifted ? `<p class="callout">งวดนี้ออกรางวัลวันที่ ${esc(thaiDate(date))} ซึ่งคนละเดือนกับงวด${
+      DB.shift_notes[date] ? " — " + esc(DB.shift_notes[date]) : ""}</p>` : ""}
     ${blocks}
   </section>`;
 }
@@ -676,7 +1060,6 @@ function wireDraw() {
     b.addEventListener("click", () => { view.date = b.dataset.go; render(); }));
 }
 
-/* ------------------------------------------------------------- ตรวจสลาก */
 function winsFor(ticket, date) {
   const out = [];
   for (const tier of TIERS) {
@@ -690,18 +1073,17 @@ function winsFor(ticket, date) {
   return out;
 }
 
-function renderTicket() {
-  return `<div id="tkOut"></div>`;
-}
+const renderTicket = () => `<div id="tkOut"></div>`;
 
 function paintTicket() {
   const host = document.getElementById("tkOut");
   if (!host) return;
   const ticket = view.ticket;
+
   if (ticket.length !== 6) {
-    host.innerHTML = `<section class="frame"><div class="tier">
-      <p class="verdict no" style="margin:0"><b>พิมพ์เลขสลาก 6 หลัก</b><br>
-      ระบบจะตรวจกับงวดที่เลือก และไล่ย้อนทุกงวดในคลังให้ด้วยว่าเลขนี้เคยถูกรางวัลอะไรมาแล้ว
+    host.innerHTML = `<section class="panel"><div class="verdict">
+      <h3>พิมพ์เลขสลาก 6 หลัก</h3>
+      <p class="sum">ระบบจะตรวจกับงวดที่เลือก แล้วไล่ย้อนทุกงวดในคลังให้ด้วยว่าเลขนี้เคยถูกรางวัลอะไรมาแล้ว
       รางวัลต่างหมวดถูกซ้อนกันได้ตามกติกาจริง</p>
     </div></section>`;
     return;
@@ -709,12 +1091,16 @@ function paintTicket() {
 
   const now = winsFor(ticket, view.date);
   const verdict = now.length
-    ? `<div class="verdict yes">
-         <h3>สลาก ${esc(ticket)} ถูกรางวัล · งวด ${esc(thaiDate(view.date))}</h3>
-         <div class="wrapx"><table class="rows"><tbody>${now.map((w) =>
-           `<tr><td>${esc(w.tier.label)}</td><td class="num">${esc(w.n)}</td></tr>`).join("")}
-         </tbody></table></div></div>`
-    : `<div class="verdict no"><h3>สลาก ${esc(ticket)} ไม่ถูกรางวัลในงวด ${esc(thaiDate(view.date))}</h3></div>`;
+    ? `<div class="verdict win">
+         <h3>ถูกรางวัล ${now.length} รายการ</h3>
+         <p class="sum">สลาก ${esc(ticket)} · งวด ${esc(thaiDate(view.date))}</p>
+         <div class="wins">${now.map((w) =>
+           `<div class="wincard"><span>${esc(w.tier.label)}</span><b>${esc(w.n)}</b></div>`).join("")}</div>
+       </div>`
+    : `<div class="verdict">
+         <h3>ไม่ถูกรางวัล</h3>
+         <p class="sum">สลาก ${esc(ticket)} · งวด ${esc(thaiDate(view.date))}</p>
+       </div>`;
 
   const past = [];
   for (const date of DATES.slice().reverse()) {
@@ -723,46 +1109,250 @@ function paintTicket() {
   }
 
   const history = past.length
-    ? `<div class="wrapx"><table class="rows">
+    ? `<div class="wrapx"><table class="list">
          <thead><tr><th>งวด</th><th>รางวัลที่ถูก</th></tr></thead>
          <tbody>${past.map((p) => `<tr class="tap" data-date="${p.date}">
            <td>${esc(thaiDate(p.date))}</td>
-           <td>${p.wins.map((w) => `${esc(w.tier.label)} <span class="num">${esc(w.n)}</span>`).join("<br>")}</td>
+           <td>${p.wins.map((w) => `${esc(w.tier.label)} <span class="n">${esc(w.n)}</span>`).join("<br>")}</td>
          </tr>`).join("")}</tbody></table></div>`
-    : `<p class="note" style="padding:0 14px 14px">เลขนี้ไม่เคยถูกรางวัลเลยใน ${group(DATES.length)} งวด</p>`;
+    : `<p class="meta" style="padding:0 22px 22px">เลขนี้ไม่เคยถูกรางวัลเลยใน ${group(DATES.length)} งวด</p>`;
 
   host.innerHTML = `
-    <section class="frame"><div class="tier">${verdict}</div></section>
-    <section class="frame">
-      <div class="frame-head">
+    <section class="panel">${verdict}</section>
+    <section class="panel">
+      <div class="panel-head">
         <h2>ย้อนดูเลข ${esc(ticket)} ทั้งคลัง</h2>
-        <span class="note">ถูก ${past.length} จาก ${group(DATES.length)} งวด
+        <span class="meta">ถูก ${past.length} จาก ${group(DATES.length)} งวด
           (${(past.length / DATES.length * 100).toFixed(1)}%)</span>
       </div>
       ${history}
     </section>`;
 
   host.querySelectorAll("tr[data-date]").forEach((tr) =>
-    tr.addEventListener("click", () => { view.date = tr.dataset.date; view.name = "draw"; render(); }));
+    tr.addEventListener("click", () => { view.date = tr.dataset.date; go("draw"); }));
 }
 
-/* ------------------------------------------------------------- เดินเรื่อง */
-document.getElementById("tabs").addEventListener("click", (e) => {
-  const b = e.target.closest("button[data-view]");
-  if (!b) return;
-  view.name = b.dataset.view;
-  render();
-});
+function tally(key) {
+  const counts = new Map();
+  const last = new Map();
+  for (const date of DATES) {
+    for (const n of numbersOf(date, key)) {
+      counts.set(n, (counts.get(n) || 0) + 1);
+      last.set(n, date);
+    }
+  }
+  return { counts, last };
+}
+
+function renderStats() {
+  const key = view.statTier;
+  const tier = TIERS[INDEX[key]];
+  const { counts, last } = tally(key);
+  const space = 10 ** tier.digits;
+
+  if (view.statMode === "never") {
+    const missing = [];
+    for (let i = 0; i < space; i++) {
+      const n = String(i).padStart(tier.digits, "0");
+      if (!counts.has(n)) missing.push(n);
+    }
+    return `<section class="panel">
+      <div class="panel-head"><h2>${esc(tier.label)} · ยังไม่เคยออก</h2>
+        <span class="meta">${group(missing.length)} จาก ${group(space)} เลข</span></div>
+      <div class="pool">${missing.map((n) => `<b>${n}</b>`).join("")}</div>
+    </section>`;
+  }
+
+  let rows;
+  let unit;
+  if (view.statMode === "gap") {
+    const after = (d) => DATES.length - 1 - DATES.indexOf(d);
+    rows = [...last.entries()].map(([n, d]) => ({ n, v: after(d), note: thaiDate(d) }))
+      .sort((a, b) => b.v - a.v).slice(0, 24);
+    unit = "งวด";
+  } else {
+    rows = [...counts.entries()].map(([n, v]) => ({ n, v, note: thaiDate(last.get(n)) }));
+    rows.sort((a, b) => view.statMode === "low" ? a.v - b.v || a.n.localeCompare(b.n)
+                                                : b.v - a.v || a.n.localeCompare(b.n));
+    rows = rows.slice(0, 24);
+    unit = "ครั้ง";
+  }
+
+  const top = Math.max(...rows.map((r) => r.v), 1);
+  const title = { top: "ออกบ่อยสุด", low: "ออกน้อยสุด", gap: "หายไปนานสุด" }[view.statMode];
+
+  return `<section class="panel">
+    <div class="panel-head"><h2>${esc(tier.label)} · ${title}</h2>
+      <span class="meta">จาก ${group(DATES.length)} งวด · ชี้ที่แถวเพื่อดูงวดล่าสุดที่ออก</span></div>
+    <div class="ranks">${rows.map((r, i) => `
+      <div class="rank" title="ออกครั้งล่าสุด ${esc(r.note)}">
+        <span class="pos">${i + 1}</span>
+        <span class="num">${esc(r.n)}</span>
+        <span class="track"><span class="fill" style="width:${Math.max(4, r.v / top * 100)}%"></span></span>
+        <span class="val">${group(r.v)} ${unit}</span>
+      </div>`).join("")}</div>
+  </section>`;
+}
+
+/* ------------------------------------------------------- เก็งเลข
+   โอกาสถูกรางวัลงวดหน้าคิดจากกติกา ไม่ใช่จากสถิติ — ทุกเลขเท่ากันเสมอ
+   สถิติย้อนหลังใส่ไว้ให้ประกอบการเลือก และบอกตรง ๆ ว่าส่วนต่างอยู่ในช่วง
+   ที่ความบังเอิญอธิบายได้หรือไม่ */
+function tierStats(key) {
+  const tier = TIERS[INDEX[key]];
+  const space = 10 ** tier.digits;
+  const counts = new Map(), last = new Map(), byYear = new Map();
+  let trials = 0;
+  for (const date of DATES) {
+    const nums = numbersOf(date, key);
+    trials += nums.length;
+    const y = Number(date.slice(0, 4));
+    for (const n of nums) {
+      counts.set(n, (counts.get(n) || 0) + 1);
+      last.set(n, date);
+      if (!byYear.has(n)) byYear.set(n, new Map());
+      const m = byYear.get(n);
+      m.set(y, (m.get(y) || 0) + 1);
+    }
+  }
+  const perDraw = numbersOf(LATEST, key).length || 1;
+  return {
+    tier, space, counts, last, byYear, trials, perDraw,
+    p: perDraw / space,
+    expected: trials / space,
+    sd: Math.sqrt(trials * (1 / space) * (1 - 1 / space)),
+  };
+}
+
+function gapOf(date) { return DATES.length - 1 - DATES.indexOf(date); }
+const pct = (x) => (x * 100).toFixed(x < 0.001 ? 4 : 2).replace(/\.?0+$/, "") + "%";
+
+function oddsCard(st) {
+  const n = view.pick;
+  if (n.length !== st.tier.digits) {
+    return `<div class="odds"><div>
+        <h2>เลือกเลขที่ชอบก่อน</h2>
+        <p class="meta" style="margin-top:8px">พิมพ์เลข ${st.tier.digits} หลักในช่องด้านบน
+        หรือกดเลขจากตารางข้างล่าง แล้วจะเห็นโอกาสจริงและสถิติของเลขนั้น</p>
+      </div><div>
+        <div class="chance">${pct(st.p)}<small>โอกาสที่เลขใดก็ตามจะถูก${esc(st.tier.label)}ในงวดหน้า
+        — เท่ากันทุกเลข คิดเป็น 1 ใน ${group(Math.round(st.space / st.perDraw))}</small></div>
+      </div></div>`;
+  }
+
+  const count = st.counts.get(n) || 0;
+  const z = st.sd > 0 ? (count - st.expected) / st.sd : 0;
+  const tag = count === 0
+    ? `<span class="tag zero">ไม่เคยออกเลยตลอด ${group(DATES.length)} งวด</span>`
+    : Math.abs(z) <= 2
+      ? `<span class="tag norm">ต่างจากค่าคาดในระดับที่ความบังเอิญปกติอธิบายได้</span>`
+      : z > 2
+        ? `<span class="tag high">ออกบ่อยกว่าค่าคาดอย่างเห็นได้ชัด</span>`
+        : `<span class="tag low">ออกน้อยกว่าค่าคาดอย่างเห็นได้ชัด</span>`;
+
+  const lastDate = st.last.get(n);
+  const ranked = [...st.counts.entries()].sort((a, b) => b[1] - a[1]);
+  const rank = ranked.findIndex(([k]) => k === n) + 1;
+
+  const years = [...new Set(DATES.map((d) => Number(d.slice(0, 4))))].sort();
+  const hits = st.byYear.get(n) || new Map();
+  const strip = years.map((y) => {
+    const c = hits.get(y) || 0;
+    return `<i class="${c >= 2 ? "hit2" : c === 1 ? "hit" : ""}" title="${y + 543}: ออก ${c} ครั้ง">${
+      String(y + 543).slice(-2)}</i>`;
+  }).join("");
+
+  const ahead = (k) => pct(1 - Math.pow(1 - st.p, k));
+
+  return `<div class="odds">
+    <div>
+      <span class="meta">เลขที่เลือก · ${esc(st.tier.label)}</span>
+      <div class="bignum">${esc(n)}</div>
+      ${tag}
+      <div class="years">${strip}</div>
+      <p class="meta" style="margin-top:10px">ช่องคือปี พ.ศ. ทึบ = ปีที่เลขนี้ออก</p>
+    </div>
+    <div>
+      <div class="chance">${pct(st.p)}<small>โอกาสถูกในงวดหน้า คิดเป็น 1 ใน
+        ${group(Math.round(st.space / st.perDraw))} — เท่ากันทุกเลข ไม่ว่าสถิติจะเป็นอย่างไร</small></div>
+      <div class="facts">
+        <div class="fact"><span>เคยออกมาแล้ว</span><b>${count} ครั้ง</b></div>
+        <div class="fact"><span>ค่าคาดตามทฤษฎีในช่วงเวลาเท่ากัน</span><b>${st.expected.toFixed(1)} ครั้ง</b></div>
+        <div class="fact"><span>อันดับความถี่</span><b>${
+          count ? `ที่ ${group(rank)} จาก ${group(st.space)}` : "—"}</b></div>
+        <div class="fact"><span>ออกครั้งล่าสุด</span><b>${
+          lastDate ? `${esc(thaiDate(lastDate))} · ห่างมาแล้ว ${gapOf(lastDate)} งวด` : "ยังไม่เคยออก"}</b></div>
+        <div class="fact"><span>ถ้าซื้อเลขนี้ทุกงวด 1 ปี (24 งวด)</span><b>มีโอกาสถูกอย่างน้อยครั้งเดียว ${ahead(24)}</b></div>
+      </div>
+    </div>
+  </div>
+  <p class="truth">
+    <b>อ่านตัวเลขพวกนี้อย่างไร:</b> การออกรางวัลแต่ละงวดเป็นอิสระจากงวดก่อนหน้า
+    เลขที่ออกบ่อยหรือหายไปนานจึงไม่ได้มีโอกาสถูกงวดหน้าต่างจากเลขอื่นเลย — ทุกเลขอยู่ที่
+    <b>${pct(st.p)}</b> เท่ากันหมด สถิติในหน้านี้ใช้เลือกตามความชอบและความสบายใจได้
+    แต่ไม่ได้ทำให้โอกาสถูกเพิ่มขึ้น และเมื่อดูพร้อมกันทั้ง ${group(st.space)} เลข
+    ย่อมมีบางเลขที่ดูโดดกว่าค่าคาดได้เองตามธรรมชาติ
+  </p>`;
+}
+
+function renderOdds() {
+  const st = tierStats(view.pickTier);
+  let rows = [...Array(st.space).keys()].map((i) => {
+    const n = String(i).padStart(st.tier.digits, "0");
+    const c = st.counts.get(n) || 0;
+    const d = st.last.get(n);
+    return { n, c, d, gap: d ? gapOf(d) : null };
+  });
+
+  if (view.strategy === "never") rows = rows.filter((r) => r.c === 0);
+  else if (view.strategy === "hot") rows.sort((a, b) => b.c - a.c || a.n.localeCompare(b.n));
+  else if (view.strategy === "cold") rows.sort((a, b) => a.c - b.c || a.n.localeCompare(b.n));
+  else rows.sort((a, b) => (b.gap ?? 1e9) - (a.gap ?? 1e9) || a.n.localeCompare(b.n));
+  rows = rows.slice(0, 40);
+
+  const top = Math.max(...rows.map((r) => r.c), 1);
+  const label = { hot: "ออกบ่อยสุด", cold: "ออกน้อยสุด", due: "หายไปนานสุด", never: "ยังไม่เคยออกเลย" }[view.strategy];
+
+  return `<section class="panel">${oddsCard(st)}</section>
+    <section class="panel">
+      <div class="panel-head">
+        <h2>${esc(st.tier.label)} · ${label}</h2>
+        <span class="meta">กดแถวเพื่อดูโอกาสและสถิติของเลขนั้น · ค่าคาดตามทฤษฎี ${
+          st.expected.toFixed(1)} ครั้งต่อเลข</span>
+      </div>
+      <div class="ranks">${rows.map((r, i) => `
+        <div class="rank tap" data-pick="${r.n}" style="cursor:pointer">
+          <span class="pos">${i + 1}</span>
+          <span class="num">${r.n}</span>
+          <span class="track"><span class="fill" style="width:${Math.max(3, r.c / top * 100)}%"></span></span>
+          <span class="val">${r.c} ครั้ง${r.gap !== null ? ` · ห่าง ${r.gap} งวด` : " · ไม่เคยออก"}</span>
+        </div>`).join("")}</div>
+    </section>`;
+}
+
+function wireOdds() {
+  document.querySelectorAll("[data-pick]").forEach((el) =>
+    el.addEventListener("click", () => {
+      view.pick = el.dataset.pick;
+      const box = document.getElementById("pickBox");
+      if (box) box.value = view.pick;
+      const stage = document.getElementById("stage");
+      stage.innerHTML = renderOdds(); wireOdds();
+      stage.scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
+}
 
 function render() {
-  for (const b of document.getElementById("tabs").children) {
-    b.setAttribute("aria-selected", String(b.dataset.view === view.name));
+  for (const host of [document.getElementById("topnav"), document.getElementById("quick")]) {
+    for (const b of host.children) b.setAttribute("aria-selected", String(b.dataset.view === view.name));
   }
   renderBar();
   const stage = document.getElementById("stage");
   if (view.name === "grid") { stage.innerHTML = renderGrid(); wireGrid(); }
   else if (view.name === "draw") { stage.innerHTML = renderDraw(); wireDraw(); }
-  else { stage.innerHTML = renderTicket(); paintTicket(); }
+  else if (view.name === "ticket") { stage.innerHTML = renderTicket(); paintTicket(); }
+  else if (view.name === "odds") { stage.innerHTML = renderOdds(); wireOdds(); }
+  else { stage.innerHTML = renderStats(); }
 }
 
 render();
