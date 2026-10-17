@@ -280,7 +280,7 @@ MONTHS_ABBR = ("ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.",
 def cmd_matrix(args, conn: sqlite3.Connection) -> int:
     """ตารางเทียบ ปี × เดือน ของหมวดรางวัลเดียว"""
     data = queries.monthly_matrix(conn, args.category, half=args.half)
-    half_note = {"all": "ทั้งสองงวด", "early": "งวดต้นเดือน", "late": "งวดกลางเดือน"}[args.half]
+    half_note = {"all": "ทุกงวด", "early": "เฉพาะงวดวันที่ 1-10", "late": "เฉพาะงวดวันที่ 11 ขึ้นไป"}[args.half]
     print(f"{data['label']} — เทียบรายเดือนทุกปี ({half_note})\n")
 
     table = [
@@ -290,7 +290,11 @@ def cmd_matrix(args, conn: sqlite3.Connection) -> int:
         )
         for year in data["years"]
     ]
-    width = max((len(c) for _, cells in table for c in cells), default=4) + 2
+    # ต้องกว้างพอทั้งเนื้อหาในช่องและชื่อเดือนที่เป็นหัวตาราง
+    width = max(
+        max((len(c) for _, cells in table for c in cells), default=0),
+        max(len(m) for m in MONTHS_ABBR),
+    ) + 2
 
     print("ปี    " + "".join(f"{m:<{width}}" for m in MONTHS_ABBR))
     print("-" * (6 + width * 12))
@@ -429,7 +433,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--half",
         choices=["all", "early", "late"],
         default="all",
-        help="all = ทุกงวด, early = งวดต้นเดือน, late = งวดกลางเดือน",
+        help="all = ทุกงวด, early = งวดวันที่ 1-10, late = งวดวันที่ 11 ขึ้นไป",
     )
     p.set_defaults(func=cmd_matrix)
 

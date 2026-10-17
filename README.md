@@ -34,7 +34,7 @@ python lotto.py matrix last2            # เลขท้าย 2 ตัว
 python lotto.py matrix first            # รางวัลที่ 1
 python lotto.py matrix front3           # เลขหน้า 3 ตัว
 python lotto.py matrix back3            # เลขท้าย 3 ตัว
-python lotto.py matrix back3 --half late  # เอาเฉพาะงวดกลางเดือน ตารางจะแคบลงอ่านง่ายขึ้น
+python lotto.py matrix back3 --half late  # เอาเฉพาะงวดวันที่ 11 ขึ้นไป ตารางจะแคบลงอ่านง่ายขึ้น
 ```
 
 ```
