@@ -1,0 +1,11 @@
+# ฐานข้อมูลที่สร้างเองได้ด้วย `python lotto.py sync`
+lotto.db
+lotto.db-wal
+lotto.db-shm
+
+# ไฟล์ส่งออก
+lotto-export.*
+
+__pycache__/
+*.py[cod]
+.venv/

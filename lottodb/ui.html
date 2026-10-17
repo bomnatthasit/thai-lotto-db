@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ฐานข้อมูลผลสลากกินแบ่งรัฐบาล</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f4f5f7;
+    --panel: #ffffff;
+    --panel-2: #f7f8fa;
+    --ink: #16181d;
+    --ink-dim: #5d646f;
+    --line: #e2e5ea;
+    --accent: #9a2c2c;
+    --accent-soft: #fdf1f1;
+    --gold: #8a6a12;
+    --gold-soft: #fdf6e3;
+    --hit: #fff3bf;
+    --hit-ink: #6b5200;
+    --radius: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #14161a;
+      --panel: #1c1f25;
+      --panel-2: #22262d;
+      --ink: #e9ebef;
+      --ink-dim: #9aa2ae;
+      --line: #2e333c;
+      --accent: #f08a8a;
+      --accent-soft: #2a1d1f;
+      --gold: #e0bc63;
+      --gold-soft: #2a2316;
+      --hit: #4a3c0d;
+      --hit-ink: #ffe9a3;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.6 "Noto Sans Thai", "Leelawadee UI", Tahoma, system-ui, sans-serif;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 16px 72px; }
+  h1 { font-size: 21px; margin: 0 0 4px; letter-spacing: -0.2px; }
+  .sub { color: var(--ink-dim); font-size: 13px; }
+  .sub b { color: var(--ink); font-weight: 600; }
+
+  nav { display: flex; gap: 4px; flex-wrap: wrap; margin: 18px 0 16px; }
+  nav button {
+    font: inherit; font-size: 14px; cursor: pointer; padding: 8px 15px;
+    border-radius: 999px; border: 1px solid var(--line);
+    background: var(--panel); color: var(--ink-dim);
+  }
+  nav button:hover { border-color: var(--accent); color: var(--ink); }
+  nav button[aria-selected="true"] {
+    background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600;
+  }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
+  }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; }
+  label.fld { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--ink-dim); }
+  input, select {
+    font: inherit; padding: 8px 10px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--panel-2); color: var(--ink);
+  }
+  input[type="text"] { font-variant-numeric: tabular-nums; }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  button.go {
+    font: inherit; font-weight: 600; cursor: pointer; padding: 9px 18px;
+    border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff;
+  }
+  button.ghost {
+    font: inherit; cursor: pointer; padding: 8px 13px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--panel-2); color: var(--ink);
+  }
+  button.ghost:hover { border-color: var(--accent); }
+  button.ghost[aria-pressed="true"] {
+    background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600;
+  }
+  .seg { display: flex; gap: 4px; flex-wrap: wrap; }
+  .hint { font-size: 12px; color: var(--ink-dim); margin-top: 10px; }
+  code { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+
+  /* ---------------- ตารางเทียบรายเดือน ---------------- */
+  .mscroll { overflow: auto; max-height: 78vh; border: 1px solid var(--line); border-radius: 10px; }
+  table.matrix { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 13px; }
+  table.matrix th, table.matrix td {
+    border-bottom: 1px solid var(--line); border-right: 1px solid var(--line);
+    padding: 5px 7px; text-align: center; vertical-align: top; white-space: nowrap;
+  }
+  table.matrix thead th {
+    position: sticky; top: 0; z-index: 3; background: var(--panel-2);
+    font-size: 12px; color: var(--ink-dim); font-weight: 600;
+  }
+  table.matrix th.yr {
+    position: sticky; left: 0; z-index: 2; background: var(--panel-2);
+    font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; min-width: 56px;
+  }
+  table.matrix thead th:first-child { z-index: 4; left: 0; }
+  table.matrix tbody tr:hover th.yr { color: var(--accent); }
+  td.col-on, th.col-on { background: var(--panel-2); }
+
+  .cellbox { display: flex; flex-direction: column; gap: 3px; align-items: stretch; }
+  .drawchip {
+    display: flex; gap: 5px; align-items: baseline; justify-content: center;
+    padding: 2px 5px; border-radius: 6px; cursor: pointer; border: 1px solid transparent;
+  }
+  .drawchip:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .drawchip .day {
+    font-size: 10px; color: var(--ink-dim); min-width: 14px; text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .drawchip .val {
+    font-variant-numeric: tabular-nums; letter-spacing: 0.6px; font-weight: 600;
+  }
+  .drawchip.hit { background: var(--hit); border-color: var(--gold); }
+  .drawchip.hit .val, .drawchip.hit .day { color: var(--hit-ink); }
+  .empty { color: var(--line); }
+
+  /* ---------------- อื่น ๆ ---------------- */
+  .draw-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .draw-head h2 { margin: 0; font-size: 18px; }
+  .prize-group { border-top: 1px solid var(--line); padding: 12px 0 2px; }
+  .prize-group:first-of-type { border-top: 0; }
+  .pg-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .pg-label { font-weight: 600; }
+  .pg-meta { font-size: 12px; color: var(--ink-dim); }
+  .nums { display: flex; flex-wrap: wrap; gap: 6px; }
+  .num {
+    font-variant-numeric: tabular-nums; letter-spacing: 1px; padding: 5px 9px;
+    border-radius: 7px; background: var(--panel-2); border: 1px solid var(--line); font-size: 14px;
+  }
+  .num.hero {
+    font-size: 25px; font-weight: 700; letter-spacing: 4px; padding: 10px 18px;
+    background: var(--gold-soft); border-color: var(--gold); color: var(--gold);
+  }
+  .num.mid { font-size: 17px; font-weight: 600; }
+
+  table.list { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.list th, table.list td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.list th { font-size: 12px; color: var(--ink-dim); font-weight: 600; }
+  td.n { font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+  td.r, th.r { text-align: right; }
+  table.list tbody tr:hover { background: var(--panel-2); }
+  tr.clickable { cursor: pointer; }
+  .scroll { overflow-x: auto; }
+
+  .win { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 10px; padding: 12px; }
+  .win h3 { margin: 0 0 8px; font-size: 16px; color: var(--accent); }
+  .lose { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px; color: var(--ink-dim); }
+  .pill {
+    display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px;
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--ink-dim);
+  }
+  .err { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--ink-dim); }
+  footer { margin-top: 26px; font-size: 12px; color: var(--ink-dim); line-height: 1.8; }
+  footer a { color: var(--accent); }
+  [hidden] { display: none !important; }
+  @media (max-width: 560px) {
+    table.matrix { font-size: 11px; }
+    table.matrix th, table.matrix td { padding: 3px 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ฐานข้อมูลผลสลากกินแบ่งรัฐบาล</h1>
+    <div class="sub" id="sub">กำลังโหลด…</div>
+  </header>
+
+  <nav id="tabs">
+    <button data-tab="matrix" aria-selected="true">เทียบรายเดือน</button>
+    <button data-tab="browse" aria-selected="false">ผลย้อนหลัง</button>
+    <button data-tab="check" aria-selected="false">ตรวจสลาก</button>
+    <button data-tab="search" aria-selected="false">ค้นเลข</button>
+    <button data-tab="stats" aria-selected="false">สถิติ</button>
+  </nav>
+
+  <!-- ---------------------------------------------------- เทียบรายเดือน -->
+  <section id="tab-matrix">
+    <div class="card">
+      <div class="row">
+        <label class="fld">รางวัล
+          <div class="seg" id="mcat"></div>
+        </label>
+        <label class="fld">งวดในเดือน
+          <div class="seg" id="mhalf">
+            <button class="ghost" data-half="all" aria-pressed="true">ทุกงวด</button>
+            <button class="ghost" data-half="early" aria-pressed="false">ต้นเดือน</button>
+            <button class="ghost" data-half="late" aria-pressed="false">กลางเดือน</button>
+          </div>
+        </label>
+        <label class="fld">เน้นเลขที่มี
+          <input type="text" id="mhl" inputmode="numeric" placeholder="เช่น 48" size="8">
+        </label>
+      </div>
+      <div class="hint">
+        แถว = ปี พ.ศ. · คอลัมน์ = เดือน · คลิกเลขเพื่อดูผลทั้งงวด ·
+        ตัวเลขเล็กหน้าเลขรางวัลคือวันที่ออกรางวัล
+      </div>
+    </div>
+    <div id="matrixHost"></div>
+  </section>
+
+  <!-- ---------------------------------------------------- ผลย้อนหลัง -->
+  <section id="tab-browse" hidden>
+    <div class="card">
+      <div class="row">
+        <label class="fld">ปี พ.ศ.
+          <select id="year"></select>
+        </label>
+        <label class="fld">ไปที่งวด
+          <input type="text" id="jump" placeholder="16/10/2569" size="12">
+        </label>
+        <button class="go" id="jumpGo">ดู</button>
+      </div>
+    </div>
+    <div class="card" id="drawDetail" hidden></div>
+    <div class="card">
+      <div class="scroll">
+        <table class="list">
+          <thead><tr><th>งวด</th><th>รางวัลที่ 1</th><th>ท้าย 2 ตัว</th><th>แหล่ง</th></tr></thead>
+          <tbody id="drawList"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------- ตรวจสลาก -->
+  <section id="tab-check" hidden>
+    <div class="card">
+      <div class="row">
+        <label class="fld">เลขสลาก 6 หลัก
+          <input type="text" id="ticket" inputmode="numeric" maxlength="7" placeholder="011781" size="10">
+        </label>
+        <label class="fld">งวด (ว่าง = ล่าสุด)
+          <input type="text" id="ckDate" placeholder="16/10/2569" size="12">
+        </label>
+        <button class="go" id="ckGo">ตรวจ</button>
+        <button class="ghost" id="histGo">ย้อนดูทุกงวด</button>
+      </div>
+      <div class="hint">พิมพ์วันที่ได้หลายแบบ: <code>16/10/2569</code>, <code>2026-10-16</code>, <code>16 ต.ค. 69</code></div>
+    </div>
+    <div id="ckResult"></div>
+  </section>
+
+  <!-- ---------------------------------------------------- ค้นเลข -->
+  <section id="tab-search" hidden>
+    <div class="card">
+      <div class="row">
+        <label class="fld">รูปแบบเลข
+          <input type="text" id="pattern" placeholder="*781" size="12">
+        </label>
+        <label class="fld">เฉพาะหมวด
+          <select id="scat"><option value="">ทุกหมวด</option></select>
+        </label>
+        <button class="go" id="searchGo">ค้น</button>
+      </div>
+      <div class="hint"><code>?</code> = เลขหนึ่งหลักใด ๆ · <code>*</code> = กี่หลักก็ได้ · เช่น <code>*781</code> หาเลขที่ลงท้าย 781, <code>01?78?</code> หาเลข 6 หลักตามแบบ</div>
+    </div>
+    <div class="card" id="searchResult" hidden></div>
+  </section>
+
+  <!-- ---------------------------------------------------- สถิติ -->
+  <section id="tab-stats" hidden>
+    <div class="card">
+      <div class="row">
+        <label class="fld">หมวด
+          <select id="fcat"></select>
+        </label>
+        <label class="fld">แบบ
+          <select id="fmode">
+            <option value="top">ออกบ่อยสุด</option>
+            <option value="low">ออกน้อยสุด</option>
+            <option value="gaps">หายไปนานสุด</option>
+          </select>
+        </label>
+        <label class="fld">ตั้งแต่งวด
+          <input type="text" id="fsince" placeholder="1/1/2558" size="11">
+        </label>
+        <label class="fld">จำนวน
+          <input type="text" id="ftop" value="20" size="4">
+        </label>
+        <button class="go" id="freqGo">ดู</button>
+      </div>
+      <div class="hint">สถิติคือการนับย้อนหลัง ไม่ใช่การทำนาย — การออกรางวัลแต่ละงวดไม่เกี่ยวกับงวดก่อน</div>
+    </div>
+    <div class="card" id="statsResult" hidden></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => n == null ? "—" : n.toLocaleString("th-TH");
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const TH_MONTHS = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+const TH_ABBR = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+
+let META = null;
+const mState = { category: "last2", half: "all", data: null };
+
+async function api(path, params = {}) {
+  const url = new URL(path, location.origin);
+  for (const [k, v] of Object.entries(params)) if (v !== "" && v != null) url.searchParams.set(k, v);
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+function showError(host, err) {
+  host.hidden = false;
+  host.innerHTML = `<div class="card"><div class="err">${esc(err.message)}</div></div>`;
+}
+
+function thai(iso) {
+  if (!iso) return "—";
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${d} ${TH_MONTHS[m - 1]} ${y + 543}`;
+}
+
+/* ------------------------------------------------------------ tabs */
+$("tabs").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button[data-tab]");
+  if (!btn) return;
+  for (const b of $("tabs").children) b.setAttribute("aria-selected", String(b === btn));
+  for (const name of ["matrix", "browse", "check", "search", "stats"]) {
+    $("tab-" + name).hidden = name !== btn.dataset.tab;
+  }
+});
+
+function openDrawTab(date) {
+  $("tabs").querySelector('[data-tab="browse"]').click();
+  loadDraw(date);
+}
+
+/* ------------------------------------------------------------ boot */
+async function boot() {
+  META = await api("/api/summary");
+  const s = META.summary;
+  $("sub").innerHTML =
+    `<b>${fmt(s.draws)}</b> งวด · <b>${fmt(s.prizes)}</b> เลขรางวัล · ` +
+    `${esc(thai(s.first_date))} – ${esc(thai(s.last_date))}`;
+
+  const byKey = Object.fromEntries(META.categories.map((c) => [c.key, c]));
+  $("mcat").innerHTML = META.matrix_categories.map((k) =>
+    `<button class="ghost" data-cat="${k}" aria-pressed="${k === mState.category}">${esc(byKey[k].label)}</button>`
+  ).join("");
+
+  $("year").innerHTML = `<option value="">ทุกปี (ล่าสุดก่อน)</option>` +
+    META.years.map((y) => `<option value="${y.year}">${+y.year + 543} (${y.draws} งวด)</option>`).join("");
+
+  const catOpts = META.categories.map((c) => `<option value="${c.key}">${esc(c.label)}</option>`).join("");
+  $("scat").innerHTML = `<option value="">ทุกหมวด</option>` + catOpts;
+  $("fcat").innerHTML = catOpts;
+  $("fcat").value = "last2";
+
+  $("foot").innerHTML =
+    `ซิงก์ล่าสุด ${esc(s.last_sync || "-")} · งวดข้อมูลไม่ครบ ${s.flagged} · งวดมีข้อสังเกต ${s.noted}<br>` +
+    `แหล่งข้อมูล: คลังย้อนหลัง <a href="https://github.com/vicha-w/thai-lotto-archive" target="_blank" rel="noreferrer">vicha-w/thai-lotto-archive</a>` +
+    ` · API สำนักงานสลากกินแบ่งรัฐบาล · หน้าตรวจหวยย้อนหลังของ sanook<br>` +
+    `ข้อมูลเพื่อการค้นย้อนหลังเท่านั้น ยึดประกาศของสำนักงานสลากกินแบ่งรัฐบาลเป็นหลัก`;
+
+  await Promise.all([loadMatrix(), loadList(), loadDraw("latest")]);
+}
+
+/* ------------------------------------------------------------ matrix */
+$("mcat").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button[data-cat]");
+  if (!btn) return;
+  mState.category = btn.dataset.cat;
+  for (const b of $("mcat").children) b.setAttribute("aria-pressed", String(b === btn));
+  loadMatrix();
+});
+
+$("mhalf").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button[data-half]");
+  if (!btn) return;
+  mState.half = btn.dataset.half;
+  for (const b of $("mhalf").children) b.setAttribute("aria-pressed", String(b === btn));
+  loadMatrix();
+});
+
+$("mhl").addEventListener("input", () => paintHighlight());
+
+async function loadMatrix() {
+  const host = $("matrixHost");
+  try {
+    mState.data = await api("/api/matrix", { category: mState.category, half: mState.half });
+    renderMatrix();
+  } catch (err) { showError(host, err); }
+}
+
+function renderMatrix() {
+  const data = mState.data;
+  const head = `<thead><tr><th class="yr">ปี พ.ศ.</th>${
+    TH_ABBR.map((m) => `<th>${m}</th>`).join("")}</tr></thead>`;
+
+  const body = data.years.map((year) => {
+    const cells = year.months.map((draws) => {
+      if (!draws.length) return `<td><span class="empty">·</span></td>`;
+      const chips = draws.map((d) =>
+        `<span class="drawchip" data-date="${d.date}" data-nums="${esc(d.numbers.join(" "))}">
+           <span class="day">${d.day}</span>
+           <span class="val">${d.numbers.map(esc).join(" ")}</span>
+         </span>`).join("");
+      return `<td><div class="cellbox">${chips}</div></td>`;
+    }).join("");
+    return `<tr><th class="yr">${year.year_be}</th>${cells}</tr>`;
+  }).join("");
+
+  $("matrixHost").innerHTML = `<div class="card">
+    <div class="draw-head" style="margin-bottom:10px">
+      <h2>${esc(data.label)}</h2>
+      <span class="pg-meta">${data.years.length} ปี · เทียบเดือนต่อเดือน</span>
+    </div>
+    <div class="mscroll"><table class="matrix">${head}<tbody>${body}</tbody></table></div>
+  </div>`;
+
+  const table = $("matrixHost").querySelector("table.matrix");
+  table.addEventListener("click", (ev) => {
+    const chip = ev.target.closest(".drawchip");
+    if (chip) openDrawTab(chip.dataset.date);
+  });
+  table.addEventListener("mouseover", (ev) => {
+    const cell = ev.target.closest("td, th.yr");
+    if (!cell) return;
+    const index = cell.cellIndex;
+    table.querySelectorAll(".col-on").forEach((el) => el.classList.remove("col-on"));
+    if (index > 0) {
+      for (const tr of table.rows) {
+        if (tr.cells[index]) tr.cells[index].classList.add("col-on");
+      }
+    }
+  });
+  table.addEventListener("mouseleave", () =>
+    table.querySelectorAll(".col-on").forEach((el) => el.classList.remove("col-on")));
+
+  paintHighlight();
+}
+
+function paintHighlight() {
+  const needle = $("mhl").value.replace(/\D/g, "");
+  const chips = $("matrixHost").querySelectorAll(".drawchip");
+  for (const chip of chips) {
+    const on = needle.length > 0 && chip.dataset.nums.split(" ").some((n) => n.includes(needle));
+    chip.classList.toggle("hit", on);
+  }
+}
+
+/* ------------------------------------------------------------ browse */
+async function loadList() {
+  const data = await api("/api/draws", { year: $("year").value, limit: 400 });
+  $("drawList").innerHTML = data.draws.map((d) => `
+    <tr class="clickable" data-date="${d.draw_date}">
+      <td>${esc(d.draw_date_th)}</td>
+      <td class="n">${esc(d.first_prize || "—")}</td>
+      <td class="n">${esc(d.last2 || "—")}</td>
+      <td><span class="pill">${esc(d.source)}</span></td>
+    </tr>`).join("");
+}
+
+$("drawList").addEventListener("click", (ev) => {
+  const tr = ev.target.closest("tr[data-date]");
+  if (tr) loadDraw(tr.dataset.date);
+});
+$("year").addEventListener("change", loadList);
+$("jumpGo").addEventListener("click", () => loadDraw($("jump").value.trim() || "latest"));
+$("jump").addEventListener("keydown", (e) => { if (e.key === "Enter") $("jumpGo").click(); });
+
+async function loadDraw(date) {
+  const host = $("drawDetail");
+  try {
+    const data = await api("/api/draw", { date });
+    const d = data.draw;
+    const groups = data.groups.map((g) => {
+      const size = g.category === "first" ? "hero" : (g.count <= 4 ? "mid" : "");
+      return `<div class="prize-group">
+        <div class="pg-head">
+          <span class="pg-label">${esc(g.label)}</span>
+          <span class="pg-meta">${g.count} รางวัล</span>
+        </div>
+        <div class="nums">${g.numbers.map((n) => `<span class="num ${size}">${esc(n)}</span>`).join("")}</div>
+      </div>`;
+    }).join("");
+    host.hidden = false;
+    host.innerHTML = `
+      <div class="draw-head">
+        <h2>งวดวันที่ ${esc(d.draw_date_th)}</h2>
+        <span class="pg-meta">${esc(d.draw_date)} · ${d.prize_count} รางวัล · แหล่ง ${esc(d.source)}</span>
+      </div>
+      ${d.anomalies ? `<div class="hint">หมายเหตุ: ${esc(d.anomalies)}</div>` : ""}
+      <div class="row" style="margin:10px 0 2px">
+        ${data.nav.prev ? `<button class="ghost" data-go="${data.nav.prev}">← งวดก่อน</button>` : ""}
+        ${data.nav.next ? `<button class="ghost" data-go="${data.nav.next}">งวดถัดไป →</button>` : ""}
+      </div>
+      ${groups}`;
+    host.querySelectorAll("button[data-go]").forEach((b) =>
+      b.addEventListener("click", () => loadDraw(b.dataset.go)));
+  } catch (err) { showError(host, err); }
+}
+
+/* ------------------------------------------------------------ check */
+$("ckGo").addEventListener("click", runCheck);
+$("ticket").addEventListener("keydown", (e) => { if (e.key === "Enter") runCheck(); });
+$("histGo").addEventListener("click", runHistory);
+
+async function runCheck() {
+  const host = $("ckResult");
+  try {
+    const data = await api("/api/check", { number: $("ticket").value, date: $("ckDate").value.trim() });
+    if (!data.wins.length) {
+      host.innerHTML = `<div class="card"><div class="lose">
+        สลาก <b class="n">${esc(data.ticket)}</b> ไม่ถูกรางวัลในงวด ${esc(data.draw.draw_date_th)}</div></div>`;
+      return;
+    }
+    const lines = data.wins.map((w) =>
+      `<tr><td>${esc(w.label)}</td><td class="n r">${esc(w.number)}</td></tr>`).join("");
+    host.innerHTML = `<div class="card"><div class="win">
+      <h3>สลาก ${esc(data.ticket)} ถูกรางวัล · งวด ${esc(data.draw.draw_date_th)}</h3>
+      <div class="scroll"><table class="list"><tbody>${lines}</tbody></table></div>
+    </div></div>`;
+  } catch (err) { showError(host, err); }
+}
+
+async function runHistory() {
+  const host = $("ckResult");
+  try {
+    const data = await api("/api/history", { number: $("ticket").value });
+    if (!data.hits) {
+      host.innerHTML = `<div class="card"><div class="lose">
+        เลข <b class="n">${esc(data.ticket)}</b> ไม่เคยถูกรางวัลเลยใน ${fmt(data.draws_total)} งวด</div></div>`;
+      return;
+    }
+    const rows = data.rows.map((r) => `
+      <tr class="clickable" data-date="${r.draw_date}">
+        <td>${esc(r.draw_date_th)}</td>
+        <td>${r.wins.map((w) => esc(w.label) + " (" + esc(w.number) + ")").join("<br>")}</td>
+      </tr>`).join("");
+    host.innerHTML = `<div class="card">
+      <div class="draw-head"><h2>ย้อนดูเลข ${esc(data.ticket)}</h2>
+        <span class="pg-meta">ถูก ${data.hits} จาก ${fmt(data.draws_total)} งวด
+          (${(data.hits / data.draws_total * 100).toFixed(1)}%)</span></div>
+      <div class="scroll"><table class="list">
+        <thead><tr><th>งวด</th><th>รางวัลที่ถูก</th></tr></thead>
+        <tbody>${rows}</tbody></table></div></div>`;
+    host.querySelectorAll("tr[data-date]").forEach((tr) =>
+      tr.addEventListener("click", () => openDrawTab(tr.dataset.date)));
+  } catch (err) { showError(host, err); }
+}
+
+/* ------------------------------------------------------------ search */
+$("searchGo").addEventListener("click", runSearch);
+$("pattern").addEventListener("keydown", (e) => { if (e.key === "Enter") runSearch(); });
+
+async function runSearch() {
+  const host = $("searchResult");
+  try {
+    const data = await api("/api/search", { pattern: $("pattern").value.trim(), category: $("scat").value });
+    host.hidden = false;
+    if (!data.results.length) { host.innerHTML = `<div class="muted">ไม่พบเลขที่ตรงรูปแบบนี้</div>`; return; }
+    const rows = data.results.map((r) => `
+      <tr class="clickable" data-date="${r.draw_date}">
+        <td>${esc(r.draw_date_th)}</td><td>${esc(r.label)}</td>
+        <td class="n">${esc(r.number)}</td>
+      </tr>`).join("");
+    host.innerHTML = `<div class="pg-meta" style="margin-bottom:8px">พบ ${data.results.length} รายการ</div>
+      <div class="scroll"><table class="list">
+      <thead><tr><th>งวด</th><th>หมวด</th><th>เลข</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`;
+    host.querySelectorAll("tr[data-date]").forEach((tr) =>
+      tr.addEventListener("click", () => openDrawTab(tr.dataset.date)));
+  } catch (err) { showError(host, err); }
+}
+
+/* ------------------------------------------------------------ stats */
+$("freqGo").addEventListener("click", runStats);
+
+async function runStats() {
+  const host = $("statsResult");
+  const mode = $("fmode").value;
+  const category = $("fcat").value;
+  try {
+    host.hidden = false;
+    if (mode === "gaps") {
+      const data = await api("/api/gaps", { category, top: $("ftop").value });
+      host.innerHTML = `<div class="pg-meta" style="margin-bottom:8px">หายไปนานสุด — ${esc(data.label)}</div>
+        <div class="scroll"><table class="list">
+        <thead><tr><th>เลข</th><th class="r">ไม่ออกมาแล้ว</th><th>ออกครั้งล่าสุด</th><th class="r">เคยออก</th></tr></thead>
+        <tbody>${data.rows.map((r) => `<tr><td class="n">${esc(r.number)}</td>
+          <td class="r">${r.draws_since} งวด</td><td>${esc(thai(r.last_seen))}</td>
+          <td class="r">${r.hits} ครั้ง</td></tr>`).join("")}</tbody></table></div>`;
+      return;
+    }
+    const data = await api("/api/freq", {
+      category, top: $("ftop").value, since: $("fsince").value.trim(), low: mode === "low" ? "1" : "",
+    });
+    host.innerHTML = `<div class="pg-meta" style="margin-bottom:8px">
+        ${mode === "low" ? "ออกน้อยสุด" : "ออกบ่อยสุด"} — ${esc(data.label)}</div>
+      <div class="scroll"><table class="list">
+      <thead><tr><th>เลข</th><th class="r">จำนวนครั้ง</th><th>ครั้งแรก</th><th>ครั้งล่าสุด</th></tr></thead>
+      <tbody>${data.rows.map((r) => `<tr><td class="n">${esc(r.number)}</td>
+        <td class="r">${r.hits}</td><td>${esc(thai(r.first_seen))}</td>
+        <td>${esc(thai(r.last_seen))}</td></tr>`).join("")}</tbody></table></div>`;
+  } catch (err) { showError(host, err); }
+}
+
+boot().catch((err) => { $("sub").innerHTML = `<span class="err">${esc(err.message)}</span>`; });
+</script>
+</body>
+</html>
