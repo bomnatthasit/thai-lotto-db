@@ -56,13 +56,22 @@ def clean_ticket(raw: str) -> str:
 
 
 def cmd_sync(args, conn: sqlite3.Connection) -> int:
+    from lottodb import repair
+
     print("กำลังดึงข้อมูล…")
     report = store.sync(conn, archive=not args.no_archive, glo=not args.no_glo)
     for source, tally in report.items():
         print(
             f"  {source:9s} ใหม่ {tally['new']:4d}  แก้ไข {tally['updated']:4d}"
             f"  เท่าเดิม {tally['unchanged']:4d}  คงของเดิม {tally['kept-better-source']:3d}"
+            f"  ข้าม {tally['skipped']:3d}"
         )
+
+    # คลังต้นทางมีบางงวดที่ข้อมูลเสีย ซ่อมให้เสร็จในคำสั่งเดียว
+    if not args.no_repair and repair.problem_draws(conn):
+        print()
+        repair.repair_flagged(conn)
+
     info = queries.summary(conn)
     print(
         f"\nรวม {info['draws']:,} งวด  ({info['first_date']} ถึง {info['last_date']})"
@@ -364,6 +373,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("sync", help="ดึงข้อมูลเข้าฐานข้อมูล")
     p.add_argument("--no-archive", action="store_true", help="ไม่ดึงคลังย้อนหลัง")
     p.add_argument("--no-glo", action="store_true", help="ไม่ดึงงวดล่าสุดจาก API สำนักงานสลากฯ")
+    p.add_argument("--no-repair", action="store_true", help="ไม่ซ่อมงวดที่ข้อมูลเสียให้อัตโนมัติ")
     p.set_defaults(func=cmd_sync)
 
     p = sub.add_parser("info", help="ภาพรวมฐานข้อมูล")
