@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from lottodb import model, store  # noqa: E402
+from lottodb import model, schedule, store  # noqa: E402
 
 TEMPLATE = Path(__file__).with_name("page_template.html")
 PLACEHOLDER = "__DATA__"
@@ -66,6 +66,12 @@ def collect(conn) -> dict:
 
     synced = conn.execute("SELECT value FROM meta WHERE key = 'last_sync'").fetchone()
 
+    # งวดตามปฏิทินของแต่ละวันออกรางวัล คิดฝั่ง Python ที่เดียว หน้าเว็บแค่เอาไปใช้
+    periods = {date: schedule.period_of(date) for date in draws}
+    notes = {
+        date: schedule.shift_reason(date) for date in draws if schedule.is_shifted(date)
+    }
+
     return {
         "tiers": [
             {
@@ -77,6 +83,9 @@ def collect(conn) -> dict:
             for c in sorted(model.CATEGORIES, key=lambda c: c.order)
         ],
         "draws": dict(sorted(draws.items())),
+        "periods": periods,
+        "shift_notes": notes,
+        "cancelled": dict(sorted(schedule.CANCELLED.items())),
         "prize_count": total,
         "synced_at": (synced["value"][:10] if synced else None),
     }

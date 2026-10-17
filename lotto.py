@@ -10,6 +10,7 @@
     python lotto.py search "*781"         ค้นเลขรางวัลด้วยรูปแบบ
     python lotto.py freq last2 --top 10   เลขท้าย 2 ตัว ที่ออกบ่อยสุด
     python lotto.py matrix last2          ตารางเทียบเลขท้าย 2 ตัว รายเดือนทุกปี
+    python lotto.py schedule              งวดที่เลื่อนข้ามเดือน และงวดที่งดจำหน่าย
     python lotto.py serve                 เปิดหน้าเว็บดูย้อนหลังที่เครื่องตัวเอง
 """
 
@@ -249,6 +250,15 @@ def cmd_doctor(args, conn: sqlite3.Connection) -> int:
         print(f"\nข้อสังเกต {len(notes)} งวด (ไม่ใช่ข้อมูลผิด — เลขซ้ำในหมวดเดียวกันเกิดขึ้นได้จริง)")
         for r in notes:
             print(f"   {r['draw_date']}  {r['anomalies']}")
+
+    sched = queries.schedule_notes(conn)
+    shifted = sum(1 for r in sched if r["kind"] == "shifted")
+    cancelled = sum(1 for r in sched if r["kind"] == "cancelled")
+    print()
+    print(
+        f"ตารางงวด: เลื่อนข้ามเดือน {shifted} งวด, งดจำหน่าย {cancelled} งวด"
+        " — ดูด้วย `python lotto.py schedule`"
+    )
     return 1 if problems else 0
 
 
@@ -287,15 +297,16 @@ MONTHS_ABBR = ("ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.",
 
 
 def cmd_matrix(args, conn: sqlite3.Connection) -> int:
-    """ตารางเทียบ ปี × เดือน ของหมวดรางวัลเดียว"""
-    data = queries.monthly_matrix(conn, args.category, half=args.half)
-    half_note = {"all": "ทุกงวด", "early": "เฉพาะงวดวันที่ 1-10", "late": "เฉพาะงวดวันที่ 11 ขึ้นไป"}[args.half]
-    print(f"{data['label']} — เทียบรายเดือนทุกปี ({half_note})\n")
+    """ตารางเทียบ งวด x เดือน ของหมวดรางวัลเดียว"""
+    data = queries.monthly_matrix(conn, args.category, slot=args.slot)
+    scope = {"all": "ทั้งงวดวันที่ 1 และ 16", "1": "เฉพาะงวดวันที่ 1", "16": "เฉพาะงวดวันที่ 16"}
+    print(f"{data['label']} — เทียบรายเดือนทุกปี ({scope[args.slot]})")
+    print()
 
     table = [
         (
             year["year_be"],
-            ["/".join(_cell(d, data["digits"]) for d in draws) for draws in year["months"]],
+            ["/".join(_cell(c, data["digits"]) for c in cells) for cells in year["months"]],
         )
         for year in data["years"]
     ]
@@ -309,14 +320,42 @@ def cmd_matrix(args, conn: sqlite3.Connection) -> int:
     print("-" * (6 + width * 12))
     for year_be, cells in table:
         print(f"{year_be:<6}" + "".join(f"{c:<{width}}" for c in cells))
-    print(f"\n{len(data['years'])} ปี  ·  ช่องว่าง = ไม่มีงวดในเดือนนั้น")
-    if args.half == "all":
-        print("ในช่องที่มีสองงวด เรียงตามวันที่ออกรางวัล คั่นด้วย /")
+
+    print()
+    print(f"{len(data['years'])} ปี  ·  จัดตามงวด ไม่ใช่วันออกรางวัลจริง")
+    print(f"*  = งวดนี้ออกรางวัลคนละเดือนกับงวดของตัวเอง ({data['shifted_count']} งวด)")
+    if data["cancelled_count"]:
+        print(f"งด = งวดที่งดจำหน่าย ไม่มีการออกรางวัล ({data['cancelled_count']} งวด)")
+    print("ดูรายละเอียดด้วย `python lotto.py schedule`")
     return 0
 
 
-def _cell(draw: dict, digits: int) -> str:
-    return " ".join(draw["numbers"]) if digits < 6 else draw["numbers"][0]
+def _cell(cell: dict, digits: int) -> str:
+    if cell["cancelled"]:
+        return "งด"
+    text = " ".join(cell["numbers"]) if digits < 6 else cell["numbers"][0]
+    return text + "*" if cell["shifted"] else text
+
+
+def cmd_schedule(args, conn: sqlite3.Connection) -> int:
+    """งวดที่ออกคนละเดือนกับงวดของตัวเอง และงวดที่งดจำหน่าย"""
+    rows = queries.schedule_notes(conn)
+    shifted = [r for r in rows if r["kind"] == "shifted"]
+    cancelled = [r for r in rows if r["kind"] == "cancelled"]
+
+    print(f"งวดที่ออกรางวัลคนละเดือนกับงวดของตัวเอง — ติดดาวในตาราง ({len(shifted)} งวด)")
+    print()
+    print(f"{'งวด':<22} {'ออกรางวัลจริง':<22} เหตุผล")
+    for r in shifted:
+        print(f"{r['period_th']:<22} {r['drawn_on_th']:<22} {r['note']}")
+
+    if cancelled:
+        print()
+        print(f"งวดที่งดจำหน่าย ไม่มีการออกรางวัล ({len(cancelled)} งวด)")
+        print()
+        for r in cancelled:
+            print(f"{r['period_th']:<22} {r['note']}")
+    return 0
 
 
 def cmd_drop(args, conn: sqlite3.Connection) -> int:
@@ -440,12 +479,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="first = รางวัลที่ 1, front3 = เลขหน้า 3 ตัว, back3 = เลขท้าย 3 ตัว, last2 = เลขท้าย 2 ตัว",
     )
     p.add_argument(
-        "--half",
-        choices=["all", "early", "late"],
+        "--slot",
+        choices=["all", "1", "16"],
         default="all",
-        help="all = ทุกงวด, early = งวดวันที่ 1-10, late = งวดวันที่ 11 ขึ้นไป",
+        help="all = ทั้งคู่, 1 = เฉพาะงวดวันที่ 1, 16 = เฉพาะงวดวันที่ 16",
     )
     p.set_defaults(func=cmd_matrix)
+
+    p = sub.add_parser("schedule", help="งวดที่เลื่อนข้ามเดือน และงวดที่งดจำหน่าย")
+    p.set_defaults(func=cmd_schedule)
 
     p = sub.add_parser("drop", help="ลบงวดหนึ่งออกจากฐานข้อมูล")
     p.add_argument("date")

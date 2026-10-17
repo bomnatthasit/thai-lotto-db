@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sqlite3
 
-from . import model
+from . import model, schedule, thaidate
 
 # หมวดที่เอามาเทียบรายเดือนได้ (เลขชุดเล็ก อ่านเป็นตารางได้)
 MATRIX_CATEGORIES: tuple[str, ...] = ("first", "front3", "back3", "last2")
@@ -92,7 +92,11 @@ def get_draw(conn: sqlite3.Connection, draw_date: str) -> dict | None:
                 "numbers": [r["number"] for r in items],
             }
         )
-    return {"draw": dict(head), "groups": groups}
+    return {
+        "draw": dict(head),
+        "groups": groups,
+        "schedule": schedule.describe(draw_date),
+    }
 
 
 def neighbours(conn: sqlite3.Connection, draw_date: str) -> dict:
@@ -114,16 +118,20 @@ def monthly_matrix(
     conn: sqlite3.Connection,
     category: str,
     *,
-    half: str = "all",
+    slot: str = "all",
 ) -> dict:
-    """ตารางเทียบ ปี (แถว) × เดือน (คอลัมน์) ของหมวดรางวัลหนึ่ง
+    """ตารางเทียบ งวด (แถว = ปี, คอลัมน์ = เดือน) ของหมวดรางวัลหนึ่ง
 
-    แต่ละเดือนปกติออกรางวัล 2 งวด (ต้นเดือนและกลางเดือน) จึงเก็บเป็นลิสต์
-    `half` = 'early' เฉพาะงวดวันที่ 1-10, 'late' เฉพาะงวดวันที่ 11 ขึ้นไป, 'all' ทุกงวด
-    (ธันวาคมมักมี 3 งวด คือวันที่ 1, 16 และ 30 ดังนั้น 'late' อาจได้มากกว่าหนึ่งงวด)
+    จัดตาม **งวดตามปฏิทิน** ไม่ใช่วันออกรางวัลจริง จึงได้ 2 ช่องต่อเดือนเสมอ
+    งวดที่ออกคนละเดือนกับงวดของตัวเองจะมี `shifted` เป็นจริง (แสดงเป็นดอกจัน)
+    และงวดที่งดจำหน่ายจะมี `cancelled` เป็นจริง
+
+    `slot` = '1' เฉพาะงวดวันที่ 1, '16' เฉพาะงวดวันที่ 16, 'all' ทั้งคู่
     """
     if category not in MATRIX_CATEGORIES:
         raise ValueError(f"เทียบรายเดือนได้เฉพาะหมวด {', '.join(MATRIX_CATEGORIES)}")
+    if slot not in {"all", "1", "16"}:
+        raise ValueError("slot ต้องเป็น all, 1 หรือ 16")
 
     rows = conn.execute(
         "SELECT p.draw_date, p.slot, p.number FROM prizes p"
@@ -135,26 +143,100 @@ def monthly_matrix(
     for r in rows:
         by_draw.setdefault(r["draw_date"], []).append(r["number"])
 
-    grid: dict[int, list[list[dict]]] = {}
+    cells: list[dict] = []
     for draw_date, numbers in by_draw.items():
-        year, month, day = (int(part) for part in draw_date.split("-"))
-        if half == "early" and day > 10:
-            continue
-        if half == "late" and day <= 10:
-            continue
+        info = schedule.describe(draw_date)
+        cells.append(
+            {
+                "period": info["period"],
+                "slot": info["slot"],
+                "date": draw_date,
+                "day": int(draw_date[-2:]),
+                "numbers": numbers,
+                "shifted": info["shifted"],
+                "cancelled": False,
+                "note": info["reason"],
+            }
+        )
+
+    covered = {c["period"][:7] for c in cells}
+    for period, reason in schedule.CANCELLED.items():
+        if period[:7] in covered or _in_range(conn, period):
+            cells.append(
+                {
+                    "period": period,
+                    "slot": int(period[-2:]),
+                    "date": None,
+                    "day": None,
+                    "numbers": [],
+                    "shifted": False,
+                    "cancelled": True,
+                    "note": reason,
+                }
+            )
+
+    if slot != "all":
+        cells = [c for c in cells if c["slot"] == int(slot)]
+
+    grid: dict[int, list[list[dict]]] = {}
+    for cell in cells:
+        year, month = int(cell["period"][:4]), int(cell["period"][5:7])
         grid.setdefault(year, [[] for _ in range(12)])
-        grid[year][month - 1].append({"date": draw_date, "day": day, "numbers": numbers})
+        grid[year][month - 1].append(cell)
+    for months in grid.values():
+        for bucket in months:
+            bucket.sort(key=lambda c: c["slot"])
 
     return {
         "category": category,
         "label": model.BY_KEY[category].th,
         "digits": model.BY_KEY[category].digits,
-        "half": half,
+        "slot": slot,
+        "shifted_count": sum(1 for c in cells if c["shifted"]),
+        "cancelled_count": sum(1 for c in cells if c["cancelled"]),
         "years": [
             {"year": year, "year_be": year + 543, "months": grid[year]}
             for year in sorted(grid, reverse=True)
         ],
     }
+
+
+def _in_range(conn: sqlite3.Connection, period: str) -> bool:
+    row = conn.execute(
+        "SELECT MIN(draw_date) AS lo, MAX(draw_date) AS hi FROM draws"
+    ).fetchone()
+    return bool(row["lo"]) and row["lo"] <= period <= row["hi"]
+
+
+def schedule_notes(conn: sqlite3.Connection) -> list[dict]:
+    """รายการงวดที่ออกคนละเดือน และงวดที่งดจำหน่าย"""
+    dates = [r["draw_date"] for r in conn.execute("SELECT draw_date FROM draws ORDER BY draw_date")]
+    out = [
+        {
+            "kind": "shifted",
+            "period": schedule.period_of(d),
+            "period_th": thaidate.to_thai(schedule.period_of(d)),
+            "drawn_on": d,
+            "drawn_on_th": thaidate.to_thai(d),
+            "note": schedule.shift_reason(d),
+        }
+        for d in dates
+        if schedule.is_shifted(d)
+    ]
+    out += [
+        {
+            "kind": "cancelled",
+            "period": period,
+            "period_th": thaidate.to_thai(period),
+            "drawn_on": None,
+            "drawn_on_th": None,
+            "note": reason,
+        }
+        for period, reason in sorted(schedule.CANCELLED.items())
+        if _in_range(conn, period)
+    ]
+    out.sort(key=lambda r: r["period"])
+    return out
 
 
 # ------------------------------------------------------------ ตรวจสลาก

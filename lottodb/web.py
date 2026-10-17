@@ -65,8 +65,11 @@ class _Handler(BaseHTTPRequestHandler):
             return queries.monthly_matrix(
                 conn,
                 params.get("category", "last2"),
-                half=params.get("half", "all"),
+                slot=params.get("slot", "all"),
             )
+
+        if route == "/api/schedule":
+            return {"rows": queries.schedule_notes(conn)}
 
         if route == "/api/draws":
             year = params.get("year")

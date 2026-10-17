@@ -193,6 +193,11 @@ table.grid th.yr.on { background: var(--seal-soft); color: var(--seal); }
   font-family: var(--mono); font-weight: 600; font-size: 13px;
   font-variant-numeric: tabular-nums; letter-spacing: 0.02em; color: var(--ink);
 }
+.chip .star { color: var(--gilt); font-weight: 700; }
+.chip.off { cursor: default; opacity: 0.6; }
+.chip.off:hover { border-color: transparent; background: none; }
+.chip.off .v { font-size: 10px; letter-spacing: 0; color: var(--ink-2); font-family: var(--body); }
+.starkey { color: var(--gilt); }
 .chip.lit { background: var(--mark); border-color: var(--gilt); }
 .chip.lit .v, .chip.lit .dd { color: var(--mark-ink); }
 .void { color: var(--rule); font-family: var(--mono); }
@@ -330,7 +335,8 @@ const thaiDate = (iso) => {
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const group = (n) => n.toLocaleString("th-TH");
 
-const view = { name: "grid", tier: "last2", half: "all", lit: "", date: LATEST, ticket: "" };
+const STAR_HTML = '<span class="star">*</span>';
+const view = { name: "grid", tier: "last2", slot: "all", lit: "", date: LATEST, ticket: "" };
 
 /* ------------------------------------------------------------- หัวสรุป */
 document.getElementById("tally").innerHTML = [
@@ -356,11 +362,11 @@ function renderBar() {
           `<button data-tier="${k}" aria-pressed="${k === view.tier}">${esc(TIERS[INDEX[k]].label)}</button>`
         ).join("")}</span>
       </label>
-      <label class="group"><span>งวดในเดือน</span>
-        <span class="seg" id="halfSeg">
-          <button data-half="all" aria-pressed="${view.half === "all"}">ทุกงวด</button>
-          <button data-half="early" aria-pressed="${view.half === "early"}">วันที่ 1–10</button>
-          <button data-half="late" aria-pressed="${view.half === "late"}">วันที่ 11+</button>
+      <label class="group"><span>งวด</span>
+        <span class="seg" id="slotSeg">
+          <button data-slot="all" aria-pressed="${view.slot === "all"}">ทั้งคู่</button>
+          <button data-slot="1" aria-pressed="${view.slot === "1"}">วันที่ 1</button>
+          <button data-slot="16" aria-pressed="${view.slot === "16"}">วันที่ 16</button>
         </span>
       </label>
       <label class="group"><span>เน้นเลขที่มี</span>
@@ -370,9 +376,9 @@ function renderBar() {
       const b = e.target.closest("button[data-tier]");
       if (b) { view.tier = b.dataset.tier; render(); }
     });
-    document.getElementById("halfSeg").addEventListener("click", (e) => {
-      const b = e.target.closest("button[data-half]");
-      if (b) { view.half = b.dataset.half; render(); }
+    document.getElementById("slotSeg").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-slot]");
+      if (b) { view.slot = b.dataset.slot; render(); }
     });
     const box = document.getElementById("litBox");
     box.addEventListener("input", () => { view.lit = box.value.replace(/\D/g, ""); paintLit(); });
@@ -414,42 +420,83 @@ function renderBar() {
 /* ------------------------------------------------------------- ตารางเทียบ */
 function gridRows() {
   const tier = TIERS[INDEX[view.tier]];
-  const byYear = new Map();
+  const cells = [];
+
   for (const date of DATES) {
-    const [y, m, d] = date.split("-").map(Number);
-    if (view.half === "early" && d > 10) continue;
-    if (view.half === "late" && d <= 10) continue;
-    if (!byYear.has(y)) byYear.set(y, Array.from({ length: 12 }, () => []));
-    byYear.get(y)[m - 1].push({ date, day: d, nums: numbersOf(date, view.tier) });
+    const period = DB.periods[date] || date;
+    cells.push({
+      period,
+      slot: Number(period.slice(-2)),
+      date,
+      day: Number(date.slice(-2)),
+      nums: numbersOf(date, view.tier),
+      shifted: period.slice(0, 7) !== date.slice(0, 7),
+      cancelled: false,
+      note: DB.shift_notes[date] || null,
+    });
   }
-  return { tier, years: [...byYear.entries()].sort((a, b) => b[0] - a[0]) };
+  for (const [period, note] of Object.entries(DB.cancelled || {})) {
+    if (period < DATES[0] || period > DATES[DATES.length - 1]) continue;
+    cells.push({ period, slot: Number(period.slice(-2)), date: null, day: null,
+                 nums: [], shifted: false, cancelled: true, note });
+  }
+
+  const kept = view.slot === "all" ? cells : cells.filter((c) => c.slot === Number(view.slot));
+  const byYear = new Map();
+  for (const c of kept) {
+    const y = Number(c.period.slice(0, 4));
+    const m = Number(c.period.slice(5, 7));
+    if (!byYear.has(y)) byYear.set(y, Array.from({ length: 12 }, () => []));
+    byYear.get(y)[m - 1].push(c);
+  }
+  for (const months of byYear.values()) for (const b of months) b.sort((a, z) => a.slot - z.slot);
+
+  return {
+    tier,
+    years: [...byYear.entries()].sort((a, b) => b[0] - a[0]),
+    shifted: kept.filter((c) => c.shifted).length,
+    cancelled: kept.filter((c) => c.cancelled).length,
+  };
 }
 
 function renderGrid() {
-  const { tier, years } = gridRows();
+  const grid = gridRows();
+  const { tier, years } = grid;
   const head = `<thead><tr><th class="yr corner">ปี พ.ศ.</th>${
     MONTH_ABBR.map((m) => `<th>${m}</th>`).join("")}</tr></thead>`;
   const body = years.map(([year, months]) => {
-    const cells = months.map((draws) => {
-      if (!draws.length) return `<td><span class="void">·</span></td>`;
-      const chips = draws.map((d) => `<button class="chip" data-date="${d.date}"
-          data-n="${esc(d.nums.join(" "))}" title="ดูผลทั้งงวด ${esc(thaiDate(d.date))}">
-          <span class="dd">${d.day}</span><span class="v">${esc(d.nums.join(" "))}</span></button>`).join("");
+    const cells = months.map((slots) => {
+      if (!slots.length) return `<td><span class="void">·</span></td>`;
+      const chips = slots.map((c) => {
+        if (c.cancelled) {
+          return `<span class="chip off" title="${esc(c.note || "")}">
+            <span class="dd">${c.slot}</span><span class="v">งดจำหน่าย</span></span>`;
+        }
+        const tip = c.shifted
+          ? `งวด ${thaiDate(c.period)} ออกรางวัลวันที่ ${thaiDate(c.date)}`
+          : `ดูผลทั้งงวด ${thaiDate(c.date)}`;
+        return `<button class="chip" data-date="${c.date}" data-n="${esc(c.nums.join(" "))}"
+            title="${esc(tip)}"><span class="dd">${c.day}</span><span class="v">${
+            esc(c.nums.join(" "))}${c.shifted ? STAR_HTML : ""}</span></button>`;
+      }).join("");
       return `<td><div class="stack">${chips}</div></td>`;
     }).join("");
     return `<tr><th class="yr">${year + 543}</th>${cells}</tr>`;
   }).join("");
 
-  const halfText = { all: "ทุกงวดในเดือน", early: "เฉพาะงวดวันที่ 1–10", late: "เฉพาะงวดวันที่ 11 ขึ้นไป" }[view.half];
+  const slotText = { all: "งวดวันที่ 1 และ 16", "1": "เฉพาะงวดวันที่ 1", "16": "เฉพาะงวดวันที่ 16" }[view.slot];
   return `<section class="frame">
     <div class="frame-head">
       <h2>${esc(tier.label)}</h2>
-      <span class="note">${years.length} ปี · ${esc(halfText)} · คลิกเลขเพื่อดูผลทั้งงวด</span>
+      <span class="note">${years.length} ปี · ${esc(slotText)} · คลิกเลขเพื่อดูผลทั้งงวด</span>
     </div>
     <div class="pan"><table class="grid">${head}<tbody>${body}</tbody></table></div>
   </section>
-  <p class="note">ตัวเลขเล็กหน้าเลขรางวัลคือวันที่ออกรางวัล ช่องที่มีหลายงวดเรียงตามวันที่
-  — ธันวาคมมักออก 3 งวด (วันที่ 1, 16 และ 30)</p>`;
+  <p class="note">จัดตามงวด ไม่ใช่วันออกรางวัล จึงได้ 2 งวดต่อเดือนเสมอ
+  ตัวเลขเล็กคือวันที่ออกรางวัลจริง ·
+  <b class="starkey">*</b> งวดที่ออกรางวัลคนละเดือนกับงวดของตัวเอง (${grid.shifted} งวด เช่น
+  งวด 1 มกราคม ออกวันที่ 30 ธันวาคมปีก่อน) ·
+  <b>งดจำหน่าย</b> งวดที่ไม่มีการออกรางวัล (${grid.cancelled} งวด)</p>`;
 }
 
 function wireGrid() {

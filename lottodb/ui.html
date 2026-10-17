@@ -119,6 +119,10 @@
   .drawchip .val {
     font-variant-numeric: tabular-nums; letter-spacing: 0.6px; font-weight: 600;
   }
+  .drawchip .star { color: var(--gold); font-weight: 700; margin-left: 1px; }
+  .drawchip.off { cursor: default; opacity: 0.65; }
+  .drawchip.off:hover { border-color: transparent; background: none; }
+  .drawchip.off .val { font-size: 10.5px; color: var(--ink-dim); letter-spacing: 0; }
   .drawchip.hit { background: var(--hit); border-color: var(--gold); }
   .drawchip.hit .val, .drawchip.hit .day { color: var(--hit-ink); }
   .empty { color: var(--line); }
@@ -191,11 +195,11 @@
         <label class="fld">รางวัล
           <div class="seg" id="mcat"></div>
         </label>
-        <label class="fld">งวดในเดือน
-          <div class="seg" id="mhalf">
-            <button class="ghost" data-half="all" aria-pressed="true">ทุกงวด</button>
-            <button class="ghost" data-half="early" aria-pressed="false">วันที่ 1-10</button>
-            <button class="ghost" data-half="late" aria-pressed="false">วันที่ 11+</button>
+        <label class="fld">งวด
+          <div class="seg" id="mslot">
+            <button class="ghost" data-slot="all" aria-pressed="true">ทั้งคู่</button>
+            <button class="ghost" data-slot="1" aria-pressed="false">งวดวันที่ 1</button>
+            <button class="ghost" data-slot="16" aria-pressed="false">งวดวันที่ 16</button>
           </div>
         </label>
         <label class="fld">เน้นเลขที่มี
@@ -204,7 +208,10 @@
       </div>
       <div class="hint">
         แถว = ปี พ.ศ. · คอลัมน์ = เดือน · คลิกเลขเพื่อดูผลทั้งงวด ·
-        ตัวเลขเล็กหน้าเลขรางวัลคือวันที่ออกรางวัล
+        ตัวเลขเล็กหน้าเลขรางวัลคือวันที่ออกรางวัลจริง<br>
+        จัดตามงวด ไม่ใช่วันออกรางวัล จึงได้ 2 งวดต่อเดือนเสมอ ·
+        <b>*</b> = งวดนี้ออกรางวัลคนละเดือนกับงวดของตัวเอง ·
+        <b>งดจำหน่าย</b> = ไม่มีการออกรางวัลงวดนั้น
       </div>
     </div>
     <div id="matrixHost"></div>
@@ -307,7 +314,7 @@ const TH_MONTHS = ["มกราคม","กุมภาพันธ์","มี
 const TH_ABBR = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
 
 let META = null;
-const mState = { category: "last2", half: "all", data: null };
+const mState = { category: "last2", slot: "all", data: null };
 
 async function api(path, params = {}) {
   const url = new URL(path, location.origin);
@@ -383,11 +390,11 @@ $("mcat").addEventListener("click", (ev) => {
   loadMatrix();
 });
 
-$("mhalf").addEventListener("click", (ev) => {
-  const btn = ev.target.closest("button[data-half]");
+$("mslot").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button[data-slot]");
   if (!btn) return;
-  mState.half = btn.dataset.half;
-  for (const b of $("mhalf").children) b.setAttribute("aria-pressed", String(b === btn));
+  mState.slot = btn.dataset.slot;
+  for (const b of $("mslot").children) b.setAttribute("aria-pressed", String(b === btn));
   loadMatrix();
 });
 
@@ -396,7 +403,7 @@ $("mhl").addEventListener("input", () => paintHighlight());
 async function loadMatrix() {
   const host = $("matrixHost");
   try {
-    mState.data = await api("/api/matrix", { category: mState.category, half: mState.half });
+    mState.data = await api("/api/matrix", { category: mState.category, slot: mState.slot });
     renderMatrix();
   } catch (err) { showError(host, err); }
 }
@@ -407,13 +414,21 @@ function renderMatrix() {
     TH_ABBR.map((m) => `<th>${m}</th>`).join("")}</tr></thead>`;
 
   const body = data.years.map((year) => {
-    const cells = year.months.map((draws) => {
-      if (!draws.length) return `<td><span class="empty">·</span></td>`;
-      const chips = draws.map((d) =>
-        `<span class="drawchip" data-date="${d.date}" data-nums="${esc(d.numbers.join(" "))}">
-           <span class="day">${d.day}</span>
-           <span class="val">${d.numbers.map(esc).join(" ")}</span>
-         </span>`).join("");
+    const cells = year.months.map((slots) => {
+      if (!slots.length) return `<td><span class="empty">·</span></td>`;
+      const chips = slots.map((c) => {
+        if (c.cancelled) {
+          return `<span class="drawchip off" title="${esc(c.note || "")}">
+            <span class="day">${c.slot}</span><span class="val">งดจำหน่าย</span></span>`;
+        }
+        const star = c.shifted ? `<span class="star">*</span>` : "";
+        const tip = c.shifted ? `งวด ${c.period} ออกรางวัลวันที่ ${c.date} — ${c.note || ""}`
+                              : `ออกรางวัลวันที่ ${c.date}`;
+        return `<span class="drawchip" data-date="${c.date}" data-nums="${esc(c.numbers.join(" "))}"
+                      title="${esc(tip)}">
+          <span class="day">${c.day}</span>
+          <span class="val">${c.numbers.map(esc).join(" ")}${star}</span></span>`;
+      }).join("");
       return `<td><div class="cellbox">${chips}</div></td>`;
     }).join("");
     return `<tr><th class="yr">${year.year_be}</th>${cells}</tr>`;
@@ -422,7 +437,8 @@ function renderMatrix() {
   $("matrixHost").innerHTML = `<div class="card">
     <div class="draw-head" style="margin-bottom:10px">
       <h2>${esc(data.label)}</h2>
-      <span class="pg-meta">${data.years.length} ปี · เทียบเดือนต่อเดือน</span>
+      <span class="pg-meta">${data.years.length} ปี · ติดดาว ${data.shifted_count} งวด ·
+        งดจำหน่าย ${data.cancelled_count} งวด</span>
     </div>
     <div class="mscroll"><table class="matrix">${head}<tbody>${body}</tbody></table></div>
   </div>`;
