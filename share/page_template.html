@@ -1,0 +1,604 @@
+<title>สลากย้อนหลัง 2549–2569</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chonburi&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<style>
+/* ตารางข้อมูลเป็นพระเอก: แถบควบคุมติดบนสุด แล้วตารางกินพื้นที่ที่เหลือทั้งหมด
+   สีหยิบจากสลากกินแบ่งรัฐบาลจริง — หมึกครั่งเข้ม ทองเก่า บนกระดาษออกชมพูจาง */
+:root {
+  color-scheme: light;
+  --paper: #f7f3f2;
+  --surface: #fffdfd;
+  --surface-2: #f2ecec;
+  --ink: #1b1719;
+  --ink-2: #6d6266;
+  --rule: #e3dbdb;
+  --seal: #8e2230;
+  --seal-soft: #faecec;
+  --gilt: #87662a;
+  --gilt-soft: #fbf2e0;
+  --mark: #f7e3a4;
+  --mark-ink: #5a4406;
+
+  --display: "Chonburi", "Noto Serif Thai", Georgia, serif;
+  --body: "IBM Plex Sans Thai", "Leelawadee UI", Tahoma, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", "Cascadia Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #161214;
+    --surface: #1e191b;
+    --surface-2: #272022;
+    --ink: #f1eaeb;
+    --ink-2: #a79ca0;
+    --rule: #342b2e;
+    --seal: #ef959c;
+    --seal-soft: #2e1e21;
+    --gilt: #d9af67;
+    --gilt-soft: #2b2316;
+    --mark: #4e3d10;
+    --mark-ink: #ffe9a8;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #161214;
+  --surface: #1e191b;
+  --surface-2: #272022;
+  --ink: #f1eaeb;
+  --ink-2: #a79ca0;
+  --rule: #342b2e;
+  --seal: #ef959c;
+  --seal-soft: #2e1e21;
+  --gilt: #d9af67;
+  --gilt-soft: #2b2316;
+  --mark: #4e3d10;
+  --mark-ink: #ffe9a8;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+.gut {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.shell { max-width: 1240px; margin: 0 auto; }
+
+/* ---------------------------------------------------------- หัวเรื่อง */
+header { padding-block: 26px 18px; }
+h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(27px, 6vw, 40px);
+  line-height: 1.15;
+  margin: 0;
+  color: var(--seal);
+  text-wrap: balance;
+}
+.standfirst { margin: 8px 0 0; max-width: 62ch; color: var(--ink-2); font-size: 14px; }
+.tally { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 14px; }
+.tally div { display: flex; flex-direction: column; }
+.tally dt {
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-2); font-weight: 600;
+}
+.tally dd {
+  margin: 0; font-family: var(--mono); font-weight: 600; font-size: 17px;
+  font-variant-numeric: tabular-nums; color: var(--ink);
+}
+
+/* ---------------------------------------------------------- แถบควบคุม */
+.bar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  padding-block: 10px;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 25; background: var(--paper);
+}
+.bar-in { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: flex-end; }
+.group { display: flex; flex-direction: column; gap: 5px; }
+.group > span {
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-2); font-weight: 600;
+}
+.seg { display: flex; flex-wrap: wrap; gap: 4px; }
+button {
+  font: inherit; font-size: 13.5px; cursor: pointer; color: var(--ink-2);
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 7px; padding: 6px 12px;
+}
+button:hover { border-color: var(--seal); color: var(--ink); }
+button[aria-pressed="true"], button[aria-selected="true"] {
+  background: var(--seal); border-color: var(--seal); color: var(--surface);
+  font-weight: 600;
+}
+:root[data-theme="dark"] button[aria-pressed="true"],
+:root[data-theme="dark"] button[aria-selected="true"] { color: #1a1113; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) button[aria-pressed="true"],
+  :root:not([data-theme="light"]) button[aria-selected="true"] { color: #1a1113; }
+}
+:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+input {
+  font: inherit; font-family: var(--mono); font-size: 14px;
+  padding: 6px 10px; border-radius: 7px; border: 1px solid var(--rule);
+  background: var(--surface); color: var(--ink); width: 9ch;
+}
+input::placeholder { color: var(--ink-2); font-family: var(--body); }
+input.wide { width: 13ch; }
+
+nav.tabs { display: flex; gap: 4px; flex-wrap: wrap; padding-block: 14px 0; }
+
+/* ---------------------------------------------------------- ตารางเทียบ */
+.frame {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 10px; overflow: hidden; margin-block: 14px;
+}
+.frame-head {
+  display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline;
+  justify-content: space-between; padding: 12px 14px;
+  border-bottom: 1px solid var(--rule); background: var(--surface-2);
+}
+.frame-head h2 { font-family: var(--display); font-weight: 400; font-size: 19px; margin: 0; }
+.note { color: var(--ink-2); font-size: 12.5px; }
+.pan { overflow: auto; max-height: min(74vh, 780px); }
+
+table.grid { border-collapse: separate; border-spacing: 0; width: 100%; }
+table.grid th, table.grid td {
+  border-bottom: 1px solid var(--rule); border-right: 1px solid var(--rule);
+  padding: 4px 6px; text-align: center; vertical-align: top; white-space: nowrap;
+}
+table.grid thead th {
+  position: sticky; top: 0; z-index: 3; background: var(--surface-2);
+  font-size: 11px; letter-spacing: 0.04em; color: var(--ink-2); font-weight: 600;
+  padding-block: 8px;
+}
+table.grid th.yr {
+  position: sticky; left: 0; z-index: 2; background: var(--surface-2);
+  font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600;
+  text-align: right; font-size: 13px; min-width: 54px; color: var(--ink);
+}
+table.grid thead th.corner { z-index: 4; left: 0; text-align: right; }
+table.grid td.on, table.grid thead th.on { background: var(--seal-soft); }
+table.grid th.yr.on { background: var(--seal-soft); color: var(--seal); }
+
+.stack { display: flex; flex-direction: column; gap: 2px; }
+.chip {
+  display: flex; gap: 5px; align-items: baseline; justify-content: center;
+  border: 1px solid transparent; border-radius: 5px; padding: 2px 4px;
+  cursor: pointer; background: none; color: inherit; width: 100%;
+}
+.chip:hover { border-color: var(--seal); background: var(--seal-soft); }
+.chip .dd {
+  font-family: var(--mono); font-size: 9.5px; font-variant-numeric: tabular-nums;
+  color: var(--ink-2); min-width: 2ch; text-align: right;
+}
+.chip .v {
+  font-family: var(--mono); font-weight: 600; font-size: 13px;
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em; color: var(--ink);
+}
+.chip.lit { background: var(--mark); border-color: var(--gilt); }
+.chip.lit .v, .chip.lit .dd { color: var(--mark-ink); }
+.void { color: var(--rule); font-family: var(--mono); }
+
+/* ---------------------------------------------------------- ผลทั้งงวด */
+.tier { border-top: 1px solid var(--rule); padding: 13px 14px; }
+.tier:first-child { border-top: 0; }
+.tier-head {
+  display: flex; flex-wrap: wrap; gap: 4px 12px;
+  justify-content: space-between; align-items: baseline; margin-bottom: 8px;
+}
+.tier-head b { font-weight: 600; font-size: 14.5px; }
+.tier-head span { font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.balls { display: flex; flex-wrap: wrap; gap: 5px; }
+.ball {
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  font-variant-numeric: tabular-nums; letter-spacing: 0.04em;
+  padding: 4px 7px; border-radius: 5px;
+  background: var(--surface-2); border: 1px solid var(--rule); color: var(--ink);
+}
+.ball.one {
+  font-size: clamp(26px, 7vw, 38px); font-weight: 600; letter-spacing: 0.12em;
+  padding: 8px 16px; background: var(--gilt-soft); border-color: var(--gilt); color: var(--gilt);
+}
+.ball.two { font-size: 17px; font-weight: 600; padding: 6px 11px; }
+.ball.hit { background: var(--mark); border-color: var(--gilt); color: var(--mark-ink); }
+.flip { display: flex; gap: 6px; flex-wrap: wrap; padding: 12px 14px 0; }
+
+/* ---------------------------------------------------------- ตรวจสลาก */
+.verdict { margin: 0; padding: 14px; border-radius: 10px; }
+.verdict.yes { background: var(--seal-soft); border: 1px solid var(--seal); }
+.verdict.no { background: var(--surface-2); border: 1px solid var(--rule); color: var(--ink-2); }
+.verdict h3 { font-family: var(--display); font-weight: 400; font-size: 17px; margin: 0 0 8px; color: var(--seal); }
+.verdict.no h3 { color: var(--ink-2); }
+
+table.rows { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+table.rows th, table.rows td {
+  text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule);
+}
+table.rows th {
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-2); font-weight: 600;
+}
+table.rows td.num {
+  font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600;
+  letter-spacing: 0.04em;
+}
+table.rows tbody tr.tap { cursor: pointer; }
+table.rows tbody tr.tap:hover { background: var(--seal-soft); }
+.wrapx { overflow-x: auto; }
+
+footer {
+  padding-block: 20px 30px; margin-top: 10px;
+  border-top: 1px solid var(--rule); color: var(--ink-2); font-size: 12px; line-height: 1.75;
+}
+footer a { color: var(--seal); }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+@media (max-width: 560px) {
+  table.grid th, table.grid td { padding: 3px 4px; }
+  .chip .v { font-size: 11.5px; }
+  .chip .dd { font-size: 9px; }
+  table.grid th.yr { min-width: 44px; font-size: 12px; }
+}
+</style>
+
+<div class="shell gut">
+  <header>
+    <h1>ผลสลากกินแบ่งรัฐบาล ย้อนหลังทุกงวด</h1>
+    <p class="standfirst">
+      เทียบเลขรางวัลเดือนต่อเดือนข้ามทุกปี ตั้งแต่งวดแรกที่มีข้อมูลจนถึงงวดล่าสุด
+      เก็บครบทั้ง 9 หมวดรางวัล ไม่ใช่แค่รางวัลที่ 1
+    </p>
+    <dl class="tally" id="tally"></dl>
+  </header>
+</div>
+
+<div class="bar gut">
+  <div class="shell">
+    <div class="bar-in" id="barIn"></div>
+  </div>
+</div>
+
+<div class="shell gut">
+  <nav class="tabs" id="tabs">
+    <button data-view="grid" aria-selected="true">เทียบรายเดือน</button>
+    <button data-view="draw" aria-selected="false">ผลทั้งงวด</button>
+    <button data-view="ticket" aria-selected="false">ตรวจสลาก</button>
+  </nav>
+
+  <main id="stage"></main>
+
+  <footer>
+    <span id="src"></span><br>
+    ข้อมูลเพื่อการค้นย้อนหลังเท่านั้น การขึ้นเงินรางวัลให้ยึดประกาศของสำนักงานสลากกินแบ่งรัฐบาล
+    ความถี่ที่เห็นในหน้านี้เป็นการนับย้อนหลัง ไม่ใช่การทำนาย การออกรางวัลแต่ละงวดเป็นอิสระจากงวดก่อน
+  </footer>
+</div>
+
+<script id="lotto-data" type="application/json">__DATA__</script>
+<script>
+"use strict";
+const DB = JSON.parse(document.getElementById("lotto-data").textContent);
+
+const MONTH_FULL = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
+                    "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+const MONTH_ABBR = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
+                    "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+
+/* ลำดับหมวดใน DB.draws ตรงกับ DB.tiers */
+const TIERS = DB.tiers;
+const INDEX = Object.fromEntries(TIERS.map((t, i) => [t.key, i]));
+const GRID_TIERS = ["first", "front3", "back3", "last2"];
+
+/* คลี่สตริงเลขที่ต่อกันออกเป็นลิสต์ ตามจำนวนหลักของหมวดนั้น */
+function split(packed, digits) {
+  const out = [];
+  for (let i = 0; i + digits <= packed.length; i += digits) out.push(packed.slice(i, i + digits));
+  return out;
+}
+function numbersOf(date, key) {
+  const row = DB.draws[date];
+  if (!row) return [];
+  const tier = TIERS[INDEX[key]];
+  return split(row[INDEX[key]] || "", tier.digits);
+}
+
+const DATES = Object.keys(DB.draws).sort();
+const LATEST = DATES[DATES.length - 1];
+
+const thaiDate = (iso) => {
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${d} ${MONTH_FULL[m - 1]} ${y + 543}`;
+};
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const group = (n) => n.toLocaleString("th-TH");
+
+const view = { name: "grid", tier: "last2", half: "all", lit: "", date: LATEST, ticket: "" };
+
+/* ------------------------------------------------------------- หัวสรุป */
+document.getElementById("tally").innerHTML = [
+  ["งวดทั้งหมด", group(DATES.length)],
+  ["เลขรางวัล", group(DB.prize_count)],
+  ["งวดแรก", thaiDate(DATES[0])],
+  ["งวดล่าสุด", thaiDate(LATEST)],
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("");
+
+document.getElementById("src").innerHTML =
+  `ข้อมูล ${esc(DB.synced_at || "")} · คลังย้อนหลัง ` +
+  `<a href="https://github.com/vicha-w/thai-lotto-archive" target="_blank" rel="noreferrer">vicha-w/thai-lotto-archive</a>` +
+  ` สอบทานกับ API สำนักงานสลากกินแบ่งรัฐบาล และหน้าตรวจหวยย้อนหลังของ sanook · ` +
+  `เครื่องมือและโค้ด <a href="https://github.com/bomnatthasit/thai-lotto-db" target="_blank" rel="noreferrer">bomnatthasit/thai-lotto-db</a>`;
+
+/* ------------------------------------------------------------- แถบควบคุม */
+function renderBar() {
+  const bar = document.getElementById("barIn");
+  if (view.name === "grid") {
+    bar.innerHTML = `
+      <label class="group"><span>รางวัล</span>
+        <span class="seg" id="tierSeg">${GRID_TIERS.map((k) =>
+          `<button data-tier="${k}" aria-pressed="${k === view.tier}">${esc(TIERS[INDEX[k]].label)}</button>`
+        ).join("")}</span>
+      </label>
+      <label class="group"><span>งวดในเดือน</span>
+        <span class="seg" id="halfSeg">
+          <button data-half="all" aria-pressed="${view.half === "all"}">ทุกงวด</button>
+          <button data-half="early" aria-pressed="${view.half === "early"}">วันที่ 1–10</button>
+          <button data-half="late" aria-pressed="${view.half === "late"}">วันที่ 11+</button>
+        </span>
+      </label>
+      <label class="group"><span>เน้นเลขที่มี</span>
+        <input id="litBox" inputmode="numeric" placeholder="เช่น 48" value="${esc(view.lit)}">
+      </label>`;
+    document.getElementById("tierSeg").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-tier]");
+      if (b) { view.tier = b.dataset.tier; render(); }
+    });
+    document.getElementById("halfSeg").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-half]");
+      if (b) { view.half = b.dataset.half; render(); }
+    });
+    const box = document.getElementById("litBox");
+    box.addEventListener("input", () => { view.lit = box.value.replace(/\D/g, ""); paintLit(); });
+    return;
+  }
+  if (view.name === "draw") {
+    bar.innerHTML = `
+      <label class="group"><span>เลือกงวด</span>
+        <select id="pick" style="font:inherit;padding:6px 10px;border-radius:7px;
+          border:1px solid var(--rule);background:var(--surface);color:var(--ink)">
+          ${DATES.slice().reverse().map((d) =>
+            `<option value="${d}"${d === view.date ? " selected" : ""}>${esc(thaiDate(d))}</option>`).join("")}
+        </select>
+      </label>`;
+    document.getElementById("pick").addEventListener("change", (e) => {
+      view.date = e.target.value; render();
+    });
+    return;
+  }
+  bar.innerHTML = `
+    <label class="group"><span>เลขสลาก 6 หลัก</span>
+      <input id="tk" class="wide" inputmode="numeric" maxlength="7"
+             placeholder="011781" value="${esc(view.ticket)}">
+    </label>
+    <label class="group"><span>เทียบกับงวด</span>
+      <select id="tkDate" style="font:inherit;padding:6px 10px;border-radius:7px;
+        border:1px solid var(--rule);background:var(--surface);color:var(--ink)">
+        ${DATES.slice().reverse().map((d) =>
+          `<option value="${d}"${d === view.date ? " selected" : ""}>${esc(thaiDate(d))}</option>`).join("")}
+      </select>
+    </label>`;
+  const tk = document.getElementById("tk");
+  tk.addEventListener("input", () => { view.ticket = tk.value.replace(/\D/g, "").slice(0, 6); paintTicket(); });
+  document.getElementById("tkDate").addEventListener("change", (e) => {
+    view.date = e.target.value; paintTicket();
+  });
+}
+
+/* ------------------------------------------------------------- ตารางเทียบ */
+function gridRows() {
+  const tier = TIERS[INDEX[view.tier]];
+  const byYear = new Map();
+  for (const date of DATES) {
+    const [y, m, d] = date.split("-").map(Number);
+    if (view.half === "early" && d > 10) continue;
+    if (view.half === "late" && d <= 10) continue;
+    if (!byYear.has(y)) byYear.set(y, Array.from({ length: 12 }, () => []));
+    byYear.get(y)[m - 1].push({ date, day: d, nums: numbersOf(date, view.tier) });
+  }
+  return { tier, years: [...byYear.entries()].sort((a, b) => b[0] - a[0]) };
+}
+
+function renderGrid() {
+  const { tier, years } = gridRows();
+  const head = `<thead><tr><th class="yr corner">ปี พ.ศ.</th>${
+    MONTH_ABBR.map((m) => `<th>${m}</th>`).join("")}</tr></thead>`;
+  const body = years.map(([year, months]) => {
+    const cells = months.map((draws) => {
+      if (!draws.length) return `<td><span class="void">·</span></td>`;
+      const chips = draws.map((d) => `<button class="chip" data-date="${d.date}"
+          data-n="${esc(d.nums.join(" "))}" title="ดูผลทั้งงวด ${esc(thaiDate(d.date))}">
+          <span class="dd">${d.day}</span><span class="v">${esc(d.nums.join(" "))}</span></button>`).join("");
+      return `<td><div class="stack">${chips}</div></td>`;
+    }).join("");
+    return `<tr><th class="yr">${year + 543}</th>${cells}</tr>`;
+  }).join("");
+
+  const halfText = { all: "ทุกงวดในเดือน", early: "เฉพาะงวดวันที่ 1–10", late: "เฉพาะงวดวันที่ 11 ขึ้นไป" }[view.half];
+  return `<section class="frame">
+    <div class="frame-head">
+      <h2>${esc(tier.label)}</h2>
+      <span class="note">${years.length} ปี · ${esc(halfText)} · คลิกเลขเพื่อดูผลทั้งงวด</span>
+    </div>
+    <div class="pan"><table class="grid">${head}<tbody>${body}</tbody></table></div>
+  </section>
+  <p class="note">ตัวเลขเล็กหน้าเลขรางวัลคือวันที่ออกรางวัล ช่องที่มีหลายงวดเรียงตามวันที่
+  — ธันวาคมมักออก 3 งวด (วันที่ 1, 16 และ 30)</p>`;
+}
+
+function wireGrid() {
+  const table = document.querySelector("table.grid");
+  if (!table) return;
+  table.addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (chip) { view.date = chip.dataset.date; view.name = "draw"; render(); }
+  });
+  table.addEventListener("mouseover", (e) => {
+    const cell = e.target.closest("td, th");
+    if (!cell) return;
+    const col = cell.cellIndex;
+    table.querySelectorAll(".on").forEach((el) => el.classList.remove("on"));
+    if (col > 0) for (const tr of table.rows) tr.cells[col]?.classList.add("on");
+  });
+  table.addEventListener("mouseleave", () =>
+    table.querySelectorAll(".on").forEach((el) => el.classList.remove("on")));
+  paintLit();
+}
+
+function paintLit() {
+  const needle = view.lit;
+  document.querySelectorAll(".chip").forEach((chip) => {
+    const hit = needle.length > 0 && chip.dataset.n.split(" ").some((n) => n.includes(needle));
+    chip.classList.toggle("lit", hit);
+  });
+}
+
+/* ------------------------------------------------------------- ผลทั้งงวด */
+function renderDraw() {
+  const date = view.date;
+  const i = DATES.indexOf(date);
+  const tiers = TIERS.map((t) => ({ tier: t, nums: numbersOf(date, t.key) }))
+                     .filter((x) => x.nums.length);
+  const blocks = tiers.map(({ tier, nums }) => {
+    const size = tier.key === "first" ? "one" : (nums.length <= 4 ? "two" : "");
+    return `<div class="tier">
+      <div class="tier-head"><b>${esc(tier.label)}</b><span>${nums.length} รางวัล</span></div>
+      <div class="balls">${nums.map((n) => `<span class="ball ${size}">${esc(n)}</span>`).join("")}</div>
+    </div>`;
+  }).join("");
+
+  return `<section class="frame">
+    <div class="frame-head">
+      <h2>งวดวันที่ ${esc(thaiDate(date))}</h2>
+      <span class="note">${esc(date)} · ${tiers.reduce((s, t) => s + t.nums.length, 0)} รางวัล</span>
+    </div>
+    <div class="flip">
+      ${i > 0 ? `<button data-go="${DATES[i - 1]}">← งวดก่อน</button>` : ""}
+      ${i < DATES.length - 1 ? `<button data-go="${DATES[i + 1]}">งวดถัดไป →</button>` : ""}
+    </div>
+    ${blocks}
+  </section>`;
+}
+
+function wireDraw() {
+  document.querySelectorAll("button[data-go]").forEach((b) =>
+    b.addEventListener("click", () => { view.date = b.dataset.go; render(); }));
+}
+
+/* ------------------------------------------------------------- ตรวจสลาก */
+function winsFor(ticket, date) {
+  const out = [];
+  for (const tier of TIERS) {
+    for (const n of numbersOf(date, tier.key)) {
+      const hit = tier.match === "exact" ? ticket === n
+                : tier.match === "prefix" ? ticket.startsWith(n)
+                : ticket.endsWith(n);
+      if (hit) out.push({ tier, n });
+    }
+  }
+  return out;
+}
+
+function renderTicket() {
+  return `<div id="tkOut"></div>`;
+}
+
+function paintTicket() {
+  const host = document.getElementById("tkOut");
+  if (!host) return;
+  const ticket = view.ticket;
+  if (ticket.length !== 6) {
+    host.innerHTML = `<section class="frame"><div class="tier">
+      <p class="verdict no" style="margin:0"><b>พิมพ์เลขสลาก 6 หลัก</b><br>
+      ระบบจะตรวจกับงวดที่เลือก และไล่ย้อนทุกงวดในคลังให้ด้วยว่าเลขนี้เคยถูกรางวัลอะไรมาแล้ว
+      รางวัลต่างหมวดถูกซ้อนกันได้ตามกติกาจริง</p>
+    </div></section>`;
+    return;
+  }
+
+  const now = winsFor(ticket, view.date);
+  const verdict = now.length
+    ? `<div class="verdict yes">
+         <h3>สลาก ${esc(ticket)} ถูกรางวัล · งวด ${esc(thaiDate(view.date))}</h3>
+         <div class="wrapx"><table class="rows"><tbody>${now.map((w) =>
+           `<tr><td>${esc(w.tier.label)}</td><td class="num">${esc(w.n)}</td></tr>`).join("")}
+         </tbody></table></div></div>`
+    : `<div class="verdict no"><h3>สลาก ${esc(ticket)} ไม่ถูกรางวัลในงวด ${esc(thaiDate(view.date))}</h3></div>`;
+
+  const past = [];
+  for (const date of DATES.slice().reverse()) {
+    const w = winsFor(ticket, date);
+    if (w.length) past.push({ date, wins: w });
+  }
+
+  const history = past.length
+    ? `<div class="wrapx"><table class="rows">
+         <thead><tr><th>งวด</th><th>รางวัลที่ถูก</th></tr></thead>
+         <tbody>${past.map((p) => `<tr class="tap" data-date="${p.date}">
+           <td>${esc(thaiDate(p.date))}</td>
+           <td>${p.wins.map((w) => `${esc(w.tier.label)} <span class="num">${esc(w.n)}</span>`).join("<br>")}</td>
+         </tr>`).join("")}</tbody></table></div>`
+    : `<p class="note" style="padding:0 14px 14px">เลขนี้ไม่เคยถูกรางวัลเลยใน ${group(DATES.length)} งวด</p>`;
+
+  host.innerHTML = `
+    <section class="frame"><div class="tier">${verdict}</div></section>
+    <section class="frame">
+      <div class="frame-head">
+        <h2>ย้อนดูเลข ${esc(ticket)} ทั้งคลัง</h2>
+        <span class="note">ถูก ${past.length} จาก ${group(DATES.length)} งวด
+          (${(past.length / DATES.length * 100).toFixed(1)}%)</span>
+      </div>
+      ${history}
+    </section>`;
+
+  host.querySelectorAll("tr[data-date]").forEach((tr) =>
+    tr.addEventListener("click", () => { view.date = tr.dataset.date; view.name = "draw"; render(); }));
+}
+
+/* ------------------------------------------------------------- เดินเรื่อง */
+document.getElementById("tabs").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-view]");
+  if (!b) return;
+  view.name = b.dataset.view;
+  render();
+});
+
+function render() {
+  for (const b of document.getElementById("tabs").children) {
+    b.setAttribute("aria-selected", String(b.dataset.view === view.name));
+  }
+  renderBar();
+  const stage = document.getElementById("stage");
+  if (view.name === "grid") { stage.innerHTML = renderGrid(); wireGrid(); }
+  else if (view.name === "draw") { stage.innerHTML = renderDraw(); wireDraw(); }
+  else { stage.innerHTML = renderTicket(); paintTicket(); }
+}
+
+render();
+</script>
