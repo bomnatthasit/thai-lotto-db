@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Azeret+Mono:wght@500;600&display=swap">
 
 <style>
 /* ท้องฟ้าราตรีม่วง-ฟ้าเป็นแถบเปิด แล้วเนื้อหาเป็นการ์ดขาวมนลอยบนพื้นสว่าง
@@ -38,9 +38,11 @@
   --p-green: #dcfce7;
   --p-amber: #fef3c7;
 
-  --display: "Anuphan", "Noto Sans Thai", system-ui, sans-serif;
-  --body: "IBM Plex Sans Thai", "Leelawadee UI", Tahoma, system-ui, sans-serif;
-  --mono: "IBM Plex Mono", "Cascadia Mono", ui-monospace, monospace;
+  --display: "Prompt", "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+  --body: "Prompt", "Noto Sans Thai", "Leelawadee UI", Tahoma, system-ui, sans-serif;
+  --mono: "Azeret Mono", "Cascadia Mono", ui-monospace, monospace;
+  /* ตัวเลขในตารางต้องแคบกว่าเลขพาดหัว ไม่งั้น 12 คอลัมน์ล้นจอ */
+  --mono-tight: "Prompt", "Noto Sans Thai", system-ui, sans-serif;
 
   --r-sm: 10px;
   --r-md: 16px;
@@ -96,7 +98,7 @@ body {
   color: var(--ink);
   font-family: var(--body);
   font-size: 15px;
-  line-height: 1.65;
+  line-height: 1.75;
   -webkit-text-size-adjust: 100%;
 }
 .gut {
@@ -108,7 +110,7 @@ body::before {
   content: ""; position: fixed; inset: 0 0 auto;
   height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--night-1);
 }
-h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; text-wrap: balance; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; text-wrap: balance; letter-spacing: -0.005em; }
 :focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; border-radius: 6px; }
 [hidden] { display: none !important; }
 
@@ -323,7 +325,7 @@ table.grid thead th {
 }
 table.grid th.yr {
   position: sticky; left: 0; z-index: 2; background: var(--card);
-  font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600;
+  font-family: var(--mono-tight); font-variant-numeric: tabular-nums; font-weight: 600;
   text-align: right; font-size: 13.5px; min-width: 60px; color: var(--ink-2); padding-right: 14px;
 }
 table.grid thead th.corner { z-index: 4; left: 0; text-align: right; padding-right: 14px; }
@@ -342,11 +344,11 @@ table.grid th.yr.on { background: var(--card-2); color: var(--brand); }
 }
 .cell:hover { background: var(--p-violet); }
 .cell .d {
-  font-family: var(--mono); font-size: 9.5px; color: var(--ink-3); opacity: .85;
+  font-family: var(--mono-tight); font-size: 9.5px; color: var(--ink-3); opacity: .85;
   font-variant-numeric: tabular-nums; min-width: 2ch; text-align: right;
 }
 .cell .n {
-  font-family: var(--mono); font-weight: 600; font-size: 13.5px;
+  font-family: var(--mono-tight); font-weight: 600; font-size: 13.5px;
   font-variant-numeric: tabular-nums; color: var(--ink); letter-spacing: .01em;
 }
 .cell .star { color: var(--brand); font-weight: 700; }

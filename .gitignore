@@ -12,3 +12,6 @@ __pycache__/
 
 # หน้าเว็บไฟล์เดียวที่สร้างใหม่ได้ด้วย share/build_page.py
 share/lotto-page.html
+
+# วิดีโอพื้นหลังของ landing page (ไฟล์ใหญ่ ไม่เก็บใน git)
+landing/assets/
