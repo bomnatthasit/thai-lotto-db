@@ -540,11 +540,16 @@ function renderDraw() {
     </div>`;
   }).join("");
 
+  const period = DB.periods[date] || date;
+  const shifted = period.slice(0, 7) !== date.slice(0, 7);
   return `<section class="frame">
     <div class="frame-head">
-      <h2>งวดวันที่ ${esc(thaiDate(date))}</h2>
+      <h2>งวดวันที่ ${esc(thaiDate(shifted ? period : date))}</h2>
       <span class="note">${esc(date)} · ${tiers.reduce((s, t) => s + t.nums.length, 0)} รางวัล</span>
     </div>
+    ${shifted ? `<p class="note" style="padding:12px 14px 0;margin:0">
+      <b class="starkey">*</b> งวดนี้ออกรางวัลวันที่ ${esc(thaiDate(date))} ซึ่งคนละเดือนกับงวด
+      ${esc(DB.shift_notes[date] ? "— " + DB.shift_notes[date] : "")}</p>` : ""}
     <div class="flip">
       ${i > 0 ? `<button data-go="${DATES[i - 1]}">← งวดก่อน</button>` : ""}
       ${i < DATES.length - 1 ? `<button data-go="${DATES[i + 1]}">งวดถัดไป →</button>` : ""}

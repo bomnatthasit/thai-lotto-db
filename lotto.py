@@ -123,6 +123,11 @@ def cmd_draw(args, conn: sqlite3.Connection) -> int:
     head = result["draw"]
     print(f"ผลสลากกินแบ่งรัฐบาล งวดวันที่ {head['draw_date_th']}  ({head['draw_date']})")
     print(f"แหล่งข้อมูล: {head['source']}   รางวัลรวม {head['prize_count']} รายการ")
+    sched = result["schedule"]
+    if sched["shifted"]:
+        print(f"* นี่คืองวดวันที่ {sched['period_th']} ที่มาออกรางวัลคนละเดือน — {sched['reason']}")
+    elif sched["same_month_shift"]:
+        print(f"  งวดวันที่ {sched['slot']} ของเดือน ออกรางวัลวันที่ {head['draw_date'][-2:]}")
     if head["anomalies"]:
         print(f"หมายเหตุ: {head['anomalies']}")
     print()

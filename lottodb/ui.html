@@ -515,6 +515,8 @@ async function loadDraw(date) {
         <h2>งวดวันที่ ${esc(d.draw_date_th)}</h2>
         <span class="pg-meta">${esc(d.draw_date)} · ${d.prize_count} รางวัล · แหล่ง ${esc(d.source)}</span>
       </div>
+      ${data.schedule.shifted ? `<div class="hint"><b>*</b> นี่คือ<b>งวดวันที่
+          ${esc(data.schedule.period_th)}</b> ที่มาออกรางวัลคนละเดือน — ${esc(data.schedule.reason || "")}</div>` : ""}
       ${d.anomalies ? `<div class="hint">หมายเหตุ: ${esc(d.anomalies)}</div>` : ""}
       <div class="row" style="margin:10px 0 2px">
         ${data.nav.prev ? `<button class="ghost" data-go="${data.nav.prev}">← งวดก่อน</button>` : ""}
