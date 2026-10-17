@@ -2,61 +2,59 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chonburi&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
 
 <style>
-/* ตารางข้อมูลเป็นพระเอก: แถบควบคุมติดบนสุด แล้วตารางกินพื้นที่ที่เหลือทั้งหมด
-   สีหยิบจากสลากกินแบ่งรัฐบาลจริง — หมึกครั่งเข้ม ทองเก่า บนกระดาษออกชมพูจาง */
+/* ม่วงเข้มไล่เฉดเป็นแถบแบรนด์ด้านบน เนื้อหาเป็นกระดาษสว่างข้างล่าง
+   สีหยิบจากมาสคอต: มิ้นต์เป็นสีหลัก ม่วงเป็นพื้น เหลืองไว้เน้นจุดเดียว
+   เส้นขอบหนาสีหมึกเข้มแบบการ์ตูนเวกเตอร์ และขอบพิกเซลคั่นแถบ */
 :root {
   color-scheme: light;
-  --paper: #f7f3f2;
-  --surface: #fffdfd;
-  --surface-2: #f2ecec;
-  --ink: #1b1719;
-  --ink-2: #6d6266;
-  --rule: #e3dbdb;
-  --seal: #8e2230;
-  --seal-soft: #faecec;
-  --gilt: #87662a;
-  --gilt-soft: #fbf2e0;
-  --mark: #f7e3a4;
-  --mark-ink: #5a4406;
+  --void: #190f3d;
+  --grape: #4c1d95;
+  --violet: #7c3aed;
+  --lilac: #c4b5fd;
+  --mint: #5eead4;
+  --mint-ink: #04463f;
+  --sun: #fde047;
+  --outline: #150b33;
 
-  --display: "Chonburi", "Noto Serif Thai", Georgia, serif;
+  --paper: #f3f0fd;
+  --card: #ffffff;
+  --card-2: #ece6fc;
+  --line: #d9cefa;
+  --ink: #1b1340;
+  --muted: #6a5c99;
+  --hit: #fde047;
+  --hit-ink: #352400;
+
+  --display: "Mitr", "Noto Sans Thai", system-ui, sans-serif;
   --body: "IBM Plex Sans Thai", "Leelawadee UI", Tahoma, system-ui, sans-serif;
   --mono: "IBM Plex Mono", "Cascadia Mono", ui-monospace, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --paper: #161214;
-    --surface: #1e191b;
-    --surface-2: #272022;
-    --ink: #f1eaeb;
-    --ink-2: #a79ca0;
-    --rule: #342b2e;
-    --seal: #ef959c;
-    --seal-soft: #2e1e21;
-    --gilt: #d9af67;
-    --gilt-soft: #2b2316;
-    --mark: #4e3d10;
-    --mark-ink: #ffe9a8;
+    --paper: #110a28;
+    --card: #1a1040;
+    --card-2: #241751;
+    --line: #35236d;
+    --ink: #efeaff;
+      --muted: #a396d8;
+    --hit: #4a3906;
+    --hit-ink: #fde047;
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --paper: #161214;
-  --surface: #1e191b;
-  --surface-2: #272022;
-  --ink: #f1eaeb;
-  --ink-2: #a79ca0;
-  --rule: #342b2e;
-  --seal: #ef959c;
-  --seal-soft: #2e1e21;
-  --gilt: #d9af67;
-  --gilt-soft: #2b2316;
-  --mark: #4e3d10;
-  --mark-ink: #ffe9a8;
+  --paper: #110a28;
+  --card: #1a1040;
+  --card-2: #241751;
+  --line: #35236d;
+  --ink: #efeaff;
+  --muted: #a396d8;
+  --hit: #4a3906;
+  --hit-ink: #fde047;
 }
 
 * { box-sizing: border-box; }
@@ -74,188 +72,212 @@ body {
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 .shell { max-width: 1240px; margin: 0 auto; }
-
-/* ---------------------------------------------------------- หัวเรื่อง */
-header { padding-block: 26px 18px; }
-h1 {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(27px, 6vw, 40px);
-  line-height: 1.15;
-  margin: 0;
-  color: var(--seal);
-  text-wrap: balance;
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--void);
 }
-.standfirst { margin: 8px 0 0; max-width: 62ch; color: var(--ink-2); font-size: 14px; }
-.tally { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 14px; }
+
+/* ---------------------------------------------------------- แถบฮีโร่ */
+.hero {
+  background:
+    radial-gradient(120% 140% at 18% 0%, var(--violet) 0%, transparent 55%),
+    radial-gradient(120% 130% at 88% 18%, #9333ea 0%, transparent 52%),
+    linear-gradient(170deg, var(--grape) 0%, var(--void) 78%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero-in {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 18px 28px; align-items: center; padding-block: 30px 26px;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--mint); margin: 0 0 10px;
+}
+h1 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(30px, 6.4vw, 54px); line-height: 1.08;
+  margin: 0; letter-spacing: -0.01em; text-wrap: balance; color: #fff;
+}
+h1 .hl { color: var(--mint); }
+.standfirst {
+  margin: 12px 0 0; max-width: 46ch; font-size: 14.5px; color: var(--lilac);
+}
+.tally { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 16px 0 0; }
 .tally div { display: flex; flex-direction: column; }
 .tally dt {
-  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-2); font-weight: 600;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--lilac);
 }
 .tally dd {
   margin: 0; font-family: var(--mono); font-weight: 600; font-size: 17px;
-  font-variant-numeric: tabular-nums; color: var(--ink);
+  font-variant-numeric: tabular-nums; color: #fff;
 }
+.hero-art { display: flex; justify-content: center; }
+.hero-art svg { width: 100%; max-width: 420px; height: auto; }
+.pixelrow {
+  height: 16px;
+  background:
+    repeating-linear-gradient(90deg, var(--violet) 0 16px, transparent 16px 32px);
+  opacity: 0.85;
+}
+.pixelrow + .pixelrow { height: 8px; background-position: 16px 0; opacity: 0.5; }
 
 /* ---------------------------------------------------------- แถบควบคุม */
 .bar {
-  position: sticky;
-  top: env(safe-area-inset-top, 0px);
-  z-index: 20;
-  background: var(--paper);
-  border-bottom: 1px solid var(--rule);
-  padding-block: 10px;
-}
-body::before {
-  content: ""; position: fixed; inset: 0 0 auto;
-  height: env(safe-area-inset-top, 0px); z-index: 25; background: var(--paper);
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--paper); border-bottom: 2px solid var(--line); padding-block: 11px;
 }
 .bar-in { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: flex-end; }
-.group { display: flex; flex-direction: column; gap: 5px; }
+.group { display: flex; flex-direction: column; gap: 6px; }
 .group > span {
-  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-2); font-weight: 600;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--muted);
 }
-.seg { display: flex; flex-wrap: wrap; gap: 4px; }
+.seg { display: flex; flex-wrap: wrap; gap: 5px; }
+.segrows { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
 button {
-  font: inherit; font-size: 13.5px; cursor: pointer; color: var(--ink-2);
-  background: var(--surface); border: 1px solid var(--rule);
-  border-radius: 7px; padding: 6px 12px;
+  font: inherit; font-size: 13px; cursor: pointer; color: var(--ink);
+  background: var(--card); border: 2px solid var(--line);
+  border-radius: 8px; padding: 5px 11px;
 }
-button:hover { border-color: var(--seal); color: var(--ink); }
+button:hover { border-color: var(--violet); }
 button[aria-pressed="true"], button[aria-selected="true"] {
-  background: var(--seal); border-color: var(--seal); color: var(--surface);
+  background: var(--mint); border-color: var(--outline); color: var(--mint-ink);
   font-weight: 600;
 }
-:root[data-theme="dark"] button[aria-pressed="true"],
-:root[data-theme="dark"] button[aria-selected="true"] { color: #1a1113; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) button[aria-pressed="true"],
-  :root:not([data-theme="light"]) button[aria-selected="true"] { color: #1a1113; }
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 2px; }
+input, select {
+  font: inherit; font-family: var(--mono); font-size: 13.5px;
+  padding: 5px 10px; border-radius: 8px; border: 2px solid var(--line);
+  background: var(--card); color: var(--ink); width: 9ch;
 }
-:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
-input {
-  font: inherit; font-family: var(--mono); font-size: 14px;
-  padding: 6px 10px; border-radius: 7px; border: 1px solid var(--rule);
-  background: var(--surface); color: var(--ink); width: 9ch;
-}
-input::placeholder { color: var(--ink-2); font-family: var(--body); }
+select { width: auto; font-family: var(--body); }
+input::placeholder { color: var(--muted); font-family: var(--body); }
 input.wide { width: 13ch; }
 
-nav.tabs { display: flex; gap: 4px; flex-wrap: wrap; padding-block: 14px 0; }
+nav.tabs { display: flex; gap: 5px; flex-wrap: wrap; padding-block: 16px 0; }
+nav.tabs button { font-size: 13.5px; padding: 7px 15px; border-radius: 999px; }
 
-/* ---------------------------------------------------------- ตารางเทียบ */
+/* ---------------------------------------------------------- กรอบเนื้อหา */
 .frame {
-  background: var(--surface); border: 1px solid var(--rule);
-  border-radius: 10px; overflow: hidden; margin-block: 14px;
+  background: var(--card); border: 2px solid var(--line);
+  border-radius: 14px; overflow: hidden; margin-block: 14px;
 }
 .frame-head {
   display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline;
-  justify-content: space-between; padding: 12px 14px;
-  border-bottom: 1px solid var(--rule); background: var(--surface-2);
+  justify-content: space-between; padding: 13px 15px;
+  border-bottom: 2px solid var(--line); background: var(--card-2);
 }
-.frame-head h2 { font-family: var(--display); font-weight: 400; font-size: 19px; margin: 0; }
-.note { color: var(--ink-2); font-size: 12.5px; }
+.frame-head h2 { font-family: var(--display); font-weight: 500; font-size: 18px; margin: 0; }
+.note { color: var(--muted); font-size: 12.5px; }
 .pan { overflow: auto; max-height: min(74vh, 780px); }
 
 table.grid { border-collapse: separate; border-spacing: 0; width: 100%; }
 table.grid th, table.grid td {
-  border-bottom: 1px solid var(--rule); border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--line); border-right: 1px solid var(--line);
   padding: 4px 6px; text-align: center; vertical-align: top; white-space: nowrap;
 }
 table.grid thead th {
-  position: sticky; top: 0; z-index: 3; background: var(--surface-2);
-  font-size: 11px; letter-spacing: 0.04em; color: var(--ink-2); font-weight: 600;
-  padding-block: 8px;
+  position: sticky; top: 0; z-index: 3; background: var(--card-2);
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em;
+  color: var(--muted); font-weight: 600; padding-block: 9px;
 }
 table.grid th.yr {
-  position: sticky; left: 0; z-index: 2; background: var(--surface-2);
+  position: sticky; left: 0; z-index: 2; background: var(--card-2);
   font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600;
   text-align: right; font-size: 13px; min-width: 54px; color: var(--ink);
 }
 table.grid thead th.corner { z-index: 4; left: 0; text-align: right; }
-table.grid td.on, table.grid thead th.on { background: var(--seal-soft); }
-table.grid th.yr.on { background: var(--seal-soft); color: var(--seal); }
+table.grid td.on, table.grid thead th.on { background: color-mix(in srgb, var(--violet) 12%, transparent); }
+table.grid th.yr.on { background: color-mix(in srgb, var(--violet) 12%, transparent); color: var(--violet); }
 
 .stack { display: flex; flex-direction: column; gap: 2px; }
 .chip {
   display: flex; gap: 5px; align-items: baseline; justify-content: center;
-  border: 1px solid transparent; border-radius: 5px; padding: 2px 4px;
+  border: 2px solid transparent; border-radius: 7px; padding: 2px 4px;
   cursor: pointer; background: none; color: inherit; width: 100%;
+  flex-wrap: wrap; row-gap: 1px;
 }
-.chip:hover { border-color: var(--seal); background: var(--seal-soft); }
+.chip:hover { border-color: var(--violet); background: var(--card-2); }
 .chip .dd {
   font-family: var(--mono); font-size: 9.5px; font-variant-numeric: tabular-nums;
-  color: var(--ink-2); min-width: 2ch; text-align: right;
+  color: var(--muted); min-width: 2ch; text-align: right;
 }
 .chip .v {
   font-family: var(--mono); font-weight: 600; font-size: 13px;
   font-variant-numeric: tabular-nums; letter-spacing: 0.02em; color: var(--ink);
 }
-.chip .star { color: var(--gilt); font-weight: 700; }
-.chip.off { cursor: default; opacity: 0.6; }
+.chip .star { color: var(--violet); font-weight: 700; }
+.chip .more { font-family: var(--mono); font-size: 9.5px; color: var(--muted); align-self: center; }
+.chip.lit { background: var(--hit); border-color: var(--outline); }
+.chip.lit .v, .chip.lit .dd, .chip.lit .more, .chip.lit .star { color: var(--hit-ink); }
+.chip.off { cursor: default; opacity: 0.55; }
 .chip.off:hover { border-color: transparent; background: none; }
-.chip.off .v { font-size: 10px; letter-spacing: 0; color: var(--ink-2); font-family: var(--body); }
-.starkey { color: var(--gilt); }
-.chip.lit { background: var(--mark); border-color: var(--gilt); }
-.chip.lit .v, .chip.lit .dd { color: var(--mark-ink); }
-.void { color: var(--rule); font-family: var(--mono); }
+.chip.off .v { font-size: 10px; letter-spacing: 0; color: var(--muted); font-family: var(--body); }
+.starkey { color: var(--violet); }
+.void { color: var(--line); font-family: var(--mono); }
 
 /* ---------------------------------------------------------- ผลทั้งงวด */
-.tier { border-top: 1px solid var(--rule); padding: 13px 14px; }
+.tier { border-top: 2px solid var(--line); padding: 14px 15px; }
 .tier:first-child { border-top: 0; }
 .tier-head {
   display: flex; flex-wrap: wrap; gap: 4px 12px;
-  justify-content: space-between; align-items: baseline; margin-bottom: 8px;
+  justify-content: space-between; align-items: baseline; margin-bottom: 9px;
 }
 .tier-head b { font-weight: 600; font-size: 14.5px; }
-.tier-head span { font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tier-head span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
 .balls { display: flex; flex-wrap: wrap; gap: 5px; }
 .ball {
   font-family: var(--mono); font-size: 13px; font-weight: 500;
   font-variant-numeric: tabular-nums; letter-spacing: 0.04em;
-  padding: 4px 7px; border-radius: 5px;
-  background: var(--surface-2); border: 1px solid var(--rule); color: var(--ink);
+  padding: 4px 8px; border-radius: 7px;
+  background: var(--card-2); border: 2px solid var(--line); color: var(--ink);
 }
 .ball.one {
-  font-size: clamp(26px, 7vw, 38px); font-weight: 600; letter-spacing: 0.12em;
-  padding: 8px 16px; background: var(--gilt-soft); border-color: var(--gilt); color: var(--gilt);
+  font-size: clamp(26px, 7vw, 40px); font-weight: 600; letter-spacing: 0.1em;
+  padding: 10px 18px; background: var(--mint); border-color: var(--outline); color: var(--mint-ink);
 }
-.ball.two { font-size: 17px; font-weight: 600; padding: 6px 11px; }
-.ball.hit { background: var(--mark); border-color: var(--gilt); color: var(--mark-ink); }
-.flip { display: flex; gap: 6px; flex-wrap: wrap; padding: 12px 14px 0; }
+.ball.two { font-size: 17px; font-weight: 600; padding: 6px 12px; }
+.ball.hit { background: var(--hit); border-color: var(--outline); color: var(--hit-ink); }
+.flip { display: flex; gap: 6px; flex-wrap: wrap; padding: 13px 15px 0; }
 
 /* ---------------------------------------------------------- ตรวจสลาก */
-.verdict { margin: 0; padding: 14px; border-radius: 10px; }
-.verdict.yes { background: var(--seal-soft); border: 1px solid var(--seal); }
-.verdict.no { background: var(--surface-2); border: 1px solid var(--rule); color: var(--ink-2); }
-.verdict h3 { font-family: var(--display); font-weight: 400; font-size: 17px; margin: 0 0 8px; color: var(--seal); }
-.verdict.no h3 { color: var(--ink-2); }
+.verdict { margin: 0; padding: 15px; border-radius: 12px; }
+.verdict.yes { background: var(--card-2); border: 2px solid var(--violet); }
+.verdict.no { background: var(--card-2); border: 2px solid var(--line); color: var(--muted); }
+.verdict h3 { font-family: var(--display); font-weight: 500; font-size: 17px; margin: 0 0 9px; color: var(--violet); }
+.verdict.no h3 { color: var(--muted); }
 
 table.rows { border-collapse: collapse; width: 100%; font-size: 13.5px; }
 table.rows th, table.rows td {
-  text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule);
+  text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line);
 }
 table.rows th {
-  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-2); font-weight: 600;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); font-weight: 600;
 }
-table.rows td.num {
+table.rows td.num, table.rows .num {
   font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600;
   letter-spacing: 0.04em;
 }
 table.rows tbody tr.tap { cursor: pointer; }
-table.rows tbody tr.tap:hover { background: var(--seal-soft); }
+table.rows tbody tr.tap:hover { background: var(--card-2); }
 .wrapx { overflow-x: auto; }
 
 footer {
-  padding-block: 20px 30px; margin-top: 10px;
-  border-top: 1px solid var(--rule); color: var(--ink-2); font-size: 12px; line-height: 1.75;
+  padding-block: 22px 32px; margin-top: 12px;
+  border-top: 2px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.75;
 }
-footer a { color: var(--seal); }
+footer a { color: var(--violet); }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+@media (max-width: 720px) {
+  .hero-in { grid-template-columns: 1fr; }
+  .hero-art { order: -1; }
+  .hero-art svg { max-width: 290px; }
+}
 @media (max-width: 560px) {
   table.grid th, table.grid td { padding: 3px 4px; }
   .chip .v { font-size: 11.5px; }
@@ -264,15 +286,87 @@ footer a { color: var(--seal); }
 }
 </style>
 
-<div class="shell gut">
-  <header>
-    <h1>ผลสลากกินแบ่งรัฐบาล ย้อนหลังทุกงวด</h1>
-    <p class="standfirst">
-      เทียบเลขรางวัลเดือนต่อเดือนข้ามทุกปี ตั้งแต่งวดแรกที่มีข้อมูลจนถึงงวดล่าสุด
-      เก็บครบทั้ง 9 หมวดรางวัล ไม่ใช่แค่รางวัลที่ 1
-    </p>
-    <dl class="tally" id="tally"></dl>
-  </header>
+<div class="hero">
+  <div class="shell gut hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow">▪ สลากกินแบ่งรัฐบาล 2549–2569</p>
+      <h1>ย้อนดูทุกงวด<br><span class="hl">ครบทุกรางวัล</span></h1>
+      <p class="standfirst">
+        เทียบเลขรางวัลเดือนต่อเดือนข้ามทุกปีในตารางเดียว เก็บครบทั้ง 9 หมวดรางวัล
+        ไม่ใช่แค่รางวัลที่ 1 และตรวจสลากย้อนหลังได้ทั้งคลัง
+      </p>
+      <dl class="tally" id="tally"></dl>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 440 320" role="img" aria-labelledby="catTitle">
+  <title id="catTitle">แมวมาสคอตกางแขน ล้อมด้วยสลาก เหรียญ และป้ายเลขรางวัล</title>
+  <g fill="none" stroke="#150b33" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+
+    <!-- ของลอยรอบตัว -->
+    <g transform="rotate(-13 100 120)">
+      <rect x="40" y="88" width="104" height="64" rx="7" fill="#ffffff"/>
+      <path d="M54 108h58M54 122h74M54 136h40"/>
+      <rect x="118" y="100" width="18" height="18" rx="3" fill="#5eead4"/>
+    </g>
+    <g transform="rotate(10 382 92)">
+      <circle cx="382" cy="92" r="31" fill="#fde047"/>
+      <circle cx="382" cy="92" r="21" stroke-width="4"/>
+      <path d="M375 80v24M371 86h11a6 6 0 0 1 0 12h-11M371 98h13" stroke-width="4"/>
+    </g>
+    <g transform="rotate(-8 372 246)">
+      <rect x="334" y="222" width="80" height="48" rx="8" fill="#c4b5fd"/>
+      <text x="374" y="256" text-anchor="middle" font-family="IBM Plex Mono, monospace"
+            font-size="25" font-weight="600" fill="#150b33" stroke="none">16</text>
+    </g>
+    <path d="M118 44l6 15 15 6-15 6-6 15-6-15-15-6 15-6z" fill="#5eead4"/>
+    <path d="M330 34l5 12 12 5-12 5-5 12-5-12-12-5 12-5z" fill="#fde047"/>
+    <path d="M58 232l5 12 12 5-12 5-5 12-5-12-12-5 12-5z" fill="#c4b5fd"/>
+
+    <!-- หาง -->
+    <path d="M264 268c40-6 56-38 44-66" stroke-width="30"/>
+    <path d="M264 268c40-6 56-38 44-66" stroke="#5eead4" stroke-width="20"/>
+
+    <!-- แขนกาง -->
+    <path d="M186 206c-30-6-58-16-78-30" stroke-width="32"/>
+    <path d="M186 206c-30-6-58-16-78-30" stroke="#5eead4" stroke-width="22"/>
+    <path d="M254 206c30-6 58-16 78-30" stroke-width="32"/>
+    <path d="M254 206c30-6 58-16 78-30" stroke="#5eead4" stroke-width="22"/>
+    <circle cx="100" cy="172" r="21" fill="#5eead4"/>
+    <circle cx="340" cy="172" r="21" fill="#5eead4"/>
+
+    <!-- ลำตัว -->
+    <path d="M182 176c-11 30-15 76-7 116h90c8-40 4-86-7-116z" fill="#5eead4"/>
+    <ellipse cx="220" cy="246" rx="32" ry="40" fill="#bbf7ea" stroke-width="4"/>
+    <ellipse cx="192" cy="292" rx="22" ry="12" fill="#5eead4"/>
+    <ellipse cx="248" cy="292" rx="22" ry="12" fill="#5eead4"/>
+
+    <!-- หู -->
+    <path d="M164 92L152 48l42 20z" fill="#5eead4"/>
+    <path d="M276 92L288 48l-42 20z" fill="#5eead4"/>
+    <path d="M170 84l-6-22 22 10z" fill="#c4b5fd" stroke-width="4"/>
+    <path d="M270 84l6-22-22 10z" fill="#c4b5fd" stroke-width="4"/>
+
+    <!-- หัว -->
+    <path d="M156 120c0-40 28-62 64-62s64 22 64 62c0 38-26 60-64 60s-64-22-64-60z" fill="#5eead4"/>
+
+    <!-- แว่น -->
+    <rect x="166" y="100" width="108" height="32" rx="16" fill="#150b33"/>
+    <path d="M182 106l16 0-14 20-16 0z" fill="#5eead4" stroke="none" opacity="0.55"/>
+    <path d="M210 106l9 0-14 20-9 0z" fill="#5eead4" stroke="none" opacity="0.35"/>
+
+    <!-- จมูก ปาก หนวด -->
+    <ellipse cx="205" cy="154" rx="15" ry="11" fill="#bbf7ea" stroke-width="4"/>
+    <ellipse cx="235" cy="154" rx="15" ry="11" fill="#bbf7ea" stroke-width="4"/>
+    <path d="M212 142h16l-8 10z" fill="#150b33" stroke-width="4"/>
+    <path d="M220 152v8M220 160c-5 7-13 7-17 2M220 160c5 7 13 7 17 2" stroke-width="4"/>
+    <path d="M186 146l-30-8M186 155h-32M186 164l-28 10" stroke-width="4"/>
+    <path d="M254 146l30-8M254 155h32M254 164l28 10" stroke-width="4"/>
+  </g>
+</svg>
+    </div>
+  </div>
+  <div class="pixelrow" aria-hidden="true"></div>
+  <div class="pixelrow" aria-hidden="true"></div>
 </div>
 
 <div class="bar gut">
@@ -310,7 +404,9 @@ const MONTH_ABBR = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค."
 /* ลำดับหมวดใน DB.draws ตรงกับ DB.tiers */
 const TIERS = DB.tiers;
 const INDEX = Object.fromEntries(TIERS.map((t, i) => [t.key, i]));
-const GRID_TIERS = ["first", "front3", "back3", "last2"];
+const TIER_ROWS = DB.tier_groups || [TIERS.map((t) => t.key)];
+const GRID_TIERS = TIER_ROWS.flat();
+const CELL_MAX = 12;  // เลขต่องวดที่โชว์ในช่องตาราง ที่เหลือบอกเป็น +N
 
 /* คลี่สตริงเลขที่ต่อกันออกเป็นลิสต์ ตามจำนวนหลักของหมวดนั้น */
 function split(packed, digits) {
@@ -358,8 +454,10 @@ function renderBar() {
   if (view.name === "grid") {
     bar.innerHTML = `
       <label class="group"><span>รางวัล</span>
-        <span class="seg" id="tierSeg">${GRID_TIERS.map((k) =>
-          `<button data-tier="${k}" aria-pressed="${k === view.tier}">${esc(TIERS[INDEX[k]].label)}</button>`
+        <span class="segrows" id="tierSeg">${TIER_ROWS.map((row) =>
+          `<span class="seg">${row.map((k) =>
+            `<button data-tier="${k}" aria-pressed="${k === view.tier}">${
+              esc(TIERS[INDEX[k]].label)}</button>`).join("")}</span>`
         ).join("")}</span>
       </label>
       <label class="group"><span>งวด</span>
@@ -475,9 +573,12 @@ function renderGrid() {
         const tip = c.shifted
           ? `งวด ${thaiDate(c.period)} ออกรางวัลวันที่ ${thaiDate(c.date)}`
           : `ดูผลทั้งงวด ${thaiDate(c.date)}`;
+        const shown = c.nums.slice(0, CELL_MAX);
+        const rest = c.nums.length - shown.length;
         return `<button class="chip" data-date="${c.date}" data-n="${esc(c.nums.join(" "))}"
             title="${esc(tip)}"><span class="dd">${c.day}</span><span class="v">${
-            esc(c.nums.join(" "))}${c.shifted ? STAR_HTML : ""}</span></button>`;
+            esc(shown.join(" "))}${c.shifted ? STAR_HTML : ""}</span>${
+            rest > 0 ? `<span class="more">+${rest}</span>` : ""}</button>`;
       }).join("");
       return `<td><div class="stack">${chips}</div></td>`;
     }).join("");
@@ -496,7 +597,8 @@ function renderGrid() {
   ตัวเลขเล็กคือวันที่ออกรางวัลจริง ·
   <b class="starkey">*</b> งวดที่ออกรางวัลคนละเดือนกับงวดของตัวเอง (${grid.shifted} งวด เช่น
   งวด 1 มกราคม ออกวันที่ 30 ธันวาคมปีก่อน) ·
-  <b>งดจำหน่าย</b> งวดที่ไม่มีการออกรางวัล (${grid.cancelled} งวด)</p>`;
+  <b>งดจำหน่าย</b> งวดที่ไม่มีการออกรางวัล (${grid.cancelled} งวด) ·
+  <b>+N</b> หมวดนี้มีเลขอีก N รางวัลในงวดนั้น พิมพ์เลขในช่องเน้นเพื่อดึงเลขที่ตรงขึ้นมา</p>`;
 }
 
 function wireGrid() {
@@ -520,9 +622,20 @@ function wireGrid() {
 
 function paintLit() {
   const needle = view.lit;
-  document.querySelectorAll(".chip").forEach((chip) => {
-    const hit = needle.length > 0 && chip.dataset.n.split(" ").some((n) => n.includes(needle));
-    chip.classList.toggle("lit", hit);
+  // ช่อง "งดจำหน่าย" ไม่มี data-n จึงต้องคัดออก ไม่งั้น split จะพัง
+  document.querySelectorAll(".chip[data-n]").forEach((chip) => {
+    const nums = chip.dataset.n ? chip.dataset.n.split(" ") : [];
+    const matches = needle ? nums.filter((n) => n.includes(needle)) : [];
+    // หมวดที่มีหลายสิบเลข ให้ช่องสลับไปโชว์เฉพาะเลขที่ตรง จะได้เห็นว่าออกงวดไหน
+    const shown = (matches.length ? matches : nums).slice(0, CELL_MAX);
+    const star = chip.querySelector(".star") ? STAR_HTML : "";
+    chip.querySelector(".v").innerHTML = esc(shown.join(" ")) + star;
+    const more = chip.querySelector(".more");
+    if (more) {
+      const rest = nums.length - shown.length;
+      more.textContent = rest > 0 ? `+${rest}` : "";
+    }
+    chip.classList.toggle("lit", matches.length > 0);
   });
 }
 

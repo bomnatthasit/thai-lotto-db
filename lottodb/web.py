@@ -59,6 +59,7 @@ class _Handler(BaseHTTPRequestHandler):
                     for c in model.CATEGORIES
                 ],
                 "matrix_categories": list(queries.MATRIX_CATEGORIES),
+                "matrix_groups": [list(row) for row in queries.MATRIX_GROUPS],
             }
 
         if route == "/api/matrix":

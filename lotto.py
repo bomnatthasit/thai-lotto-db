@@ -331,14 +331,27 @@ def cmd_matrix(args, conn: sqlite3.Connection) -> int:
     print(f"*  = งวดนี้ออกรางวัลคนละเดือนกับงวดของตัวเอง ({data['shifted_count']} งวด)")
     if data["cancelled_count"]:
         print(f"งด = งวดที่งดจำหน่าย ไม่มีการออกรางวัล ({data['cancelled_count']} งวด)")
+
+    biggest = max((len(c["numbers"]) for y in data["years"] for cells in y["months"] for c in cells),
+                  default=0)
+    if biggest > MATRIX_CELL_MAX:
+        print(
+            f"+N = ยังมีอีก N เลขในงวดนั้นที่ไม่ได้พิมพ์ (หมวดนี้มีถึง {biggest} รางวัลต่องวด)"
+            " — ดูครบด้วย `python lotto.py draw <วันที่>` หรือบนหน้าเว็บ"
+        )
     print("ดูรายละเอียดด้วย `python lotto.py schedule`")
     return 0
+
+
+MATRIX_CELL_MAX = 2  # เลขต่องวดที่พิมพ์ลงตารางได้โดยไม่ล้นจอ
 
 
 def _cell(cell: dict, digits: int) -> str:
     if cell["cancelled"]:
         return "งด"
-    text = " ".join(cell["numbers"]) if digits < 6 else cell["numbers"][0]
+    shown = cell["numbers"][:MATRIX_CELL_MAX]
+    rest = len(cell["numbers"]) - len(shown)
+    text = " ".join(shown) + (f" +{rest}" if rest else "")
     return text + "*" if cell["shifted"] else text
 
 

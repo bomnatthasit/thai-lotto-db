@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from lottodb import model, schedule, store  # noqa: E402
+from lottodb import model, queries, schedule, store  # noqa: E402
 
 TEMPLATE = Path(__file__).with_name("page_template.html")
 PLACEHOLDER = "__DATA__"
@@ -82,6 +82,7 @@ def collect(conn) -> dict:
             }
             for c in sorted(model.CATEGORIES, key=lambda c: c.order)
         ],
+        "tier_groups": [list(row) for row in queries.MATRIX_GROUPS],
         "draws": dict(sorted(draws.items())),
         "periods": periods,
         "shift_notes": notes,

@@ -6,8 +6,13 @@ import sqlite3
 
 from . import model, schedule, thaidate
 
-# หมวดที่เอามาเทียบรายเดือนได้ (เลขชุดเล็ก อ่านเป็นตารางได้)
-MATRIX_CATEGORIES: tuple[str, ...] = ("first", "front3", "back3", "last2")
+# เทียบรายเดือนได้ทุกหมวด จัดปุ่มเป็นแถวตามชนิดรางวัล
+MATRIX_GROUPS: tuple[tuple[str, ...], ...] = (
+    ("first", "second", "third", "fourth", "fifth", "near1"),
+    ("front3", "back3"),
+    ("last2",),
+)
+MATRIX_CATEGORIES: tuple[str, ...] = tuple(k for row in MATRIX_GROUPS for k in row)
 
 
 def summary(conn: sqlite3.Connection) -> dict:
@@ -129,7 +134,7 @@ def monthly_matrix(
     `slot` = '1' เฉพาะงวดวันที่ 1, '16' เฉพาะงวดวันที่ 16, 'all' ทั้งคู่
     """
     if category not in MATRIX_CATEGORIES:
-        raise ValueError(f"เทียบรายเดือนได้เฉพาะหมวด {', '.join(MATRIX_CATEGORIES)}")
+        raise ValueError(f"ไม่รู้จักหมวด {category}")
     if slot not in {"all", "1", "16"}:
         raise ValueError("slot ต้องเป็น all, 1 หรือ 16")
 
